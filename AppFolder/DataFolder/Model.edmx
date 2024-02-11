@@ -1,0 +1,2303 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище DBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Adress">
+          <Key>
+            <PropertyRef Name="Adress" />
+          </Key>
+          <Property Name="Adress" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RegionID" Type="int" Nullable="false" />
+          <Property Name="CityID" Type="int" Nullable="false" />
+          <Property Name="StreetID" Type="int" Nullable="false" />
+          <Property Name="Home" Type="int" Nullable="false" />
+          <Property Name="Building" Type="nvarchar" MaxLength="5" />
+          <Property Name="Appartament" Type="int" />
+        </EntityType>
+        <EntityType Name="AdressClient">
+          <Key>
+            <PropertyRef Name="AdressClientID" />
+          </Key>
+          <Property Name="AdressClientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="int" Nullable="false" />
+          <Property Name="FullAdress" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Busket">
+          <Key>
+            <PropertyRef Name="ClientBuscketID" />
+          </Key>
+          <Property Name="ClientBuscketID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="int" />
+          <Property Name="StaffID" Type="int" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameCategory" Type="nvarchar" MaxLength="60" Nullable="false" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="CityID" />
+          </Key>
+          <Property Name="CityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameCity" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="RegionID" Type="int" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ClientID" />
+          </Key>
+          <Property Name="ClientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PhoneNum" Type="bigint" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="AuthCode" Type="nvarchar" MaxLength="6" />
+          <Property Name="DateOfBirth" Type="date" Nullable="false" />
+          <Property Name="GenderID" Type="int" Nullable="false" />
+          <Property Name="SelectedAdressID" Type="int" />
+        </EntityType>
+        <EntityType Name="ClientEnterPC">
+          <Key>
+            <PropertyRef Name="ClientEnterPC_ID" />
+          </Key>
+          <Property Name="ClientEnterPC_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="int" Nullable="false" />
+          <Property Name="NamePC" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="DepartamentCompany">
+          <Key>
+            <PropertyRef Name="DepartamentID" />
+          </Key>
+          <Property Name="DepartamentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AdressID" Type="int" Nullable="false" />
+          <Property Name="StatusDepartamentID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DepartamentIssue">
+          <Key>
+            <PropertyRef Name="DepartamentID" />
+          </Key>
+          <Property Name="DepartamentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameDep" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="CodeDep" Type="nchar" MaxLength="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Gender">
+          <Key>
+            <PropertyRef Name="GenderID" />
+          </Key>
+          <Property Name="GenderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameGender" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UQnum" Type="nvarchar" MaxLength="13" Nullable="false" />
+          <Property Name="StaffID" Type="int" />
+          <Property Name="ClientID" Type="int" />
+          <Property Name="Price" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="OrderStart" Type="datetime" />
+          <Property Name="OrderIssue" Type="datetime" Nullable="false" />
+          <Property Name="ShellLife" Type="datetime" />
+          <Property Name="DeliveryDate" Type="datetime" Nullable="false" />
+          <Property Name="StatusOrderID" Type="int" Nullable="false" />
+          <Property Name="TypeOfIssueD" Type="int" Nullable="false" />
+          <Property Name="DepartamentCompanyID" Type="int" />
+          <Property Name="DeliveryAdress" Type="nvarchar" MaxLength="185" />
+          <Property Name="CancelDescription" Type="nvarchar" MaxLength="255" />
+          <Property Name="PaymentTypetID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Passport">
+          <Key>
+            <PropertyRef Name="PassportID" />
+          </Key>
+          <Property Name="PassportID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Series" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="Num" Type="nchar" MaxLength="6" Nullable="false" />
+          <Property Name="GenderID" Type="int" Nullable="false" />
+          <Property Name="DateOfBirth" Type="date" Nullable="false" />
+          <Property Name="DateOfIssue" Type="date" Nullable="false" />
+          <Property Name="DepOfIssueID" Type="int" Nullable="false" />
+          <Property Name="AdressRegID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PassportOfStaff">
+          <Key>
+            <PropertyRef Name="PassportOfStaffID" />
+          </Key>
+          <Property Name="PassportOfStaffID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StaffID" Type="int" />
+          <Property Name="PassportID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PaymentType">
+          <Key>
+            <PropertyRef Name="TypePaymentID" />
+          </Key>
+          <Property Name="TypePaymentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NamePayment" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Photo" Type="varbinary(max)" />
+          <Property Name="NameProduct" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductGroup">
+          <Key>
+            <PropertyRef Name="ProducGroupID" />
+          </Key>
+          <Property Name="ProducGroupID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderID" Type="int" Nullable="false" />
+          <Property Name="ProductOrderID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductOrder">
+          <Key>
+            <PropertyRef Name="ProductOrderID" />
+          </Key>
+          <Property Name="ProductOrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Photo" Type="varbinary(max)" />
+          <Property Name="NameProduct" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="Amount" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="RegionID" />
+          </Key>
+          <Property Name="RegionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameRegion" Type="nvarchar" MaxLength="60" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameRole" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="StaffID" />
+          </Key>
+          <Property Name="StaffID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Photo" Type="varbinary(max)" />
+          <Property Name="Login" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="30" />
+          <Property Name="PhoneNum" Type="nvarchar" MaxLength="18" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="PassportID" Type="int" Nullable="false" />
+          <Property Name="StatusID" Type="int" Nullable="false" />
+          <Property Name="DepartamentID" Type="int" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StatusDepartament">
+          <Key>
+            <PropertyRef Name="StatusDepartamentID" />
+          </Key>
+          <Property Name="StatusDepartamentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameStatus" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StatusOrder">
+          <Key>
+            <PropertyRef Name="StatusOrderID" />
+          </Key>
+          <Property Name="StatusOrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameStatus" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StatusProduct">
+          <Key>
+            <PropertyRef Name="StatusProductID" />
+          </Key>
+          <Property Name="StatusProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameStatus" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="StatusUser">
+          <Key>
+            <PropertyRef Name="StatusUserID" />
+          </Key>
+          <Property Name="StatusUserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameStatus" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Storage">
+          <Key>
+            <PropertyRef Name="StorageID" />
+          </Key>
+          <Property Name="StorageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartamentID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="int" Nullable="false" />
+          <Property Name="StorageNum" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="StatusProductID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Street">
+          <Key>
+            <PropertyRef Name="StreetID" />
+          </Key>
+          <Property Name="StreetID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameStreet" Type="nvarchar" MaxLength="60" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StreetsOfCity">
+          <Key>
+            <PropertyRef Name="StreetsOfCityID" />
+          </Key>
+          <Property Name="StreetsOfCityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CityID" Type="int" Nullable="false" />
+          <Property Name="StreetID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TypeOfIssueOrder">
+          <Key>
+            <PropertyRef Name="TypeOfIssueID" />
+          </Key>
+          <Property Name="TypeOfIssueID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameType" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Adress_City">
+          <End Role="City" Type="Self.City" Multiplicity="1" />
+          <End Role="Adress" Type="Self.Adress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="CityID" />
+            </Principal>
+            <Dependent Role="Adress">
+              <PropertyRef Name="CityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Adress_Region">
+          <End Role="Region" Type="Self.Region" Multiplicity="1" />
+          <End Role="Adress" Type="Self.Adress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="RegionID" />
+            </Principal>
+            <Dependent Role="Adress">
+              <PropertyRef Name="RegionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Adress_Street">
+          <End Role="Street" Type="Self.Street" Multiplicity="1" />
+          <End Role="Adress" Type="Self.Adress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Street">
+              <PropertyRef Name="StreetID" />
+            </Principal>
+            <Dependent Role="Adress">
+              <PropertyRef Name="StreetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AdressClient_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="AdressClient" Type="Self.AdressClient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="AdressClient">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Busket_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="Busket" Type="Self.Busket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="Busket">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Busket_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Busket" Type="Self.Busket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Busket">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Busket_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Busket" Type="Self.Busket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="Busket">
+              <PropertyRef Name="StaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_City_Region">
+          <End Role="Region" Type="Self.Region" Multiplicity="0..1" />
+          <End Role="City" Type="Self.City" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="RegionID" />
+            </Principal>
+            <Dependent Role="City">
+              <PropertyRef Name="RegionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Client_AdressClient">
+          <End Role="AdressClient" Type="Self.AdressClient" Multiplicity="0..1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdressClient">
+              <PropertyRef Name="AdressClientID" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="SelectedAdressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Client_Gender">
+          <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="GenderID" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="GenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientEnterPC_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="ClientEnterPC" Type="Self.ClientEnterPC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="ClientEnterPC">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DepartamentCompany_Adress">
+          <End Role="Adress" Type="Self.Adress" Multiplicity="1" />
+          <End Role="DepartamentCompany" Type="Self.DepartamentCompany" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Adress">
+              <PropertyRef Name="Adress" />
+            </Principal>
+            <Dependent Role="DepartamentCompany">
+              <PropertyRef Name="AdressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DepartamentCompany_StatusDepartament">
+          <End Role="StatusDepartament" Type="Self.StatusDepartament" Multiplicity="1" />
+          <End Role="DepartamentCompany" Type="Self.DepartamentCompany" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusDepartament">
+              <PropertyRef Name="StatusDepartamentID" />
+            </Principal>
+            <Dependent Role="DepartamentCompany">
+              <PropertyRef Name="StatusDepartamentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_DepartamentCompany">
+          <End Role="DepartamentCompany" Type="Self.DepartamentCompany" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartamentCompany">
+              <PropertyRef Name="DepartamentID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="DepartamentCompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_PaymentType">
+          <End Role="PaymentType" Type="Self.PaymentType" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentType">
+              <PropertyRef Name="TypePaymentID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="PaymentTypetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="StaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_StatusOrder">
+          <End Role="StatusOrder" Type="Self.StatusOrder" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusOrder">
+              <PropertyRef Name="StatusOrderID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="StatusOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_TypeOfIssueOrder">
+          <End Role="TypeOfIssueOrder" Type="Self.TypeOfIssueOrder" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeOfIssueOrder">
+              <PropertyRef Name="TypeOfIssueID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="TypeOfIssueD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Passport_Adress">
+          <End Role="Adress" Type="Self.Adress" Multiplicity="1" />
+          <End Role="Passport" Type="Self.Passport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Adress">
+              <PropertyRef Name="Adress" />
+            </Principal>
+            <Dependent Role="Passport">
+              <PropertyRef Name="AdressRegID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Passport_DateOfIsue">
+          <End Role="DepartamentIssue" Type="Self.DepartamentIssue" Multiplicity="1" />
+          <End Role="Passport" Type="Self.Passport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartamentIssue">
+              <PropertyRef Name="DepartamentID" />
+            </Principal>
+            <Dependent Role="Passport">
+              <PropertyRef Name="DepOfIssueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Passport_Gender">
+          <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
+          <End Role="Passport" Type="Self.Passport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="GenderID" />
+            </Principal>
+            <Dependent Role="Passport">
+              <PropertyRef Name="GenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PassportOfStaff_Passport1">
+          <End Role="Passport" Type="Self.Passport" Multiplicity="1" />
+          <End Role="PassportOfStaff" Type="Self.PassportOfStaff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Passport">
+              <PropertyRef Name="PassportID" />
+            </Principal>
+            <Dependent Role="PassportOfStaff">
+              <PropertyRef Name="PassportID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PassportOfStaff_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="PassportOfStaff" Type="Self.PassportOfStaff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="PassportOfStaff">
+              <PropertyRef Name="StaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductGroupID_Order">
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="ProductGroup" Type="Self.ProductGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="ProductGroup">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductGroupID_ProductOrder">
+          <End Role="ProductOrder" Type="Self.ProductOrder" Multiplicity="1" />
+          <End Role="ProductGroup" Type="Self.ProductGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductOrder">
+              <PropertyRef Name="ProductOrderID" />
+            </Principal>
+            <Dependent Role="ProductGroup">
+              <PropertyRef Name="ProductOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductOrder_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="ProductOrder" Type="Self.ProductOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="ProductOrder">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_DepartamentCompany">
+          <End Role="DepartamentCompany" Type="Self.DepartamentCompany" Multiplicity="0..1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartamentCompany">
+              <PropertyRef Name="DepartamentID" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="DepartamentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Storage_DepartamentCompany">
+          <End Role="DepartamentCompany" Type="Self.DepartamentCompany" Multiplicity="1" />
+          <End Role="Storage" Type="Self.Storage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartamentCompany">
+              <PropertyRef Name="DepartamentID" />
+            </Principal>
+            <Dependent Role="Storage">
+              <PropertyRef Name="DepartamentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Storage_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Storage" Type="Self.Storage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Storage">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Storage_StatusProduct">
+          <End Role="StatusProduct" Type="Self.StatusProduct" Multiplicity="1" />
+          <End Role="Storage" Type="Self.Storage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusProduct">
+              <PropertyRef Name="StatusProductID" />
+            </Principal>
+            <Dependent Role="Storage">
+              <PropertyRef Name="StatusProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StreetsOfCity_City">
+          <End Role="City" Type="Self.City" Multiplicity="1" />
+          <End Role="StreetsOfCity" Type="Self.StreetsOfCity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="CityID" />
+            </Principal>
+            <Dependent Role="StreetsOfCity">
+              <PropertyRef Name="CityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StreetsOfCity_Street">
+          <End Role="Street" Type="Self.Street" Multiplicity="1" />
+          <End Role="StreetsOfCity" Type="Self.StreetsOfCity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Street">
+              <PropertyRef Name="StreetID" />
+            </Principal>
+            <Dependent Role="StreetsOfCity">
+              <PropertyRef Name="StreetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Passport">
+          <End Role="Passport" Type="Self.Passport" Multiplicity="1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Passport">
+              <PropertyRef Name="PassportID" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="PassportID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_StatusUser">
+          <End Role="StatusUser" Type="Self.StatusUser" Multiplicity="1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusUser">
+              <PropertyRef Name="StatusUserID" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="Хранилище DBModelContainer">
+          <EntitySet Name="Adress" EntityType="Self.Adress" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AdressClient" EntityType="Self.AdressClient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Busket" EntityType="Self.Busket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClientEnterPC" EntityType="Self.ClientEnterPC" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DepartamentCompany" EntityType="Self.DepartamentCompany" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DepartamentIssue" EntityType="Self.DepartamentIssue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Passport" EntityType="Self.Passport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PassportOfStaff" EntityType="Self.PassportOfStaff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaymentType" EntityType="Self.PaymentType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductGroup" EntityType="Self.ProductGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductOrder" EntityType="Self.ProductOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Region" EntityType="Self.Region" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StatusDepartament" EntityType="Self.StatusDepartament" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StatusOrder" EntityType="Self.StatusOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StatusProduct" EntityType="Self.StatusProduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StatusUser" EntityType="Self.StatusUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Storage" EntityType="Self.Storage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Street" EntityType="Self.Street" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StreetsOfCity" EntityType="Self.StreetsOfCity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeOfIssueOrder" EntityType="Self.TypeOfIssueOrder" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Adress_City" Association="Self.FK_Adress_City">
+            <End Role="City" EntitySet="City" />
+            <End Role="Adress" EntitySet="Adress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Adress_Region" Association="Self.FK_Adress_Region">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="Adress" EntitySet="Adress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Adress_Street" Association="Self.FK_Adress_Street">
+            <End Role="Street" EntitySet="Street" />
+            <End Role="Adress" EntitySet="Adress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AdressClient_Client" Association="Self.FK_AdressClient_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="AdressClient" EntitySet="AdressClient" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Busket_Client" Association="Self.FK_Busket_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Busket" EntitySet="Busket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Busket_Product" Association="Self.FK_Busket_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Busket" EntitySet="Busket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Busket_Staff" Association="Self.FK_Busket_Staff">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Busket" EntitySet="Busket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_City_Region" Association="Self.FK_City_Region">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="City" EntitySet="City" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Client_AdressClient" Association="Self.FK_Client_AdressClient">
+            <End Role="AdressClient" EntitySet="AdressClient" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Client_Gender" Association="Self.FK_Client_Gender">
+            <End Role="Gender" EntitySet="Gender" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientEnterPC_Client" Association="Self.FK_ClientEnterPC_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="ClientEnterPC" EntitySet="ClientEnterPC" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartamentCompany_Adress" Association="Self.FK_DepartamentCompany_Adress">
+            <End Role="Adress" EntitySet="Adress" />
+            <End Role="DepartamentCompany" EntitySet="DepartamentCompany" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartamentCompany_StatusDepartament" Association="Self.FK_DepartamentCompany_StatusDepartament">
+            <End Role="StatusDepartament" EntitySet="StatusDepartament" />
+            <End Role="DepartamentCompany" EntitySet="DepartamentCompany" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Client" Association="Self.FK_Order_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_DepartamentCompany" Association="Self.FK_Order_DepartamentCompany">
+            <End Role="DepartamentCompany" EntitySet="DepartamentCompany" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_PaymentType" Association="Self.FK_Order_PaymentType">
+            <End Role="PaymentType" EntitySet="PaymentType" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Staff" Association="Self.FK_Order_Staff">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_StatusOrder" Association="Self.FK_Order_StatusOrder">
+            <End Role="StatusOrder" EntitySet="StatusOrder" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_TypeOfIssueOrder" Association="Self.FK_Order_TypeOfIssueOrder">
+            <End Role="TypeOfIssueOrder" EntitySet="TypeOfIssueOrder" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Passport_Adress" Association="Self.FK_Passport_Adress">
+            <End Role="Adress" EntitySet="Adress" />
+            <End Role="Passport" EntitySet="Passport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Passport_DateOfIsue" Association="Self.FK_Passport_DateOfIsue">
+            <End Role="DepartamentIssue" EntitySet="DepartamentIssue" />
+            <End Role="Passport" EntitySet="Passport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Passport_Gender" Association="Self.FK_Passport_Gender">
+            <End Role="Gender" EntitySet="Gender" />
+            <End Role="Passport" EntitySet="Passport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PassportOfStaff_Passport1" Association="Self.FK_PassportOfStaff_Passport1">
+            <End Role="Passport" EntitySet="Passport" />
+            <End Role="PassportOfStaff" EntitySet="PassportOfStaff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PassportOfStaff_Staff" Association="Self.FK_PassportOfStaff_Staff">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="PassportOfStaff" EntitySet="PassportOfStaff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Category" Association="Self.FK_Product_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductGroupID_Order" Association="Self.FK_ProductGroupID_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="ProductGroup" EntitySet="ProductGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductGroupID_ProductOrder" Association="Self.FK_ProductGroupID_ProductOrder">
+            <End Role="ProductOrder" EntitySet="ProductOrder" />
+            <End Role="ProductGroup" EntitySet="ProductGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductOrder_Product" Association="Self.FK_ProductOrder_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductOrder" EntitySet="ProductOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_DepartamentCompany" Association="Self.FK_Staff_DepartamentCompany">
+            <End Role="DepartamentCompany" EntitySet="DepartamentCompany" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Storage_DepartamentCompany" Association="Self.FK_Storage_DepartamentCompany">
+            <End Role="DepartamentCompany" EntitySet="DepartamentCompany" />
+            <End Role="Storage" EntitySet="Storage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Storage_Product" Association="Self.FK_Storage_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Storage" EntitySet="Storage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Storage_StatusProduct" Association="Self.FK_Storage_StatusProduct">
+            <End Role="StatusProduct" EntitySet="StatusProduct" />
+            <End Role="Storage" EntitySet="Storage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StreetsOfCity_City" Association="Self.FK_StreetsOfCity_City">
+            <End Role="City" EntitySet="City" />
+            <End Role="StreetsOfCity" EntitySet="StreetsOfCity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StreetsOfCity_Street" Association="Self.FK_StreetsOfCity_Street">
+            <End Role="Street" EntitySet="Street" />
+            <End Role="StreetsOfCity" EntitySet="StreetsOfCity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Passport" Association="Self.FK_User_Passport">
+            <End Role="Passport" EntitySet="Passport" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_StatusUser" Association="Self.FK_User_StatusUser">
+            <End Role="StatusUser" EntitySet="StatusUser" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Adress">
+          <Key>
+            <PropertyRef Name="Adress1" />
+          </Key>
+          <Property Name="Adress1" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RegionID" Type="Int32" Nullable="false" />
+          <Property Name="CityID" Type="Int32" Nullable="false" />
+          <Property Name="StreetID" Type="Int32" Nullable="false" />
+          <Property Name="Home" Type="Int32" Nullable="false" />
+          <Property Name="Building" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="Appartament" Type="Int32" />
+          <NavigationProperty Name="City" Relationship="Self.FK_Adress_City" FromRole="Adress" ToRole="City" />
+          <NavigationProperty Name="Region" Relationship="Self.FK_Adress_Region" FromRole="Adress" ToRole="Region" />
+          <NavigationProperty Name="Street" Relationship="Self.FK_Adress_Street" FromRole="Adress" ToRole="Street" />
+          <NavigationProperty Name="DepartamentCompany" Relationship="Self.FK_DepartamentCompany_Adress" FromRole="Adress" ToRole="DepartamentCompany" />
+          <NavigationProperty Name="Passport" Relationship="Self.FK_Passport_Adress" FromRole="Adress" ToRole="Passport" />
+        </EntityType>
+        <EntityType Name="AdressClient">
+          <Key>
+            <PropertyRef Name="AdressClientID" />
+          </Key>
+          <Property Name="AdressClientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="Int32" Nullable="false" />
+          <Property Name="FullAdress" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_AdressClient_Client" FromRole="AdressClient" ToRole="Client" />
+          <NavigationProperty Name="Client1" Relationship="Self.FK_Client_AdressClient" FromRole="AdressClient" ToRole="Client" />
+        </EntityType>
+        <EntityType Name="Busket">
+          <Key>
+            <PropertyRef Name="ClientBuscketID" />
+          </Key>
+          <Property Name="ClientBuscketID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="Int32" />
+          <Property Name="StaffID" Type="Int32" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Busket_Client" FromRole="Busket" ToRole="Client" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_Busket_Product" FromRole="Busket" ToRole="Product" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_Busket_Staff" FromRole="Busket" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameCategory" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_Product_Category" FromRole="Category" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="CityID" />
+          </Key>
+          <Property Name="CityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameCity" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RegionID" Type="Int32" />
+          <NavigationProperty Name="Adress" Relationship="Self.FK_Adress_City" FromRole="City" ToRole="Adress" />
+          <NavigationProperty Name="Region" Relationship="Self.FK_City_Region" FromRole="City" ToRole="Region" />
+          <NavigationProperty Name="StreetsOfCity" Relationship="Self.FK_StreetsOfCity_City" FromRole="City" ToRole="StreetsOfCity" />
+        </EntityType>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="ClientID" />
+          </Key>
+          <Property Name="ClientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PhoneNum" Type="Int64" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="AuthCode" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="GenderID" Type="Int32" Nullable="false" />
+          <Property Name="SelectedAdressID" Type="Int32" />
+          <NavigationProperty Name="AdressClient" Relationship="Self.FK_AdressClient_Client" FromRole="Client" ToRole="AdressClient" />
+          <NavigationProperty Name="AdressClient1" Relationship="Self.FK_Client_AdressClient" FromRole="Client" ToRole="AdressClient" />
+          <NavigationProperty Name="Busket" Relationship="Self.FK_Busket_Client" FromRole="Client" ToRole="Busket" />
+          <NavigationProperty Name="Gender" Relationship="Self.FK_Client_Gender" FromRole="Client" ToRole="Gender" />
+          <NavigationProperty Name="ClientEnterPC" Relationship="Self.FK_ClientEnterPC_Client" FromRole="Client" ToRole="ClientEnterPC" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_Order_Client" FromRole="Client" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="ClientEnterPC">
+          <Key>
+            <PropertyRef Name="ClientEnterPC_ID" />
+          </Key>
+          <Property Name="ClientEnterPC_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="Int32" Nullable="false" />
+          <Property Name="NamePC" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_ClientEnterPC_Client" FromRole="ClientEnterPC" ToRole="Client" />
+        </EntityType>
+        <EntityType Name="DepartamentCompany">
+          <Key>
+            <PropertyRef Name="DepartamentID" />
+          </Key>
+          <Property Name="DepartamentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AdressID" Type="Int32" Nullable="false" />
+          <Property Name="StatusDepartamentID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Adress" Relationship="Self.FK_DepartamentCompany_Adress" FromRole="DepartamentCompany" ToRole="Adress" />
+          <NavigationProperty Name="StatusDepartament" Relationship="Self.FK_DepartamentCompany_StatusDepartament" FromRole="DepartamentCompany" ToRole="StatusDepartament" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_Order_DepartamentCompany" FromRole="DepartamentCompany" ToRole="Order" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_Staff_DepartamentCompany" FromRole="DepartamentCompany" ToRole="Staff" />
+          <NavigationProperty Name="Storage" Relationship="Self.FK_Storage_DepartamentCompany" FromRole="DepartamentCompany" ToRole="Storage" />
+        </EntityType>
+        <EntityType Name="DepartamentIssue">
+          <Key>
+            <PropertyRef Name="DepartamentID" />
+          </Key>
+          <Property Name="DepartamentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameDep" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CodeDep" Type="String" MaxLength="7" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Passport" Relationship="Self.FK_Passport_DateOfIsue" FromRole="DepartamentIssue" ToRole="Passport" />
+        </EntityType>
+        <EntityType Name="Gender">
+          <Key>
+            <PropertyRef Name="GenderID" />
+          </Key>
+          <Property Name="GenderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameGender" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Client_Gender" FromRole="Gender" ToRole="Client" />
+          <NavigationProperty Name="Passport" Relationship="Self.FK_Passport_Gender" FromRole="Gender" ToRole="Passport" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UQnum" Type="String" MaxLength="13" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StaffID" Type="Int32" />
+          <Property Name="ClientID" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="OrderStart" Type="DateTime" Precision="3" />
+          <Property Name="OrderIssue" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ShellLife" Type="DateTime" Precision="3" />
+          <Property Name="DeliveryDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="StatusOrderID" Type="Int32" Nullable="false" />
+          <Property Name="TypeOfIssueD" Type="Int32" Nullable="false" />
+          <Property Name="DepartamentCompanyID" Type="Int32" />
+          <Property Name="DeliveryAdress" Type="String" MaxLength="185" FixedLength="false" Unicode="true" />
+          <Property Name="CancelDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentTypetID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Order_Client" FromRole="Order" ToRole="Client" />
+          <NavigationProperty Name="DepartamentCompany" Relationship="Self.FK_Order_DepartamentCompany" FromRole="Order" ToRole="DepartamentCompany" />
+          <NavigationProperty Name="PaymentType" Relationship="Self.FK_Order_PaymentType" FromRole="Order" ToRole="PaymentType" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_Order_Staff" FromRole="Order" ToRole="Staff" />
+          <NavigationProperty Name="StatusOrder" Relationship="Self.FK_Order_StatusOrder" FromRole="Order" ToRole="StatusOrder" />
+          <NavigationProperty Name="TypeOfIssueOrder" Relationship="Self.FK_Order_TypeOfIssueOrder" FromRole="Order" ToRole="TypeOfIssueOrder" />
+          <NavigationProperty Name="ProductGroup" Relationship="Self.FK_ProductGroupID_Order" FromRole="Order" ToRole="ProductGroup" />
+        </EntityType>
+        <EntityType Name="Passport">
+          <Key>
+            <PropertyRef Name="PassportID" />
+          </Key>
+          <Property Name="PassportID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Series" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Num" Type="String" MaxLength="6" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="GenderID" Type="Int32" Nullable="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateOfIssue" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DepOfIssueID" Type="Int32" Nullable="false" />
+          <Property Name="AdressRegID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Adress" Relationship="Self.FK_Passport_Adress" FromRole="Passport" ToRole="Adress" />
+          <NavigationProperty Name="DepartamentIssue" Relationship="Self.FK_Passport_DateOfIsue" FromRole="Passport" ToRole="DepartamentIssue" />
+          <NavigationProperty Name="Gender" Relationship="Self.FK_Passport_Gender" FromRole="Passport" ToRole="Gender" />
+          <NavigationProperty Name="PassportOfStaff" Relationship="Self.FK_PassportOfStaff_Passport1" FromRole="Passport" ToRole="PassportOfStaff" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_User_Passport" FromRole="Passport" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="PassportOfStaff">
+          <Key>
+            <PropertyRef Name="PassportOfStaffID" />
+          </Key>
+          <Property Name="PassportOfStaffID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StaffID" Type="Int32" />
+          <Property Name="PassportID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Passport" Relationship="Self.FK_PassportOfStaff_Passport1" FromRole="PassportOfStaff" ToRole="Passport" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_PassportOfStaff_Staff" FromRole="PassportOfStaff" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="PaymentType">
+          <Key>
+            <PropertyRef Name="TypePaymentID" />
+          </Key>
+          <Property Name="TypePaymentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NamePayment" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_Order_PaymentType" FromRole="PaymentType" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="NameProduct" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Busket" Relationship="Self.FK_Busket_Product" FromRole="Product" ToRole="Busket" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_Product_Category" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="ProductOrder" Relationship="Self.FK_ProductOrder_Product" FromRole="Product" ToRole="ProductOrder" />
+          <NavigationProperty Name="Storage" Relationship="Self.FK_Storage_Product" FromRole="Product" ToRole="Storage" />
+        </EntityType>
+        <EntityType Name="ProductGroup">
+          <Key>
+            <PropertyRef Name="ProducGroupID" />
+          </Key>
+          <Property Name="ProducGroupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <Property Name="ProductOrderID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_ProductGroupID_Order" FromRole="ProductGroup" ToRole="Order" />
+          <NavigationProperty Name="ProductOrder" Relationship="Self.FK_ProductGroupID_ProductOrder" FromRole="ProductGroup" ToRole="ProductOrder" />
+        </EntityType>
+        <EntityType Name="ProductOrder">
+          <Key>
+            <PropertyRef Name="ProductOrderID" />
+          </Key>
+          <Property Name="ProductOrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="NameProduct" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+          <Property Name="ProductID" Type="Int32" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_ProductOrder_Product" FromRole="ProductOrder" ToRole="Product" />
+          <NavigationProperty Name="ProductGroup" Relationship="Self.FK_ProductGroupID_ProductOrder" FromRole="ProductOrder" ToRole="ProductGroup" />
+        </EntityType>
+        <EntityType Name="Region">
+          <Key>
+            <PropertyRef Name="RegionID" />
+          </Key>
+          <Property Name="RegionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameRegion" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Adress" Relationship="Self.FK_Adress_Region" FromRole="Region" ToRole="Adress" />
+          <NavigationProperty Name="City" Relationship="Self.FK_City_Region" FromRole="Region" ToRole="City" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameRole" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_User_Role" FromRole="Role" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="StaffID" />
+          </Key>
+          <Property Name="StaffID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Login" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Patronymic" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNum" Type="String" MaxLength="18" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="PassportID" Type="Int32" Nullable="false" />
+          <Property Name="StatusID" Type="Int32" Nullable="false" />
+          <Property Name="DepartamentID" Type="Int32" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Busket" Relationship="Self.FK_Busket_Staff" FromRole="Staff" ToRole="Busket" />
+          <NavigationProperty Name="DepartamentCompany" Relationship="Self.FK_Staff_DepartamentCompany" FromRole="Staff" ToRole="DepartamentCompany" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_Order_Staff" FromRole="Staff" ToRole="Order" />
+          <NavigationProperty Name="Passport" Relationship="Self.FK_User_Passport" FromRole="Staff" ToRole="Passport" />
+          <NavigationProperty Name="PassportOfStaff" Relationship="Self.FK_PassportOfStaff_Staff" FromRole="Staff" ToRole="PassportOfStaff" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_User_Role" FromRole="Staff" ToRole="Role" />
+          <NavigationProperty Name="StatusUser" Relationship="Self.FK_User_StatusUser" FromRole="Staff" ToRole="StatusUser" />
+        </EntityType>
+        <EntityType Name="StatusDepartament">
+          <Key>
+            <PropertyRef Name="StatusDepartamentID" />
+          </Key>
+          <Property Name="StatusDepartamentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="DepartamentCompany" Relationship="Self.FK_DepartamentCompany_StatusDepartament" FromRole="StatusDepartament" ToRole="DepartamentCompany" />
+        </EntityType>
+        <EntityType Name="StatusOrder">
+          <Key>
+            <PropertyRef Name="StatusOrderID" />
+          </Key>
+          <Property Name="StatusOrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_Order_StatusOrder" FromRole="StatusOrder" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="StatusProduct">
+          <Key>
+            <PropertyRef Name="StatusProductID" />
+          </Key>
+          <Property Name="StatusProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Storage" Relationship="Self.FK_Storage_StatusProduct" FromRole="StatusProduct" ToRole="Storage" />
+        </EntityType>
+        <EntityType Name="StatusUser">
+          <Key>
+            <PropertyRef Name="StatusUserID" />
+          </Key>
+          <Property Name="StatusUserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_User_StatusUser" FromRole="StatusUser" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="Storage">
+          <Key>
+            <PropertyRef Name="StorageID" />
+          </Key>
+          <Property Name="StorageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartamentID" Type="Int32" Nullable="false" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+          <Property Name="StorageNum" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StatusProductID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DepartamentCompany" Relationship="Self.FK_Storage_DepartamentCompany" FromRole="Storage" ToRole="DepartamentCompany" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_Storage_Product" FromRole="Storage" ToRole="Product" />
+          <NavigationProperty Name="StatusProduct" Relationship="Self.FK_Storage_StatusProduct" FromRole="Storage" ToRole="StatusProduct" />
+        </EntityType>
+        <EntityType Name="Street">
+          <Key>
+            <PropertyRef Name="StreetID" />
+          </Key>
+          <Property Name="StreetID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameStreet" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Adress" Relationship="Self.FK_Adress_Street" FromRole="Street" ToRole="Adress" />
+          <NavigationProperty Name="StreetsOfCity" Relationship="Self.FK_StreetsOfCity_Street" FromRole="Street" ToRole="StreetsOfCity" />
+        </EntityType>
+        <EntityType Name="StreetsOfCity">
+          <Key>
+            <PropertyRef Name="StreetsOfCityID" />
+          </Key>
+          <Property Name="StreetsOfCityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CityID" Type="Int32" Nullable="false" />
+          <Property Name="StreetID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="City" Relationship="Self.FK_StreetsOfCity_City" FromRole="StreetsOfCity" ToRole="City" />
+          <NavigationProperty Name="Street" Relationship="Self.FK_StreetsOfCity_Street" FromRole="StreetsOfCity" ToRole="Street" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TypeOfIssueOrder">
+          <Key>
+            <PropertyRef Name="TypeOfIssueID" />
+          </Key>
+          <Property Name="TypeOfIssueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameType" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_Order_TypeOfIssueOrder" FromRole="TypeOfIssueOrder" ToRole="Order" />
+        </EntityType>
+        <Association Name="FK_Adress_City">
+          <End Role="City" Type="Self.City" Multiplicity="1" />
+          <End Role="Adress" Type="Self.Adress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="CityID" />
+            </Principal>
+            <Dependent Role="Adress">
+              <PropertyRef Name="CityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Adress_Region">
+          <End Role="Region" Type="Self.Region" Multiplicity="1" />
+          <End Role="Adress" Type="Self.Adress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="RegionID" />
+            </Principal>
+            <Dependent Role="Adress">
+              <PropertyRef Name="RegionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Adress_Street">
+          <End Role="Street" Type="Self.Street" Multiplicity="1" />
+          <End Role="Adress" Type="Self.Adress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Street">
+              <PropertyRef Name="StreetID" />
+            </Principal>
+            <Dependent Role="Adress">
+              <PropertyRef Name="StreetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DepartamentCompany_Adress">
+          <End Role="Adress" Type="Self.Adress" Multiplicity="1" />
+          <End Role="DepartamentCompany" Type="Self.DepartamentCompany" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Adress">
+              <PropertyRef Name="Adress1" />
+            </Principal>
+            <Dependent Role="DepartamentCompany">
+              <PropertyRef Name="AdressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Passport_Adress">
+          <End Role="Adress" Type="Self.Adress" Multiplicity="1" />
+          <End Role="Passport" Type="Self.Passport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Adress">
+              <PropertyRef Name="Adress1" />
+            </Principal>
+            <Dependent Role="Passport">
+              <PropertyRef Name="AdressRegID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AdressClient_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="AdressClient" Type="Self.AdressClient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="AdressClient">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Client_AdressClient">
+          <End Role="AdressClient" Type="Self.AdressClient" Multiplicity="0..1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AdressClient">
+              <PropertyRef Name="AdressClientID" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="SelectedAdressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Busket_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="Busket" Type="Self.Busket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="Busket">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Busket_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Busket" Type="Self.Busket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Busket">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Busket_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Busket" Type="Self.Busket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="Busket">
+              <PropertyRef Name="StaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_City_Region">
+          <End Role="Region" Type="Self.Region" Multiplicity="0..1" />
+          <End Role="City" Type="Self.City" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Region">
+              <PropertyRef Name="RegionID" />
+            </Principal>
+            <Dependent Role="City">
+              <PropertyRef Name="RegionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StreetsOfCity_City">
+          <End Role="City" Type="Self.City" Multiplicity="1" />
+          <End Role="StreetsOfCity" Type="Self.StreetsOfCity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="CityID" />
+            </Principal>
+            <Dependent Role="StreetsOfCity">
+              <PropertyRef Name="CityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Client_Gender">
+          <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="GenderID" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="GenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientEnterPC_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="ClientEnterPC" Type="Self.ClientEnterPC" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="ClientEnterPC">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DepartamentCompany_StatusDepartament">
+          <End Role="StatusDepartament" Type="Self.StatusDepartament" Multiplicity="1" />
+          <End Role="DepartamentCompany" Type="Self.DepartamentCompany" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusDepartament">
+              <PropertyRef Name="StatusDepartamentID" />
+            </Principal>
+            <Dependent Role="DepartamentCompany">
+              <PropertyRef Name="StatusDepartamentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_DepartamentCompany">
+          <End Role="DepartamentCompany" Type="Self.DepartamentCompany" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartamentCompany">
+              <PropertyRef Name="DepartamentID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="DepartamentCompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_DepartamentCompany">
+          <End Role="DepartamentCompany" Type="Self.DepartamentCompany" Multiplicity="0..1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartamentCompany">
+              <PropertyRef Name="DepartamentID" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="DepartamentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Storage_DepartamentCompany">
+          <End Role="DepartamentCompany" Type="Self.DepartamentCompany" Multiplicity="1" />
+          <End Role="Storage" Type="Self.Storage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartamentCompany">
+              <PropertyRef Name="DepartamentID" />
+            </Principal>
+            <Dependent Role="Storage">
+              <PropertyRef Name="DepartamentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Passport_DateOfIsue">
+          <End Role="DepartamentIssue" Type="Self.DepartamentIssue" Multiplicity="1" />
+          <End Role="Passport" Type="Self.Passport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartamentIssue">
+              <PropertyRef Name="DepartamentID" />
+            </Principal>
+            <Dependent Role="Passport">
+              <PropertyRef Name="DepOfIssueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Passport_Gender">
+          <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
+          <End Role="Passport" Type="Self.Passport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="GenderID" />
+            </Principal>
+            <Dependent Role="Passport">
+              <PropertyRef Name="GenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_PaymentType">
+          <End Role="PaymentType" Type="Self.PaymentType" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentType">
+              <PropertyRef Name="TypePaymentID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="PaymentTypetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="StaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_StatusOrder">
+          <End Role="StatusOrder" Type="Self.StatusOrder" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusOrder">
+              <PropertyRef Name="StatusOrderID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="StatusOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_TypeOfIssueOrder">
+          <End Role="TypeOfIssueOrder" Type="Self.TypeOfIssueOrder" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeOfIssueOrder">
+              <PropertyRef Name="TypeOfIssueID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="TypeOfIssueD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductGroupID_Order">
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="ProductGroup" Type="Self.ProductGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="ProductGroup">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PassportOfStaff_Passport1">
+          <End Role="Passport" Type="Self.Passport" Multiplicity="1" />
+          <End Role="PassportOfStaff" Type="Self.PassportOfStaff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Passport">
+              <PropertyRef Name="PassportID" />
+            </Principal>
+            <Dependent Role="PassportOfStaff">
+              <PropertyRef Name="PassportID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Passport">
+          <End Role="Passport" Type="Self.Passport" Multiplicity="1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Passport">
+              <PropertyRef Name="PassportID" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="PassportID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PassportOfStaff_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="PassportOfStaff" Type="Self.PassportOfStaff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="PassportOfStaff">
+              <PropertyRef Name="StaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductOrder_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="ProductOrder" Type="Self.ProductOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="ProductOrder">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Storage_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Storage" Type="Self.Storage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Storage">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductGroupID_ProductOrder">
+          <End Role="ProductOrder" Type="Self.ProductOrder" Multiplicity="1" />
+          <End Role="ProductGroup" Type="Self.ProductGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductOrder">
+              <PropertyRef Name="ProductOrderID" />
+            </Principal>
+            <Dependent Role="ProductGroup">
+              <PropertyRef Name="ProductOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_StatusUser">
+          <End Role="StatusUser" Type="Self.StatusUser" Multiplicity="1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusUser">
+              <PropertyRef Name="StatusUserID" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Storage_StatusProduct">
+          <End Role="StatusProduct" Type="Self.StatusProduct" Multiplicity="1" />
+          <End Role="Storage" Type="Self.Storage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StatusProduct">
+              <PropertyRef Name="StatusProductID" />
+            </Principal>
+            <Dependent Role="Storage">
+              <PropertyRef Name="StatusProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StreetsOfCity_Street">
+          <End Role="Street" Type="Self.Street" Multiplicity="1" />
+          <End Role="StreetsOfCity" Type="Self.StreetsOfCity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Street">
+              <PropertyRef Name="StreetID" />
+            </Principal>
+            <Dependent Role="StreetsOfCity">
+              <PropertyRef Name="StreetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Adress" EntityType="Self.Adress" />
+          <EntitySet Name="AdressClient" EntityType="Self.AdressClient" />
+          <EntitySet Name="Busket" EntityType="Self.Busket" />
+          <EntitySet Name="Category" EntityType="Self.Category" />
+          <EntitySet Name="City" EntityType="Self.City" />
+          <EntitySet Name="Client" EntityType="Self.Client" />
+          <EntitySet Name="ClientEnterPC" EntityType="Self.ClientEnterPC" />
+          <EntitySet Name="DepartamentCompany" EntityType="Self.DepartamentCompany" />
+          <EntitySet Name="DepartamentIssue" EntityType="Self.DepartamentIssue" />
+          <EntitySet Name="Gender" EntityType="Self.Gender" />
+          <EntitySet Name="Order" EntityType="Self.Order" />
+          <EntitySet Name="Passport" EntityType="Self.Passport" />
+          <EntitySet Name="PassportOfStaff" EntityType="Self.PassportOfStaff" />
+          <EntitySet Name="PaymentType" EntityType="Self.PaymentType" />
+          <EntitySet Name="Product" EntityType="Self.Product" />
+          <EntitySet Name="ProductGroup" EntityType="Self.ProductGroup" />
+          <EntitySet Name="ProductOrder" EntityType="Self.ProductOrder" />
+          <EntitySet Name="Region" EntityType="Self.Region" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="Staff" EntityType="Self.Staff" />
+          <EntitySet Name="StatusDepartament" EntityType="Self.StatusDepartament" />
+          <EntitySet Name="StatusOrder" EntityType="Self.StatusOrder" />
+          <EntitySet Name="StatusProduct" EntityType="Self.StatusProduct" />
+          <EntitySet Name="StatusUser" EntityType="Self.StatusUser" />
+          <EntitySet Name="Storage" EntityType="Self.Storage" />
+          <EntitySet Name="Street" EntityType="Self.Street" />
+          <EntitySet Name="StreetsOfCity" EntityType="Self.StreetsOfCity" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="TypeOfIssueOrder" EntityType="Self.TypeOfIssueOrder" />
+          <AssociationSet Name="FK_Adress_City" Association="Self.FK_Adress_City">
+            <End Role="City" EntitySet="City" />
+            <End Role="Adress" EntitySet="Adress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Adress_Region" Association="Self.FK_Adress_Region">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="Adress" EntitySet="Adress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Adress_Street" Association="Self.FK_Adress_Street">
+            <End Role="Street" EntitySet="Street" />
+            <End Role="Adress" EntitySet="Adress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartamentCompany_Adress" Association="Self.FK_DepartamentCompany_Adress">
+            <End Role="Adress" EntitySet="Adress" />
+            <End Role="DepartamentCompany" EntitySet="DepartamentCompany" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Passport_Adress" Association="Self.FK_Passport_Adress">
+            <End Role="Adress" EntitySet="Adress" />
+            <End Role="Passport" EntitySet="Passport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AdressClient_Client" Association="Self.FK_AdressClient_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="AdressClient" EntitySet="AdressClient" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Client_AdressClient" Association="Self.FK_Client_AdressClient">
+            <End Role="AdressClient" EntitySet="AdressClient" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Busket_Client" Association="Self.FK_Busket_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Busket" EntitySet="Busket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Busket_Product" Association="Self.FK_Busket_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Busket" EntitySet="Busket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Busket_Staff" Association="Self.FK_Busket_Staff">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Busket" EntitySet="Busket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Category" Association="Self.FK_Product_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_City_Region" Association="Self.FK_City_Region">
+            <End Role="Region" EntitySet="Region" />
+            <End Role="City" EntitySet="City" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StreetsOfCity_City" Association="Self.FK_StreetsOfCity_City">
+            <End Role="City" EntitySet="City" />
+            <End Role="StreetsOfCity" EntitySet="StreetsOfCity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Client_Gender" Association="Self.FK_Client_Gender">
+            <End Role="Gender" EntitySet="Gender" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientEnterPC_Client" Association="Self.FK_ClientEnterPC_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="ClientEnterPC" EntitySet="ClientEnterPC" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Client" Association="Self.FK_Order_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartamentCompany_StatusDepartament" Association="Self.FK_DepartamentCompany_StatusDepartament">
+            <End Role="StatusDepartament" EntitySet="StatusDepartament" />
+            <End Role="DepartamentCompany" EntitySet="DepartamentCompany" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_DepartamentCompany" Association="Self.FK_Order_DepartamentCompany">
+            <End Role="DepartamentCompany" EntitySet="DepartamentCompany" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_DepartamentCompany" Association="Self.FK_Staff_DepartamentCompany">
+            <End Role="DepartamentCompany" EntitySet="DepartamentCompany" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Storage_DepartamentCompany" Association="Self.FK_Storage_DepartamentCompany">
+            <End Role="DepartamentCompany" EntitySet="DepartamentCompany" />
+            <End Role="Storage" EntitySet="Storage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Passport_DateOfIsue" Association="Self.FK_Passport_DateOfIsue">
+            <End Role="DepartamentIssue" EntitySet="DepartamentIssue" />
+            <End Role="Passport" EntitySet="Passport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Passport_Gender" Association="Self.FK_Passport_Gender">
+            <End Role="Gender" EntitySet="Gender" />
+            <End Role="Passport" EntitySet="Passport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_PaymentType" Association="Self.FK_Order_PaymentType">
+            <End Role="PaymentType" EntitySet="PaymentType" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Staff" Association="Self.FK_Order_Staff">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_StatusOrder" Association="Self.FK_Order_StatusOrder">
+            <End Role="StatusOrder" EntitySet="StatusOrder" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_TypeOfIssueOrder" Association="Self.FK_Order_TypeOfIssueOrder">
+            <End Role="TypeOfIssueOrder" EntitySet="TypeOfIssueOrder" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductGroupID_Order" Association="Self.FK_ProductGroupID_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="ProductGroup" EntitySet="ProductGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PassportOfStaff_Passport1" Association="Self.FK_PassportOfStaff_Passport1">
+            <End Role="Passport" EntitySet="Passport" />
+            <End Role="PassportOfStaff" EntitySet="PassportOfStaff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Passport" Association="Self.FK_User_Passport">
+            <End Role="Passport" EntitySet="Passport" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PassportOfStaff_Staff" Association="Self.FK_PassportOfStaff_Staff">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="PassportOfStaff" EntitySet="PassportOfStaff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductOrder_Product" Association="Self.FK_ProductOrder_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductOrder" EntitySet="ProductOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Storage_Product" Association="Self.FK_Storage_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Storage" EntitySet="Storage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductGroupID_ProductOrder" Association="Self.FK_ProductGroupID_ProductOrder">
+            <End Role="ProductOrder" EntitySet="ProductOrder" />
+            <End Role="ProductGroup" EntitySet="ProductGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_StatusUser" Association="Self.FK_User_StatusUser">
+            <End Role="StatusUser" EntitySet="StatusUser" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Storage_StatusProduct" Association="Self.FK_Storage_StatusProduct">
+            <End Role="StatusProduct" EntitySet="StatusProduct" />
+            <End Role="Storage" EntitySet="Storage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StreetsOfCity_Street" Association="Self.FK_StreetsOfCity_Street">
+            <End Role="Street" EntitySet="Street" />
+            <End Role="StreetsOfCity" EntitySet="StreetsOfCity" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(DBModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(DBModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище DBModelContainer" CdmEntityContainer="DBEntities">
+          <EntitySetMapping Name="Adress">
+            <EntityTypeMapping TypeName="DBModel.Adress">
+              <MappingFragment StoreEntitySet="Adress">
+                <ScalarProperty Name="Adress1" ColumnName="Adress" />
+                <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="StreetID" ColumnName="StreetID" />
+                <ScalarProperty Name="Home" ColumnName="Home" />
+                <ScalarProperty Name="Building" ColumnName="Building" />
+                <ScalarProperty Name="Appartament" ColumnName="Appartament" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AdressClient">
+            <EntityTypeMapping TypeName="DBModel.AdressClient">
+              <MappingFragment StoreEntitySet="AdressClient">
+                <ScalarProperty Name="AdressClientID" ColumnName="AdressClientID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="FullAdress" ColumnName="FullAdress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Busket">
+            <EntityTypeMapping TypeName="DBModel.Busket">
+              <MappingFragment StoreEntitySet="Busket">
+                <ScalarProperty Name="ClientBuscketID" ColumnName="ClientBuscketID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Category">
+            <EntityTypeMapping TypeName="DBModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="NameCategory" ColumnName="NameCategory" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="City">
+            <EntityTypeMapping TypeName="DBModel.City">
+              <MappingFragment StoreEntitySet="City">
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="NameCity" ColumnName="NameCity" />
+                <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Client">
+            <EntityTypeMapping TypeName="DBModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="PhoneNum" ColumnName="PhoneNum" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="AuthCode" ColumnName="AuthCode" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="GenderID" ColumnName="GenderID" />
+                <ScalarProperty Name="SelectedAdressID" ColumnName="SelectedAdressID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientEnterPC">
+            <EntityTypeMapping TypeName="DBModel.ClientEnterPC">
+              <MappingFragment StoreEntitySet="ClientEnterPC">
+                <ScalarProperty Name="ClientEnterPC_ID" ColumnName="ClientEnterPC_ID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="NamePC" ColumnName="NamePC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DepartamentCompany">
+            <EntityTypeMapping TypeName="DBModel.DepartamentCompany">
+              <MappingFragment StoreEntitySet="DepartamentCompany">
+                <ScalarProperty Name="DepartamentID" ColumnName="DepartamentID" />
+                <ScalarProperty Name="AdressID" ColumnName="AdressID" />
+                <ScalarProperty Name="StatusDepartamentID" ColumnName="StatusDepartamentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DepartamentIssue">
+            <EntityTypeMapping TypeName="DBModel.DepartamentIssue">
+              <MappingFragment StoreEntitySet="DepartamentIssue">
+                <ScalarProperty Name="DepartamentID" ColumnName="DepartamentID" />
+                <ScalarProperty Name="NameDep" ColumnName="NameDep" />
+                <ScalarProperty Name="CodeDep" ColumnName="CodeDep" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Gender">
+            <EntityTypeMapping TypeName="DBModel.Gender">
+              <MappingFragment StoreEntitySet="Gender">
+                <ScalarProperty Name="GenderID" ColumnName="GenderID" />
+                <ScalarProperty Name="NameGender" ColumnName="NameGender" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order">
+            <EntityTypeMapping TypeName="DBModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="UQnum" ColumnName="UQnum" />
+                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="OrderStart" ColumnName="OrderStart" />
+                <ScalarProperty Name="OrderIssue" ColumnName="OrderIssue" />
+                <ScalarProperty Name="ShellLife" ColumnName="ShellLife" />
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+                <ScalarProperty Name="StatusOrderID" ColumnName="StatusOrderID" />
+                <ScalarProperty Name="TypeOfIssueD" ColumnName="TypeOfIssueD" />
+                <ScalarProperty Name="DepartamentCompanyID" ColumnName="DepartamentCompanyID" />
+                <ScalarProperty Name="DeliveryAdress" ColumnName="DeliveryAdress" />
+                <ScalarProperty Name="CancelDescription" ColumnName="CancelDescription" />
+                <ScalarProperty Name="PaymentTypetID" ColumnName="PaymentTypetID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Passport">
+            <EntityTypeMapping TypeName="DBModel.Passport">
+              <MappingFragment StoreEntitySet="Passport">
+                <ScalarProperty Name="PassportID" ColumnName="PassportID" />
+                <ScalarProperty Name="Series" ColumnName="Series" />
+                <ScalarProperty Name="Num" ColumnName="Num" />
+                <ScalarProperty Name="GenderID" ColumnName="GenderID" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="DateOfIssue" ColumnName="DateOfIssue" />
+                <ScalarProperty Name="DepOfIssueID" ColumnName="DepOfIssueID" />
+                <ScalarProperty Name="AdressRegID" ColumnName="AdressRegID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PassportOfStaff">
+            <EntityTypeMapping TypeName="DBModel.PassportOfStaff">
+              <MappingFragment StoreEntitySet="PassportOfStaff">
+                <ScalarProperty Name="PassportOfStaffID" ColumnName="PassportOfStaffID" />
+                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+                <ScalarProperty Name="PassportID" ColumnName="PassportID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaymentType">
+            <EntityTypeMapping TypeName="DBModel.PaymentType">
+              <MappingFragment StoreEntitySet="PaymentType">
+                <ScalarProperty Name="TypePaymentID" ColumnName="TypePaymentID" />
+                <ScalarProperty Name="NamePayment" ColumnName="NamePayment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product">
+            <EntityTypeMapping TypeName="DBModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="NameProduct" ColumnName="NameProduct" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductGroup">
+            <EntityTypeMapping TypeName="DBModel.ProductGroup">
+              <MappingFragment StoreEntitySet="ProductGroup">
+                <ScalarProperty Name="ProducGroupID" ColumnName="ProducGroupID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="ProductOrderID" ColumnName="ProductOrderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductOrder">
+            <EntityTypeMapping TypeName="DBModel.ProductOrder">
+              <MappingFragment StoreEntitySet="ProductOrder">
+                <ScalarProperty Name="ProductOrderID" ColumnName="ProductOrderID" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="NameProduct" ColumnName="NameProduct" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Region">
+            <EntityTypeMapping TypeName="DBModel.Region">
+              <MappingFragment StoreEntitySet="Region">
+                <ScalarProperty Name="RegionID" ColumnName="RegionID" />
+                <ScalarProperty Name="NameRegion" ColumnName="NameRegion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="DBModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="NameRole" ColumnName="NameRole" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Staff">
+            <EntityTypeMapping TypeName="DBModel.Staff">
+              <MappingFragment StoreEntitySet="Staff">
+                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="PhoneNum" ColumnName="PhoneNum" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PassportID" ColumnName="PassportID" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="DepartamentID" ColumnName="DepartamentID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusDepartament">
+            <EntityTypeMapping TypeName="DBModel.StatusDepartament">
+              <MappingFragment StoreEntitySet="StatusDepartament">
+                <ScalarProperty Name="StatusDepartamentID" ColumnName="StatusDepartamentID" />
+                <ScalarProperty Name="NameStatus" ColumnName="NameStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusOrder">
+            <EntityTypeMapping TypeName="DBModel.StatusOrder">
+              <MappingFragment StoreEntitySet="StatusOrder">
+                <ScalarProperty Name="StatusOrderID" ColumnName="StatusOrderID" />
+                <ScalarProperty Name="NameStatus" ColumnName="NameStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusProduct">
+            <EntityTypeMapping TypeName="DBModel.StatusProduct">
+              <MappingFragment StoreEntitySet="StatusProduct">
+                <ScalarProperty Name="StatusProductID" ColumnName="StatusProductID" />
+                <ScalarProperty Name="NameStatus" ColumnName="NameStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StatusUser">
+            <EntityTypeMapping TypeName="DBModel.StatusUser">
+              <MappingFragment StoreEntitySet="StatusUser">
+                <ScalarProperty Name="StatusUserID" ColumnName="StatusUserID" />
+                <ScalarProperty Name="NameStatus" ColumnName="NameStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Storage">
+            <EntityTypeMapping TypeName="DBModel.Storage">
+              <MappingFragment StoreEntitySet="Storage">
+                <ScalarProperty Name="StorageID" ColumnName="StorageID" />
+                <ScalarProperty Name="DepartamentID" ColumnName="DepartamentID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="StorageNum" ColumnName="StorageNum" />
+                <ScalarProperty Name="StatusProductID" ColumnName="StatusProductID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Street">
+            <EntityTypeMapping TypeName="DBModel.Street">
+              <MappingFragment StoreEntitySet="Street">
+                <ScalarProperty Name="StreetID" ColumnName="StreetID" />
+                <ScalarProperty Name="NameStreet" ColumnName="NameStreet" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StreetsOfCity">
+            <EntityTypeMapping TypeName="DBModel.StreetsOfCity">
+              <MappingFragment StoreEntitySet="StreetsOfCity">
+                <ScalarProperty Name="StreetsOfCityID" ColumnName="StreetsOfCityID" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="StreetID" ColumnName="StreetID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DBModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeOfIssueOrder">
+            <EntityTypeMapping TypeName="DBModel.TypeOfIssueOrder">
+              <MappingFragment StoreEntitySet="TypeOfIssueOrder">
+                <ScalarProperty Name="TypeOfIssueID" ColumnName="TypeOfIssueID" />
+                <ScalarProperty Name="NameType" ColumnName="NameType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Хранилище DBModel.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Хранилище DBModel.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Хранилище DBModel.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Хранилище DBModel.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DBModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Хранилище DBModel.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DBModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Хранилище DBModel.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Хранилище DBModel.sp_upgraddiagrams" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
