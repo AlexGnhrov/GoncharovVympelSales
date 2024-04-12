@@ -1,24 +1,20 @@
-﻿using GoncharovCarPartsAS.AppFolder.ClassFolder;
-using GoncharovCarPartsAS.AppFolder.DataFolder;
+﻿using GoncharovVympelSale.AppFolder.ClassFolder;
+using GoncharovVympelSale.AppFolder.DataFolder;
+using GoncharovVympelSale.AppFolder.GlobalClassFolder;
+using GoncharovVympelSale.AppFolder.ResourceFolder.ClassFolder;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Media;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace GoncharovCarPartsAS.AppFolder.WinFolder
+namespace GoncharovVympelSale.AppFolder.WinFolder
 {
     /// <summary>
     /// Логика взаимодействия для AuthorizationWin.xaml
@@ -28,6 +24,13 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
 
         private double shrinkWinHeight = -325;
         private string EmailClient = "";
+
+        TimeSpan EndOfBlck;
+
+        DispatcherTimer timer;
+
+        string CodeForReg = "";
+        bool blockGetCodeBtn = false;
 
         public AuthorizationWin()
         {
@@ -55,7 +58,7 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
         {
             var selectedTB = sender as TextBox;
 
-            selectedTB.Tag = "";
+            selectedTB.Tag = null;
 
             try
             {
@@ -66,291 +69,390 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
                         break;
                     case "EmailTB":
                         {
-                            if (!string.IsNullOrWhiteSpace(EmailTB.Text))
+
+                            EmailTB.Text = EmailTB.Text.Trim();
+                            EmailTB.Text = EmailTB.Text.Replace(" ", "");
+
+                            if (string.IsNullOrWhiteSpace(EmailTB.Text))
                             {
-                                bool isEmail = selectedTB.isEmail();
+                                RegBTN.IsEnabled = false;
+                                return;
+                            }
 
-                                if (isEmail)
+
+                            bool isEmail = selectedTB.isEmail();
+
+                            if (isEmail)
+                            {
+                                if (!blockGetCodeBtn)
                                 {
-                                    if (!blockGetCodeBtn)
-                                    {
-                                        RegBTN.IsEnabled = isEmail;
-                                    }
-                                    else
-                                    {
-                                        CodeTB.IsEnabled = true;
-                                    }
-
-                                    ErrorRegLB.Visibility = Visibility.Hidden;
+                                    RegBTN.IsEnabled = isEmail;
                                 }
                                 else
                                 {
-                                    showErrorMessage(ErrorRegLB, "Неверный формат почты");
-
-                                    RegBTN.IsEnabled = CodeTB.IsEnabled = isEmail;
-
+                                    CodeTB.IsEnabled = true;
                                 }
 
+                                ErrorRegTBl.Visibility = Visibility.Hidden;
+                            }
+                            else
+                            {
+                                showErrorMessage(ErrorRegTBl, "Неверный формат почты");
+
+                                RegBTN.IsEnabled = CodeTB.IsEnabled = isEmail;
 
                             }
 
+
                         }
+
                         break;
                     case "CodeTB":
                         {
-                            ErrorRegLB.Visibility = Visibility.Hidden;
+                            ErrorRegTBl.Visibility = Visibility.Hidden;
 
-                            if (selectedTB.Text.Length > 5)
+                            if (!(selectedTB.Text.Length > 5)) return;
+
+                            Keyboard.ClearFocus();
+
+                            if (RegLogoLB.Content.ToString() == "Восстановление")
                             {
-                                if (selectedTB.Text == CodeForReg)
+                                var client = DBEntities.GetContext().Client.FirstOrDefault(u => u.Email == EmailClient);
+
+                                if (client == null)
+                                    throw new Exception("Почта не существует или удалена.");
+
+                                if (client.AuthCode == selectedTB.Text)
                                 {
+
                                     timer.Stop();
 
                                     Thread.Sleep(300);
 
                                     await DisapearGetCode();
 
+                                    blockGetCodeBtn = false;
+                                    RegBTN.IsEnabled = true;
 
+                                    RegBTN.Content = "Восстановить";
+
+                                    ResetCodeSP.Visibility = Visibility.Visible;
+
+                                    CodeAccepted = true;
+
+
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                if (selectedTB.Text == CodeForReg)
+                                {
+
+                                    timer.Stop();
+
+                                    Thread.Sleep(300);
+
+                                    await DisapearGetCode();
 
                                     blockGetCodeBtn = false;
                                     RegBTN.IsEnabled = true;
 
-                                    if (RegLogoLB.Content.ToString() == "Восстановление")
-                                    {
-                                        RegBTN.Content = "Восстановить";
+                                    RegBTN.Content = "Зарегистрироваться";
+                                    CodeAccepted = true;
 
-                                        ResetCodeSP.Visibility = Visibility.Visible;
-
-                                        CodeAccepted = true;
-                                    }
-                                    else
-                                    {
-                                        RegBTN.Content = "Зарегистрироваться";
-                                        CodeAccepted = true;
-
-                                        await ExpandWinAnim();
-                                        await ApperRegForm();
-
-                                    }
-
+                                    await ExpandWinAnim();
+                                    await AppearRegForm();
                                     return;
                                 }
 
-
-                                Keyboard.ClearFocus();
-
-                                selectedTB.Text = "";
-
-                                showErrorMessage(ErrorRegLB, "Неверный код");
-
-                                selectedTB.Tag = GlobalVarriabels.ErrorTag;
-
                             }
 
+
+                            selectedTB.Text = "";
+
+                            showErrorMessage(ErrorRegTBl, "Неверный код");
+
+                            selectedTB.Tag = GlobalVarriabels.ErrorTag;
+
                         }
+
 
                         break;
                     case "PhoneRegTB":
-                        if (!selectedTB.Text.StartsWith("+7"))
                         {
-                            ErrorRegLB.Visibility = Visibility.Hidden;
-                            showErrorMessage(ErrorRegLB, "Неверный формат телефона");
-
-                            selectedTB.Tag = GlobalVarriabels.ErrorTag;
-                        }
-                        else
-                        {
-                            ErrorRegLB.Visibility = Visibility.Hidden;
-                        }
-                        selectedTB.Phone();
-                        break;
-                    case "PasswordRegTB":
-                        {
-                            string messageError;
-
-                            if (!PasswordRegTB.CheckPassword(out messageError))
+                            if (selectedTB.Text == "7")
                             {
-                                PasswordRegTB.Tag = GlobalVarriabels.ErrorTag;
-
-                                showErrorMessage(ErrorRegLB, messageError);
-
-                            }
-                            else
-                            {
-                                ErrorRegLB.Visibility = Visibility.Hidden;
+                                selectedTB.Text = selectedTB.Text.Insert(0, "+");
+                                selectedTB.Text += " ";
+                                selectedTB.CaretIndex = 3;
                             }
 
-                        }
-                        break;
+                            if (!selectedTB.Text.StartsWith("+7"))
+                            {
+                                //ErrorRegLB.Visibility = Visibility.Hidden;
+                                showErrorMessage(ErrorRegTBl, "Неверный формат телефона");
 
-                    default:
+                                selectedTB.Tag = GlobalVarriabels.ErrorTag;
+                                return;
+                            }
+
+                            ErrorRegTBl.Visibility = Visibility.Hidden;
+
+                            selectedTB.Phone();
+                        }
                         break;
                 }
             }
             catch (Exception ex)
             {
-                showErrorMessage(ErrorRegLB, ex.Message);
+                showErrorMessage(ErrorRegTBl, ex.Message);
             }
 
         }
 
         private void PasswordPB_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            PasswordBox password = sender as PasswordBox;
-
-            switch (password.Name)
+            try
             {
-                case "PasswordPB":
-                    {
-                        PasswordAuthHintLB.Visibility = password.Password.Length < 1 ? Visibility.Visible : Visibility.Collapsed;
-                        EnableAuhtButton();
-                    }
-                    break;
-                case "PasswordResetPB":
-                    {
-                        PasswordResetHintLB.Visibility = password.Password.Length < 1 ? Visibility.Visible : Visibility.Collapsed;
-                    }
-                    break;
-                case "PasswordReset2PB":
-                    {
-                        PasswordResetHint2LB.Visibility = password.Password.Length < 1 ? Visibility.Visible : Visibility.Collapsed;
-                    }
-                    break;
-                default:
-                    break;
+                PasswordBox password = sender as PasswordBox;
+
+                Label hintTextBlock = password.Template.FindName("HintLB", password) as Label;
+                TextBlock textBlock = password.Template.FindName("TextPassword", password) as TextBlock;
+                ToggleButton toggleButton = password.Template.FindName("ShowPasswordBTN", password) as ToggleButton;
+
+                bool isShowPassword = PropertyClass.GetShowPassword(password);
+
+
+
+                textBlock.Text = password.Password;
+
+                hintTextBlock.Visibility = password.Password.Length < 1 ? Visibility.Visible : Visibility.Collapsed;
+
+                if (isShowPassword)
+                    toggleButton.Visibility = password.Password.Length < 1 ? Visibility.Collapsed : Visibility.Visible;
+
+                switch (password.Name)
+                {
+                    case "PasswordPB":
+                        {
+                            EnableAuhtButton();
+                        }
+                        break;
+                    case "PasswordRegPB":
+                        {
+                            string messageError;
+
+                            if (!PasswordRegPB.CheckPassword(out messageError))
+                            {
+                                PasswordRegPB.Tag = GlobalVarriabels.ErrorTag;
+
+                                showErrorMessage(ErrorRegTBl, messageError);
+                                return;
+                            }
+
+                            ErrorRegTBl.Visibility = Visibility.Hidden;
+                        }
+                        break;
+                    case "PasswordResetPB":
+                    case "PasswordReset2PB":
+                        {
+                            ErrorRegTBl.Visibility = Visibility.Hidden;
+                        }
+                        break;
+                }
             }
+            catch { }
 
 
         }
 
+
+        private void remeberMe(Client client)
+        {
+            if (RemeberChB.IsChecked == false) return;
+
+            string userPcName = string.Format("{0:x}", (Environment.MachineName + Environment.UserName).GetHashCode());
+            var getPC = DBEntities.GetContext().ClientEnterPC.FirstOrDefault(u => u.ClientID == client.ClientID && u.NamePC == null);
+
+            if (getPC == null)
+            {
+                ClientEnterPC newPC = new ClientEnterPC();
+
+                newPC.ClientID = client.ClientID;
+                newPC.NamePC = userPcName;
+
+                DBEntities.GetContext().ClientEnterPC.Add(newPC);
+            }
+            else
+            {
+                getPC.NamePC = userPcName;
+            }
+
+
+            DBEntities.GetContext().SaveChanges();
+
+            GlobalVarriabels.currentClientPC = userPcName;
+        }
+
+
         private async void SignInBTN_Click(object sender, RoutedEventArgs e)
         {
+            GlobalVarriabels.isDepWorker = false;
+            GlobalVarriabels.isReadOnly = false;
 
-            //DBEntities.NullContext();
+            Keyboard.ClearFocus();
 
-            //SignInBTN.IsEnabled = false;
+            DBEntities.NullContext();
 
-            //ErrorLB.Visibility = Visibility.Hidden;
+            SignInBTN.IsEnabled = false;
+            ErrorTBl.Visibility = Visibility.Hidden;
 
-            //Staff staff;
-            //Client client;
+            Staff staff = null;
+            Client client = null;
 
-            //string password = string.Format("{0:x}", PasswordPB.Password.Trim().GetHashCode());
+            string password = string.Format("{0:x}", PasswordPB.Password.Trim().GetHashCode());
+            string login = LoginTB.Text.Trim();
 
-            //bool skipStaff = false;
-            //string login = LoginTB.Text.Trim();
+            try
+            {
+                if (login.StartsWith("+7") | login.StartsWith("7"))
+                {
+                    long phone = LoginTB.FormatPhoneForDB();
 
-            //try
-            //{
-            //    if (login.StartsWith("+7") | login.StartsWith("7"))
-            //    {
-            //        long phone = LoginTB.FormatPhoneForDB();
+                    client = DBEntities.GetContext().Client.FirstOrDefault(u => u.PhoneNum == phone);
 
-            //        client = DBEntities.GetContext().Client.FirstOrDefault(u => u.PhoneNum == phone);
+                    if (client == null || client.Password != password)
+                    {
+                        showErrorMessage(ErrorTBl, "Неверный телефон или пароль");
+                        SystemSounds.Exclamation.Play();
+                        return;
+                    }
 
-            //        if (client == null || client.Password != password)
-            //        {
-            //            showErrorMessage(ErrorLB, "Неверный телефон или пароль");
-            //            return;
-            //        }
+                    remeberMe(client);
 
-            //        GlobalVarriabels.currentUserID = client.ClientID;
-
-            //        skipStaff = true;
-            //    }
-
-
-            //    if (LoginTB.isEmail())
-            //    {
-            //        password = string.Format("{0:x}", PasswordPB.Password.GetHashCode());
-
-            //        client = DBEntities.GetContext().Client.FirstOrDefault(u => u.Email == LoginTB.Text.Trim());
-
-            //        if (client == null || client.Password != password)
-            //        {
-            //            showErrorMessage(ErrorLB, "Неверная почта или пароль");
-            //            return;
-            //        }
-
-            //        GlobalVarriabels.currentUserID = client.ClientID;
-
-            //        skipStaff = true;
-
-            //    }
+                    GlobalVarriabels.currentUserID = client.ClientID;
+                    GlobalVarriabels.currentRoleName = GlobalVarriabels.RoleName.Client;
+                    GlobalVarriabels.curDepCompanyID = Convert.ToInt32(client.SelectedDepID);
 
 
 
-            //    if (!skipStaff)
-            //    {
+                }
+                else if (LoginTB.isEmail())
+                {
+                    password = string.Format("{0:x}", PasswordPB.Password.GetHashCode());
 
-            //        staff = DBEntities.GetContext().Staff.FirstOrDefault(u => u.Login == LoginTB.Text.Trim());
+                    client = DBEntities.GetContext().Client.FirstOrDefault(u => u.Email == LoginTB.Text.Trim());
+
+                    if (client == null || client.Password != password)
+                    {
+                        showErrorMessage(ErrorTBl, "Неверная почта или пароль");
+                        SystemSounds.Exclamation.Play();
+                        return;
+                    }
+
+                    remeberMe(client);
+
+                    GlobalVarriabels.currentUserID = client.ClientID;
+                    GlobalVarriabels.currentRoleName = GlobalVarriabels.RoleName.Client;
+                    GlobalVarriabels.curDepCompanyID = Convert.ToInt32(client.SelectedDepID);
+                }
+                else
+                {
+
+                    staff = DBEntities.GetContext().Staff.FirstOrDefault(u => u.Login == LoginTB.Text.Trim());
+
+                    if (staff?.StatusID == 3)
+                    {
+                        showErrorMessage(ErrorTBl, "Доступ запрещён");
+                        return;
+                    }
+
+                    if (staff == null || staff.Password != PasswordPB.Password)
+                    {
+                        showErrorMessage(ErrorTBl, "Неверный логин или пароль");
+                        SystemSounds.Exclamation.Play();
+                        return;
+                    }
+
+                    GlobalVarriabels.currentUserID = staff.StaffID;
+                    GlobalVarriabels.curDepCompanyID = staff.DepartamentID;
+                    GlobalVarriabels.currentRoleName = (GlobalVarriabels.RoleName)staff.RoleID;
+
+                    GlobalVarriabels.isReadOnly = GlobalVarriabels.currentRoleName == GlobalVarriabels.RoleName.MainManager || GlobalVarriabels.currentRoleName == GlobalVarriabels.RoleName.DepManager;
+
+                    GlobalVarriabels.isDepWorker = !(GlobalVarriabels.currentRoleName == GlobalVarriabels.RoleName.MainAdmin || GlobalVarriabels.currentRoleName == GlobalVarriabels.RoleName.MainManager);
 
 
-            //        if (staff == null || staff.Password != PasswordPB.Password)
-            //        {
-            //            showErrorMessage(ErrorLB, "Неверный логин или пароль");
-            //            return;
-            //        }
 
-
-            //        GlobalVarriabels.curDepCompanyID = staff.DepartamentID;
-            //        GlobalVarriabels.CurrentRoleID = (GlobalVarriabels.RoleName)staff.RoleID;
-            //    }
+                }
 
 
 
-            await AnimWinClose();
-            new MainWin().Show();
-            Close();
+                await AnimWinClose();
+                new MainWin(staff, client).Show();
+                Close();
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    showErrorMessage(ErrorLB, ex.Message);
-
-            //}
-            //finally
-            //{
-            //    SignInBTN.IsEnabled = true;
-            //}
+            }
+            catch (Exception ex)
+            {
+                showErrorMessage(ErrorTBl, ex.Message);
+            }
+            finally
+            {
+                SignInBTN.IsEnabled = true;
+            }
         }
 
         private void RegBTN_Click(object sender, RoutedEventArgs e)
         {
 
-            ErrorRegLB.Visibility = Visibility.Hidden;
+            DBEntities.NullContext();
+
+            ErrorRegTBl.Visibility = Visibility.Hidden;
+
+            Keyboard.ClearFocus();
 
 
             if (RegLogoLB.Content.ToString() == "Восстановление")
             {
                 if (CodeAccepted)
-                {
                     ResettingPassword();
-                }
                 else
-                {
-                    ReserPasswordGetCode();
-                }
+                    ResetPasswordGetCode();
+
                 return;
             }
 
 
             if (CodeAccepted)
-            {
                 Registraition();
-            }
             else
-            {
                 RegistraitionGetCode();
-            }
-
-
 
 
         }
 
-        TimeSpan EndOfBlck;
 
+
+        private void CreateTimeAndGenerateCode()
+        {
+            EndOfBlck = DateTime.Now.AddSeconds(61).TimeOfDay;
+
+            RepeatCodePanelSP.Opacity = 1;
+
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(500);
+            timer.Tick += Timer_Tick;
+            timer.Start();
+
+
+            blockGetCodeBtn = true;
+            CodeTB.IsEnabled = true;
+            RegBTN.IsEnabled = false;
+
+
+        }
 
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -368,59 +470,30 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
 
         }
 
-        DispatcherTimer timer;
-
-        string CodeForReg = "";
-        bool blockGetCodeBtn = false;
 
 
-        private void TimerAndCode()
-        {
-            EndOfBlck = DateTime.Now.AddSeconds(61).TimeOfDay;
-
-            RepeatCodePanelSP.Opacity = 1;
-
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(500);
-            timer.Tick += Timer_Tick;
-            timer.Start();
-
-
-            blockGetCodeBtn = true;
-            CodeTB.IsEnabled = true;
-            RegBTN.IsEnabled = false;
-
-
-            CodeGenerator();
-        }
-
-
-
-
-
-        private bool CheckFilesBeforeReg()
+        private bool CheckFieldsBeforeReg()
         {
             string messageError;
             bool gotError = false;
 
-            if (string.IsNullOrWhiteSpace(PasswordRegTB.Text))
+            if (string.IsNullOrWhiteSpace(PasswordRegPB.Password))
             {
-                PasswordRegTB.Tag = GlobalVarriabels.ErrorTag;
+                PasswordRegPB.Tag = GlobalVarriabels.ErrorTag;
 
                 if (!gotError)
                 {
-                    showErrorMessage(ErrorRegLB, "Введите пароль");
+                    showErrorMessage(ErrorRegTBl, "Введите пароль");
                     gotError = true;
-
                 }
             }
-            else if (!PasswordRegTB.CheckPassword(out messageError))
+            else if (!PasswordRegPB.CheckPassword(out messageError))
             {
-                PasswordRegTB.Tag = GlobalVarriabels.ErrorTag;
+                PasswordRegPB.Tag = GlobalVarriabels.ErrorTag;
 
                 if (!gotError)
                 {
-                    showErrorMessage(ErrorRegLB, messageError);
+                    showErrorMessage(ErrorRegTBl, messageError);
                     gotError = true;
 
                 }
@@ -432,7 +505,7 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
 
                 if (!gotError)
                 {
-                    showErrorMessage(ErrorRegLB, "Введите телефон");
+                    showErrorMessage(ErrorRegTBl, "Введите телефон");
 
                     gotError = true;
                 }
@@ -443,7 +516,7 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
 
                 if (!gotError)
                 {
-                    showErrorMessage(ErrorRegLB, "Телефон не полностью введён");
+                    showErrorMessage(ErrorRegTBl, "Телефон не полностью введён");
 
                     gotError = true;
                 }
@@ -455,7 +528,7 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
 
                 if (!gotError)
                 {
-                    showErrorMessage(ErrorRegLB, "Введите имя");
+                    showErrorMessage(ErrorRegTBl, "Введите имя");
 
                     gotError = true;
                 }
@@ -466,7 +539,7 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
 
                 if (!gotError)
                 {
-                    showErrorMessage(ErrorRegLB, "Введите фамилию");
+                    showErrorMessage(ErrorRegTBl, "Введите фамилию");
                     gotError = true;
                 }
 
@@ -478,7 +551,7 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
 
                 if (!gotError)
                 {
-                    showErrorMessage(ErrorRegLB, "Выберите дату рождения");
+                    showErrorMessage(ErrorRegTBl, "Выберите дату рождения");
 
                     gotError = true;
                 }
@@ -487,7 +560,7 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
             {
                 if (!gotError)
                 {
-                    showErrorMessage(ErrorRegLB, "Выберите пол");
+                    showErrorMessage(ErrorRegTBl, "Выберите пол");
                     gotError = true;
                 }
 
@@ -505,7 +578,10 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
 
             try
             {
-                if (CheckFilesBeforeReg()) return;
+                if (CheckFieldsBeforeReg())
+                {
+                    return;
+                }
 
                 long Phone = PhoneRegTB.FormatPhoneForDB();
 
@@ -514,7 +590,7 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
 
                 if (newClient != null)
                 {
-                    showErrorMessage(ErrorRegLB, "Данный телефон уже зарегистрирован");
+                    showErrorMessage(ErrorRegTBl, "Данный телефон уже зарегистрирован");
                     return;
                 }
 
@@ -522,7 +598,7 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
 
                 newClient.Email = EmailTB.Text.Trim();
                 newClient.PhoneNum = PhoneRegTB.FormatPhoneForDB();
-                newClient.Password = string.Format("{0:x}", PasswordRegTB.Text.GetHashCode());
+                newClient.Password = string.Format("{0:x}", PasswordRegPB.Password.GetHashCode());
                 newClient.Name = NameRegTB.Text.Trim();
                 newClient.Surname = SurnameRegTB.Text.Trim();
                 newClient.DateOfBirth = Convert.ToDateTime(DateOfBirthDP.SelectedDate);
@@ -531,27 +607,44 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
                 DBEntities.GetContext().Client.Add(newClient);
 
 
+                string userPcName = string.Format("{0:x}", (Environment.MachineName + Environment.UserName).GetHashCode());
+
+                var checkPC = DBEntities.GetContext().ClientEnterPC.FirstOrDefault(u => u.NamePC == userPcName);
+
+                if (checkPC != null)
+                    checkPC.NamePC = null;
 
                 ClientEnterPC newPC = new ClientEnterPC();
+
+
                 newPC.ClientID = newClient.ClientID;
-                newPC.NamePC = string.Format("{0:x}", (Environment.MachineName + Environment.UserName).GetHashCode());
+                newPC.NamePC = userPcName;
 
                 DBEntities.GetContext().ClientEnterPC.Add(newPC);
 
 
                 DBEntities.GetContext().SaveChanges();
 
+                string message = $"<h2>Вы успешно зарегистрировали учётную запись в \"Вымпел продажи\"! </h2>" + $"{CodeGenerator()}";
+
+                EmailClass.sendMessage(EmailClient, "Успешная регистрация", message);
+
+
+                GlobalVarriabels.currentUserID = newClient.ClientID;
+                GlobalVarriabels.currentRoleName = GlobalVarriabels.RoleName.Client;
+
+                await BorderSucced(true);
+
                 await AnimWinClose();
 
-                new MainWin().Show();
+                new MainWin(null, newClient).Show();
 
                 Close();
 
             }
             catch (Exception ex)
             {
-
-                showErrorMessage(ErrorRegLB, ex.Message);
+                showErrorMessage(ErrorRegTBl, ex.Message);
             }
 
 
@@ -567,52 +660,115 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
 
                 if (newClient != null)
                 {
-                    showErrorMessage(ErrorRegLB, "Данная почта уже зарегистрирована");
+                    showErrorMessage(ErrorRegTBl, "Данная почта уже зарегистрирована");
+
                     return;
                 }
 
                 EmailClient = EmailTB.Text.Trim();
 
-                TimerAndCode();
+                string message = $"<h2>Код для регистрации </h2>" +
+                    $"{CodeGenerator()}";
 
-                CodeGenerator();
+                EmailClass.sendMessage(EmailClient, "Регистрация", message);
 
 
+                CreateTimeAndGenerateCode();
+
+                CodeTB.Focus();
 
             }
             catch (Exception ex)
             {
-                showErrorMessage(ErrorRegLB, ex.Message);
+                showErrorMessage(ErrorRegTBl, ex.Message);
             }
 
 
         }
 
 
-        private void ResettingPassword()
+        private async void ResettingPassword()
         {
             try
             {
-                UnderTBlClick_MouseLeftButtonUp(BackAuthTBl, null);
+
+
+
+                if (!PasswordResetPB.CheckPassword(out string messageError))
+                {
+                    PasswordRegPB.Tag = GlobalVarriabels.ErrorTag;
+                    PasswordRegPB.Tag = GlobalVarriabels.ErrorTag;
+
+                    showErrorMessage(ErrorRegTBl, messageError);
+                    return;
+                }
+                else if (PasswordResetPB.Password != PasswordReset2PB.Password)
+                {
+                    PasswordResetPB.Tag = GlobalVarriabels.ErrorTag;
+                    PasswordReset2PB.Tag = GlobalVarriabels.ErrorTag;
+                    showErrorMessage(ErrorRegTBl, "Пароли не совпадают.");
+
+                    return;
+                }
+
+                var client = DBEntities.GetContext().Client.FirstOrDefault(u => u.Email == EmailClient);
+                var setPC = DBEntities.GetContext().ClientEnterPC.Where(u => u.ClientID == client.ClientID);
+
+                client.Password = string.Format("{0:x}", PasswordResetPB.Password.GetHashCode());
+
+                foreach (var item in setPC)
+                {
+                    item.NamePC = null;
+                }
+
+
+                DBEntities.GetContext().SaveChanges();
+
+                Thread.Sleep(300);
+
+                await BorderSucced(false);
+
+
+
             }
             catch (Exception ex)
             {
-                showErrorMessage(ErrorRegLB, ex.Message);
+                showErrorMessage(ErrorRegTBl, ex.Message);
             }
 
         }
 
-        private void ReserPasswordGetCode()
+        private void ResetPasswordGetCode()
         {
             try
             {
-                TimerAndCode();
 
-                CodeGenerator();
+                EmailClient = EmailTB.Text.Trim();
+
+                var client = DBEntities.GetContext().Client.FirstOrDefault(u => u.Email == EmailClient);
+
+                if (client == null)
+                    throw new Exception("Такая почта не зарегистрирована.");
+
+                client.AuthCode = CodeGenerator();
+
+                DBEntities.GetContext().SaveChanges();
+
+
+                string message = $"<h2>Код для восстановление пароля</h2>" +
+                $"{client.AuthCode}";
+
+                EmailClass.sendMessage(EmailClient, "Восстановление пароля", message);
+
+                CreateTimeAndGenerateCode();
+
+
+                CodeTB.Focus();
+
             }
             catch (Exception ex)
             {
-                showErrorMessage(ErrorRegLB, ex.Message);
+                showErrorMessage(ErrorRegTBl, ex.Message);
             }
 
         }
@@ -626,10 +782,11 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
         {
 
             if (blockTranz != null && blockTranz > DateTime.Now.TimeOfDay) return;
+            blockTranz = DateTime.Now.AddSeconds(0.5).TimeOfDay;
+
+            Keyboard.ClearFocus();
 
             TextBlock SelectedTBl = sender as TextBlock;
-
-            blockTranz = DateTime.Now.AddSeconds(0.5).TimeOfDay;
 
             Keyboard.ClearFocus();
 
@@ -637,13 +794,19 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
             ThicknessAnimation gridTransit = new ThicknessAnimation();
             PowerEase elasticEase = new PowerEase();
 
+            gridTransit.EasingFunction = elasticEase;
 
             elasticEase.Power = 2.6;
-            var time = TimeSpan.FromSeconds(0.24);
+
+            var time = TimeSpan.FromSeconds(0.4);
 
 
             if (SelectedTBl.Name == "RegTBl")
             {
+                AuthorizationSP.IsEnabled = false;
+                RegistrationSP.IsEnabled = true;
+
+
                 gridTransit.To = new Thickness(shrinkWinHeight, 0, 0, 0);
                 gridTransit.Duration = time;
 
@@ -654,24 +817,43 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
             else
             {
 
+                AuthorizationSP.IsEnabled = true;
+                RegistrationSP.IsEnabled = false;
+
                 gridTransit.To = new Thickness(0);
                 gridTransit.Duration = time;
 
-                Title = "Авторизация";
 
-            }
-
-
-            gridTransit.EasingFunction = elasticEase;
-
-            MainGrid.BeginAnimation(Grid.MarginProperty, gridTransit);
+                timer?.Stop();
 
 
-            if (CodeAccepted)
-            {
+
                 await Task.Delay(125);
 
                 Keyboard.ClearFocus();
+
+
+                if (Height >= MaxHeight)
+                {
+                    DoubleAnimation ShkrinWindow = new DoubleAnimation();
+
+                    ShkrinWindow.To = MinHeight;
+                    ShkrinWindow.Duration = time;
+
+                    BeginAnimation(HeightProperty, ShkrinWindow);
+
+                }
+
+
+                ResetCodeSP.Visibility = Visibility.Collapsed;
+                CodePanelSP.Visibility = Visibility.Visible;
+                RegFormSP.Visibility = Visibility.Collapsed;
+
+                Title = "Авторизация";
+
+                blockGetCodeBtn = false;
+                RegBTN.IsEnabled = true;
+
 
                 RegBTN.Content = "Получить код";
                 RegBTN.IsEnabled = false;
@@ -685,7 +867,7 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
 
                 //------ресет регистраци текска---------------
 
-                PasswordRegTB.Text = "";
+                PasswordRegPB.Password = "";
                 PhoneRegTB.Text = "";
                 NameRegTB.Text = "";
                 SurnameRegTB.Text = "";
@@ -696,12 +878,12 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
 
                 //------Ресет регистрации тегов---------------
 
-                PasswordRegTB.Tag = "";
-                EmailTB.Tag = "";
-                CodeTB.Tag = "";
-                PhoneRegTB.Tag = "";
-                NameRegTB.Tag = "";
-                SurnameRegTB.Tag = "";
+                PasswordRegPB.Tag = null;
+                EmailTB.Tag = null; ;
+                CodeTB.Tag = null;
+                PhoneRegTB.Tag = null;
+                NameRegTB.Tag = null;
+                SurnameRegTB.Tag = null;
                 DateOfBirthDP.Tag = null;
 
                 //------Ресет восстановаление пароля тег---------------
@@ -716,26 +898,19 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
 
                 RepeatCodePanelSP.Visibility = Visibility.Visible;
                 RepeatCodePanelSP.IsEnabled = false;
+                RepeatCodeTimerTBl.Text = "1:00";
+
+                ErrorRegTBl.Text = "";
 
 
-                ErrorRegLB.Text = "";
-
-                if (Height >= 650)
-                {
-                    DoubleAnimation ShkrinWindow = new DoubleAnimation();
-
-                    ShkrinWindow.To = 475;
-                    ShkrinWindow.Duration = time;
-
-                    BeginAnimation(HeightProperty, ShkrinWindow);
-
-                }
-
-
-                ResetCodeSP.Visibility = Visibility.Collapsed;
-                CodePanelSP.Visibility = Visibility.Visible;
-                RegFormSP.Visibility = Visibility.Collapsed;
             }
+
+
+            gridTransit.EasingFunction = elasticEase;
+
+            MainGrid.BeginAnimation(Grid.MarginProperty, gridTransit);
+
+
         }
 
         private void ForgetPasswordTBl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -762,13 +937,11 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
 
             switch (selectedTB.Name)
             {
-                case "PasswordRegTB":
-                    {
-                        e.OnlyEnglish();
-                    }
-                    break;
                 case "PhoneRegTB":
                     e.OnlyNumsTB();
+                    break;
+                case "EmailTB":
+                    e.OnlyEnglish();
                     break;
             }
 
@@ -783,21 +956,18 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
             CodeForReg = "";
             for (int i = 0; i < 6; i++)
             {
-                switch (r.Next(2))
+                if (r.Next(2) == 1)
                 {
-
-                    case 1:
-                        CodeForReg += Convert.ToChar(r.Next(97, 123));
-                        break;
-                    default:
-                        CodeForReg += r.Next(10).ToString();
-                        break;
+                    CodeForReg += Convert.ToChar(r.Next(97, 123));
+                }
+                else
+                {
+                    CodeForReg += r.Next(10).ToString();
                 }
 
 
-
             }
-            Clipboard.SetText(CodeForReg);
+            Clipboard.SetText(CodeForReg); //-----------------------------------------------------УДАЛИТЬ
 
             CodeTB.Focus();
 
@@ -820,10 +990,9 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
 
         private void DateOfBirthDP_LostFocus(object sender, RoutedEventArgs e)
         {
-
             if (DateOfBirthDP.SelectedDate == null)
             {
-                DateOfBirthDP.Tag = "";
+                DateOfBirthDP.Tag = null;
             }
         }
 
@@ -832,6 +1001,8 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
         private void TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             var selectedTB = sender as TextBox;
+
+            selectedTB.Text = selectedTB.Text.Trim();
 
             switch (selectedTB.Name)
             {
@@ -900,9 +1071,9 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
 
             DoubleAnimation ShkrinWindow = new DoubleAnimation();
 
-            var time = TimeSpan.FromSeconds(0.34);
+            var time = TimeSpan.FromSeconds(0.28);
 
-            ShkrinWindow.To = 666;
+            ShkrinWindow.To = MaxHeight;
             ShkrinWindow.Duration = time;
 
 
@@ -943,7 +1114,7 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
         }
 
 
-        private async Task ApperRegForm()
+        private async Task AppearRegForm()
         {
 
             RegFormSP.Visibility = Visibility.Visible;
@@ -964,17 +1135,57 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
 
             RegBTN.IsEnabled = true;
 
+        }
 
+
+        private async Task BorderSucced(bool IsRegistation)
+        {
+
+            if (IsRegistation)
+                SuccsesTextTBL.Text = "Вы успешно зарегистрировались!";
+            else
+                SuccsesTextTBL.Text = "Пароль успешно восстановлен!";
+
+            SuccseedBorder.Visibility = Visibility.Visible;
+
+            DoubleAnimation OpaciyChange = new DoubleAnimation();
+
+            var time = TimeSpan.FromSeconds(0.50);
+
+
+            OpaciyChange.From = 0;
+            OpaciyChange.To = 1;
+            OpaciyChange.Duration = time;
+
+
+            SuccseedBorder.BeginAnimation(OpacityProperty, OpaciyChange);
+
+            if (!IsRegistation)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(0.5));
+                UnderTBlClick_MouseLeftButtonUp(BackAuthTBl, null);
+            }
+
+            await Task.Delay(TimeSpan.FromSeconds(2.5));
+
+            if (IsRegistation) return;
+
+
+            OpaciyChange.From = 1;
+            OpaciyChange.To = 0;
+            OpaciyChange.Duration = time;
+
+            SuccseedBorder.BeginAnimation(OpacityProperty, OpaciyChange);
+
+            await Task.Delay(time + TimeSpan.FromSeconds(0.10));
+
+            SuccseedBorder.Visibility = Visibility.Hidden;
 
         }
 
 
-
-
-
         private void showErrorMessage(TextBlock nameOfTB, string Message)
         {
-
             nameOfTB.Visibility = Visibility.Visible;
             nameOfTB.Text = Message;
         }
@@ -994,6 +1205,45 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
 
         }
 
+        private void DateOfBirthDP_GotFocus(object sender, RoutedEventArgs e)
+        {
+            DateOfBirthDP.Tag = null;
+        }
+
+
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+
+                string userPcName = string.Format("{0:x}", (Environment.MachineName + Environment.UserName).GetHashCode());
+
+
+                var setPC = DBEntities.GetContext().ClientEnterPC.FirstOrDefault(u => u.NamePC == userPcName);
+
+                if (setPC == null) return;
+
+
+                var client = DBEntities.GetContext().Client.FirstOrDefault(u => u.ClientID == setPC.ClientID);
+
+                GlobalVarriabels.currentUserID = client.ClientID;
+                GlobalVarriabels.currentRoleName = GlobalVarriabels.RoleName.Client;
+                GlobalVarriabels.curDepCompanyID = Convert.ToInt32(client.SelectedDepID);
+                GlobalVarriabels.currentClientPC = userPcName;
+
+                await AnimWinClose();
+                new MainWin(null, client).Show();
+                Close();
+
+            }
+            catch
+            {
+                showErrorMessage(ErrorTBl, "Не удалось загрузить данные для входа.");
+            }
+        }
     }
+
+
 }
 

@@ -7,9 +7,9 @@
       <Schema Namespace="Хранилище DBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Adress">
           <Key>
-            <PropertyRef Name="Adress" />
+            <PropertyRef Name="AdressID" />
           </Key>
-          <Property Name="Adress" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AdressID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RegionID" Type="int" Nullable="false" />
           <Property Name="CityID" Type="int" Nullable="false" />
           <Property Name="StreetID" Type="int" Nullable="false" />
@@ -55,6 +55,7 @@
             <PropertyRef Name="ClientID" />
           </Key>
           <Property Name="ClientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Photo" Type="varbinary(max)" />
           <Property Name="PhoneNum" Type="bigint" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
@@ -62,7 +63,9 @@
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
           <Property Name="AuthCode" Type="nvarchar" MaxLength="6" />
           <Property Name="DateOfBirth" Type="date" Nullable="false" />
+          <Property Name="DateAdd" Type="datetime" />
           <Property Name="GenderID" Type="int" Nullable="false" />
+          <Property Name="SelectedDepID" Type="int" />
           <Property Name="SelectedAdressID" Type="int" />
         </EntityType>
         <EntityType Name="ClientEnterPC">
@@ -89,6 +92,15 @@
           <Property Name="NameDep" Type="nvarchar" MaxLength="300" Nullable="false" />
           <Property Name="CodeDep" Type="nchar" MaxLength="7" Nullable="false" />
         </EntityType>
+        <EntityType Name="EditStaff">
+          <Key>
+            <PropertyRef Name="StaffID" />
+          </Key>
+          <Property Name="EditStaffID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WhoEditStaffID" Type="int" Nullable="false" />
+          <Property Name="StaffID" Type="int" Nullable="false" />
+          <Property Name="DateEdit" Type="datetime" />
+        </EntityType>
         <EntityType Name="Gender">
           <Key>
             <PropertyRef Name="GenderID" />
@@ -104,16 +116,16 @@
           <Property Name="UQnum" Type="nvarchar" MaxLength="13" Nullable="false" />
           <Property Name="StaffID" Type="int" />
           <Property Name="ClientID" Type="int" />
-          <Property Name="Price" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" />
           <Property Name="OrderStart" Type="datetime" />
-          <Property Name="OrderIssue" Type="datetime" Nullable="false" />
+          <Property Name="OrderIssue" Type="datetime" />
           <Property Name="ShellLife" Type="datetime" />
-          <Property Name="DeliveryDate" Type="datetime" Nullable="false" />
-          <Property Name="StatusOrderID" Type="int" Nullable="false" />
-          <Property Name="TypeOfIssueD" Type="int" Nullable="false" />
-          <Property Name="DepartamentCompanyID" Type="int" />
+          <Property Name="DeliveryDate" Type="datetime" />
+          <Property Name="DepartamentCompanyID" Type="int" Nullable="false" />
           <Property Name="DeliveryAdress" Type="nvarchar" MaxLength="185" />
           <Property Name="CancelDescription" Type="nvarchar" MaxLength="255" />
+          <Property Name="StatusOrderID" Type="int" Nullable="false" />
+          <Property Name="TypeOfIssueD" Type="int" />
           <Property Name="PaymentTypetID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Passport">
@@ -128,14 +140,6 @@
           <Property Name="DateOfIssue" Type="date" Nullable="false" />
           <Property Name="DepOfIssueID" Type="int" Nullable="false" />
           <Property Name="AdressRegID" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="PassportOfStaff">
-          <Key>
-            <PropertyRef Name="PassportOfStaffID" />
-          </Key>
-          <Property Name="PassportOfStaffID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StaffID" Type="int" />
-          <Property Name="PassportID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="PaymentType">
           <Key>
@@ -162,6 +166,9 @@
           <Property Name="ProducGroupID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OrderID" Type="int" Nullable="false" />
           <Property Name="ProductOrderID" Type="int" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="Amount" Type="int" Nullable="false" />
+          <Property Name="OverAllPrice" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="ProductOrder">
           <Key>
@@ -170,8 +177,6 @@
           <Property Name="ProductOrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Photo" Type="varbinary(max)" />
           <Property Name="NameProduct" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Price" Type="decimal" Precision="12" Scale="2" Nullable="false" />
-          <Property Name="Amount" Type="int" Nullable="false" />
           <Property Name="ProductID" Type="int" />
         </EntityType>
         <EntityType Name="Region">
@@ -193,7 +198,7 @@
             <PropertyRef Name="StaffID" />
           </Key>
           <Property Name="StaffID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Photo" Type="varbinary(max)" />
+          <Property Name="Photo" Type="varbinary(max)" Nullable="false" />
           <Property Name="Login" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="30" Nullable="false" />
           <Property Name="Surname" Type="nvarchar" MaxLength="30" Nullable="false" />
@@ -201,9 +206,12 @@
           <Property Name="Patronymic" Type="nvarchar" MaxLength="30" />
           <Property Name="PhoneNum" Type="nvarchar" MaxLength="18" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="AddDate" Type="datetime" />
+          <Property Name="LastEditDate" Type="datetime" />
+          <Property Name="BlockDate" Type="datetime" />
           <Property Name="PassportID" Type="int" Nullable="false" />
           <Property Name="StatusID" Type="int" Nullable="false" />
-          <Property Name="DepartamentID" Type="int" />
+          <Property Name="DepartamentID" Type="int" Nullable="false" />
           <Property Name="RoleID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="StatusDepartament">
@@ -243,7 +251,7 @@
           <Property Name="ProductID" Type="int" Nullable="false" />
           <Property Name="Amount" Type="int" Nullable="false" />
           <Property Name="StorageNum" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="StatusProductID" Type="int" Nullable="false" />
+          <Property Name="StatusProductID" Type="int" />
         </EntityType>
         <EntityType Name="Street">
           <Key>
@@ -259,16 +267,6 @@
           <Property Name="StreetsOfCityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CityID" Type="int" Nullable="false" />
           <Property Name="StreetID" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="TypeOfIssueOrder">
           <Key>
@@ -313,7 +311,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AdressClient_Client">
+        <Association Name="FK_AdressClient_Client1">
           <End Role="Client" Type="Self.Client" Multiplicity="1" />
           <End Role="AdressClient" Type="Self.AdressClient" Multiplicity="*" />
           <ReferentialConstraint>
@@ -373,7 +371,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Client_AdressClient">
+        <Association Name="FK_Client_AdressClient1">
           <End Role="AdressClient" Type="Self.AdressClient" Multiplicity="0..1" />
           <End Role="Client" Type="Self.Client" Multiplicity="*" />
           <ReferentialConstraint>
@@ -382,6 +380,18 @@
             </Principal>
             <Dependent Role="Client">
               <PropertyRef Name="SelectedAdressID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Client_DepartamentCompany">
+          <End Role="DepartamentCompany" Type="Self.DepartamentCompany" Multiplicity="0..1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartamentCompany">
+              <PropertyRef Name="DepartamentID" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="SelectedDepID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -414,14 +424,14 @@
           <End Role="DepartamentCompany" Type="Self.DepartamentCompany" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Adress">
-              <PropertyRef Name="Adress" />
+              <PropertyRef Name="AdressID" />
             </Principal>
             <Dependent Role="DepartamentCompany">
               <PropertyRef Name="AdressID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DepartamentCompany_StatusDepartament">
+        <Association Name="FK_DepartamentCompany_StatusDepartament1">
           <End Role="StatusDepartament" Type="Self.StatusDepartament" Multiplicity="1" />
           <End Role="DepartamentCompany" Type="Self.DepartamentCompany" Multiplicity="*" />
           <ReferentialConstraint>
@@ -430,6 +440,30 @@
             </Principal>
             <Dependent Role="DepartamentCompany">
               <PropertyRef Name="StatusDepartamentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EditStaff_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+          <End Role="EditStaff" Type="Self.EditStaff" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="EditStaff">
+              <PropertyRef Name="StaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EditStaff_Staff1">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+          <End Role="EditStaff" Type="Self.EditStaff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="EditStaff">
+              <PropertyRef Name="WhoEditStaffID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -446,7 +480,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_DepartamentCompany">
-          <End Role="DepartamentCompany" Type="Self.DepartamentCompany" Multiplicity="0..1" />
+          <End Role="DepartamentCompany" Type="Self.DepartamentCompany" Multiplicity="1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DepartamentCompany">
@@ -494,7 +528,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_TypeOfIssueOrder">
-          <End Role="TypeOfIssueOrder" Type="Self.TypeOfIssueOrder" Multiplicity="1" />
+          <End Role="TypeOfIssueOrder" Type="Self.TypeOfIssueOrder" Multiplicity="0..1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TypeOfIssueOrder">
@@ -510,7 +544,7 @@
           <End Role="Passport" Type="Self.Passport" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Adress">
-              <PropertyRef Name="Adress" />
+              <PropertyRef Name="AdressID" />
             </Principal>
             <Dependent Role="Passport">
               <PropertyRef Name="AdressRegID" />
@@ -538,30 +572,6 @@
             </Principal>
             <Dependent Role="Passport">
               <PropertyRef Name="GenderID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PassportOfStaff_Passport1">
-          <End Role="Passport" Type="Self.Passport" Multiplicity="1" />
-          <End Role="PassportOfStaff" Type="Self.PassportOfStaff" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Passport">
-              <PropertyRef Name="PassportID" />
-            </Principal>
-            <Dependent Role="PassportOfStaff">
-              <PropertyRef Name="PassportID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PassportOfStaff_Staff">
-          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
-          <End Role="PassportOfStaff" Type="Self.PassportOfStaff" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Staff">
-              <PropertyRef Name="StaffID" />
-            </Principal>
-            <Dependent Role="PassportOfStaff">
-              <PropertyRef Name="StaffID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -614,7 +624,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Staff_DepartamentCompany">
-          <End Role="DepartamentCompany" Type="Self.DepartamentCompany" Multiplicity="0..1" />
+          <End Role="DepartamentCompany" Type="Self.DepartamentCompany" Multiplicity="1" />
           <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DepartamentCompany">
@@ -650,7 +660,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Storage_StatusProduct">
-          <End Role="StatusProduct" Type="Self.StatusProduct" Multiplicity="1" />
+          <End Role="StatusProduct" Type="Self.StatusProduct" Multiplicity="0..1" />
           <End Role="Storage" Type="Self.Storage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="StatusProduct">
@@ -721,37 +731,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
-        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="Хранилище DBModelContainer">
           <EntitySet Name="Adress" EntityType="Self.Adress" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AdressClient" EntityType="Self.AdressClient" Schema="dbo" store:Type="Tables" />
@@ -762,10 +741,10 @@
           <EntitySet Name="ClientEnterPC" EntityType="Self.ClientEnterPC" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DepartamentCompany" EntityType="Self.DepartamentCompany" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DepartamentIssue" EntityType="Self.DepartamentIssue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EditStaff" EntityType="Self.EditStaff" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Passport" EntityType="Self.Passport" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="PassportOfStaff" EntityType="Self.PassportOfStaff" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaymentType" EntityType="Self.PaymentType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductGroup" EntityType="Self.ProductGroup" Schema="dbo" store:Type="Tables" />
@@ -780,7 +759,6 @@
           <EntitySet Name="Storage" EntityType="Self.Storage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Street" EntityType="Self.Street" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StreetsOfCity" EntityType="Self.StreetsOfCity" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TypeOfIssueOrder" EntityType="Self.TypeOfIssueOrder" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Adress_City" Association="Self.FK_Adress_City">
             <End Role="City" EntitySet="City" />
@@ -794,7 +772,7 @@
             <End Role="Street" EntitySet="Street" />
             <End Role="Adress" EntitySet="Adress" />
           </AssociationSet>
-          <AssociationSet Name="FK_AdressClient_Client" Association="Self.FK_AdressClient_Client">
+          <AssociationSet Name="FK_AdressClient_Client1" Association="Self.FK_AdressClient_Client1">
             <End Role="Client" EntitySet="Client" />
             <End Role="AdressClient" EntitySet="AdressClient" />
           </AssociationSet>
@@ -814,8 +792,12 @@
             <End Role="Region" EntitySet="Region" />
             <End Role="City" EntitySet="City" />
           </AssociationSet>
-          <AssociationSet Name="FK_Client_AdressClient" Association="Self.FK_Client_AdressClient">
+          <AssociationSet Name="FK_Client_AdressClient1" Association="Self.FK_Client_AdressClient1">
             <End Role="AdressClient" EntitySet="AdressClient" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Client_DepartamentCompany" Association="Self.FK_Client_DepartamentCompany">
+            <End Role="DepartamentCompany" EntitySet="DepartamentCompany" />
             <End Role="Client" EntitySet="Client" />
           </AssociationSet>
           <AssociationSet Name="FK_Client_Gender" Association="Self.FK_Client_Gender">
@@ -830,9 +812,17 @@
             <End Role="Adress" EntitySet="Adress" />
             <End Role="DepartamentCompany" EntitySet="DepartamentCompany" />
           </AssociationSet>
-          <AssociationSet Name="FK_DepartamentCompany_StatusDepartament" Association="Self.FK_DepartamentCompany_StatusDepartament">
+          <AssociationSet Name="FK_DepartamentCompany_StatusDepartament1" Association="Self.FK_DepartamentCompany_StatusDepartament1">
             <End Role="StatusDepartament" EntitySet="StatusDepartament" />
             <End Role="DepartamentCompany" EntitySet="DepartamentCompany" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EditStaff_Staff" Association="Self.FK_EditStaff_Staff">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="EditStaff" EntitySet="EditStaff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EditStaff_Staff1" Association="Self.FK_EditStaff_Staff1">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="EditStaff" EntitySet="EditStaff" />
           </AssociationSet>
           <AssociationSet Name="FK_Order_Client" Association="Self.FK_Order_Client">
             <End Role="Client" EntitySet="Client" />
@@ -869,14 +859,6 @@
           <AssociationSet Name="FK_Passport_Gender" Association="Self.FK_Passport_Gender">
             <End Role="Gender" EntitySet="Gender" />
             <End Role="Passport" EntitySet="Passport" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PassportOfStaff_Passport1" Association="Self.FK_PassportOfStaff_Passport1">
-            <End Role="Passport" EntitySet="Passport" />
-            <End Role="PassportOfStaff" EntitySet="PassportOfStaff" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PassportOfStaff_Staff" Association="Self.FK_PassportOfStaff_Staff">
-            <End Role="Staff" EntitySet="Staff" />
-            <End Role="PassportOfStaff" EntitySet="PassportOfStaff" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_Category" Association="Self.FK_Product_Category">
             <End Role="Category" EntitySet="Category" />
@@ -938,9 +920,9 @@
       <Schema Namespace="DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Adress">
           <Key>
-            <PropertyRef Name="Adress1" />
+            <PropertyRef Name="AdressID" />
           </Key>
-          <Property Name="Adress1" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AdressID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RegionID" Type="Int32" Nullable="false" />
           <Property Name="CityID" Type="Int32" Nullable="false" />
           <Property Name="StreetID" Type="Int32" Nullable="false" />
@@ -960,8 +942,8 @@
           <Property Name="AdressClientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ClientID" Type="Int32" Nullable="false" />
           <Property Name="FullAdress" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Client" Relationship="Self.FK_AdressClient_Client" FromRole="AdressClient" ToRole="Client" />
-          <NavigationProperty Name="Client1" Relationship="Self.FK_Client_AdressClient" FromRole="AdressClient" ToRole="Client" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_AdressClient_Client1" FromRole="AdressClient" ToRole="Client" />
+          <NavigationProperty Name="Client1" Relationship="Self.FK_Client_AdressClient1" FromRole="AdressClient" ToRole="Client" />
         </EntityType>
         <EntityType Name="Busket">
           <Key>
@@ -1000,6 +982,7 @@
             <PropertyRef Name="ClientID" />
           </Key>
           <Property Name="ClientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="PhoneNum" Type="Int64" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
@@ -1007,11 +990,14 @@
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
           <Property Name="AuthCode" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
           <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateAdd" Type="DateTime" Precision="3" />
           <Property Name="GenderID" Type="Int32" Nullable="false" />
+          <Property Name="SelectedDepID" Type="Int32" />
           <Property Name="SelectedAdressID" Type="Int32" />
-          <NavigationProperty Name="AdressClient" Relationship="Self.FK_AdressClient_Client" FromRole="Client" ToRole="AdressClient" />
-          <NavigationProperty Name="AdressClient1" Relationship="Self.FK_Client_AdressClient" FromRole="Client" ToRole="AdressClient" />
+          <NavigationProperty Name="AdressClient" Relationship="Self.FK_AdressClient_Client1" FromRole="Client" ToRole="AdressClient" />
+          <NavigationProperty Name="AdressClient1" Relationship="Self.FK_Client_AdressClient1" FromRole="Client" ToRole="AdressClient" />
           <NavigationProperty Name="Busket" Relationship="Self.FK_Busket_Client" FromRole="Client" ToRole="Busket" />
+          <NavigationProperty Name="DepartamentCompany" Relationship="Self.FK_Client_DepartamentCompany" FromRole="Client" ToRole="DepartamentCompany" />
           <NavigationProperty Name="Gender" Relationship="Self.FK_Client_Gender" FromRole="Client" ToRole="Gender" />
           <NavigationProperty Name="ClientEnterPC" Relationship="Self.FK_ClientEnterPC_Client" FromRole="Client" ToRole="ClientEnterPC" />
           <NavigationProperty Name="Order" Relationship="Self.FK_Order_Client" FromRole="Client" ToRole="Order" />
@@ -1033,7 +1019,8 @@
           <Property Name="AdressID" Type="Int32" Nullable="false" />
           <Property Name="StatusDepartamentID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Adress" Relationship="Self.FK_DepartamentCompany_Adress" FromRole="DepartamentCompany" ToRole="Adress" />
-          <NavigationProperty Name="StatusDepartament" Relationship="Self.FK_DepartamentCompany_StatusDepartament" FromRole="DepartamentCompany" ToRole="StatusDepartament" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Client_DepartamentCompany" FromRole="DepartamentCompany" ToRole="Client" />
+          <NavigationProperty Name="StatusDepartament" Relationship="Self.FK_DepartamentCompany_StatusDepartament1" FromRole="DepartamentCompany" ToRole="StatusDepartament" />
           <NavigationProperty Name="Order" Relationship="Self.FK_Order_DepartamentCompany" FromRole="DepartamentCompany" ToRole="Order" />
           <NavigationProperty Name="Staff" Relationship="Self.FK_Staff_DepartamentCompany" FromRole="DepartamentCompany" ToRole="Staff" />
           <NavigationProperty Name="Storage" Relationship="Self.FK_Storage_DepartamentCompany" FromRole="DepartamentCompany" ToRole="Storage" />
@@ -1046,6 +1033,17 @@
           <Property Name="NameDep" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CodeDep" Type="String" MaxLength="7" FixedLength="true" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Passport" Relationship="Self.FK_Passport_DateOfIsue" FromRole="DepartamentIssue" ToRole="Passport" />
+        </EntityType>
+        <EntityType Name="EditStaff">
+          <Key>
+            <PropertyRef Name="StaffID" />
+          </Key>
+          <Property Name="EditStaffID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WhoEditStaffID" Type="Int32" Nullable="false" />
+          <Property Name="StaffID" Type="Int32" Nullable="false" />
+          <Property Name="DateEdit" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_EditStaff_Staff" FromRole="EditStaff" ToRole="Staff" />
+          <NavigationProperty Name="Staff1" Relationship="Self.FK_EditStaff_Staff1" FromRole="EditStaff" ToRole="Staff" />
         </EntityType>
         <EntityType Name="Gender">
           <Key>
@@ -1064,16 +1062,16 @@
           <Property Name="UQnum" Type="String" MaxLength="13" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="StaffID" Type="Int32" />
           <Property Name="ClientID" Type="Int32" />
-          <Property Name="Price" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="OrderStart" Type="DateTime" Precision="3" />
-          <Property Name="OrderIssue" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="OrderIssue" Type="DateTime" Precision="3" />
           <Property Name="ShellLife" Type="DateTime" Precision="3" />
-          <Property Name="DeliveryDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="StatusOrderID" Type="Int32" Nullable="false" />
-          <Property Name="TypeOfIssueD" Type="Int32" Nullable="false" />
-          <Property Name="DepartamentCompanyID" Type="Int32" />
+          <Property Name="DeliveryDate" Type="DateTime" Precision="3" />
+          <Property Name="DepartamentCompanyID" Type="Int32" Nullable="false" />
           <Property Name="DeliveryAdress" Type="String" MaxLength="185" FixedLength="false" Unicode="true" />
           <Property Name="CancelDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="StatusOrderID" Type="Int32" Nullable="false" />
+          <Property Name="TypeOfIssueD" Type="Int32" />
           <Property Name="PaymentTypetID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Client" Relationship="Self.FK_Order_Client" FromRole="Order" ToRole="Client" />
           <NavigationProperty Name="DepartamentCompany" Relationship="Self.FK_Order_DepartamentCompany" FromRole="Order" ToRole="DepartamentCompany" />
@@ -1098,18 +1096,7 @@
           <NavigationProperty Name="Adress" Relationship="Self.FK_Passport_Adress" FromRole="Passport" ToRole="Adress" />
           <NavigationProperty Name="DepartamentIssue" Relationship="Self.FK_Passport_DateOfIsue" FromRole="Passport" ToRole="DepartamentIssue" />
           <NavigationProperty Name="Gender" Relationship="Self.FK_Passport_Gender" FromRole="Passport" ToRole="Gender" />
-          <NavigationProperty Name="PassportOfStaff" Relationship="Self.FK_PassportOfStaff_Passport1" FromRole="Passport" ToRole="PassportOfStaff" />
           <NavigationProperty Name="Staff" Relationship="Self.FK_User_Passport" FromRole="Passport" ToRole="Staff" />
-        </EntityType>
-        <EntityType Name="PassportOfStaff">
-          <Key>
-            <PropertyRef Name="PassportOfStaffID" />
-          </Key>
-          <Property Name="PassportOfStaffID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StaffID" Type="Int32" />
-          <Property Name="PassportID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Passport" Relationship="Self.FK_PassportOfStaff_Passport1" FromRole="PassportOfStaff" ToRole="Passport" />
-          <NavigationProperty Name="Staff" Relationship="Self.FK_PassportOfStaff_Staff" FromRole="PassportOfStaff" ToRole="Staff" />
         </EntityType>
         <EntityType Name="PaymentType">
           <Key>
@@ -1141,6 +1128,9 @@
           <Property Name="ProducGroupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="OrderID" Type="Int32" Nullable="false" />
           <Property Name="ProductOrderID" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+          <Property Name="OverAllPrice" Type="Decimal" Precision="18" Scale="2" />
           <NavigationProperty Name="Order" Relationship="Self.FK_ProductGroupID_Order" FromRole="ProductGroup" ToRole="Order" />
           <NavigationProperty Name="ProductOrder" Relationship="Self.FK_ProductGroupID_ProductOrder" FromRole="ProductGroup" ToRole="ProductOrder" />
         </EntityType>
@@ -1151,8 +1141,6 @@
           <Property Name="ProductOrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="NameProduct" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Price" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
-          <Property Name="Amount" Type="Int32" Nullable="false" />
           <Property Name="ProductID" Type="Int32" />
           <NavigationProperty Name="Product" Relationship="Self.FK_ProductOrder_Product" FromRole="ProductOrder" ToRole="Product" />
           <NavigationProperty Name="ProductGroup" Relationship="Self.FK_ProductGroupID_ProductOrder" FromRole="ProductOrder" ToRole="ProductGroup" />
@@ -1179,7 +1167,7 @@
             <PropertyRef Name="StaffID" />
           </Key>
           <Property Name="StaffID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="Login" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Surname" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
@@ -1187,15 +1175,19 @@
           <Property Name="Patronymic" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="PhoneNum" Type="String" MaxLength="18" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="AddDate" Type="DateTime" Precision="3" />
+          <Property Name="LastEditDate" Type="DateTime" Precision="3" />
+          <Property Name="BlockDate" Type="DateTime" Precision="3" />
           <Property Name="PassportID" Type="Int32" Nullable="false" />
           <Property Name="StatusID" Type="Int32" Nullable="false" />
-          <Property Name="DepartamentID" Type="Int32" />
+          <Property Name="DepartamentID" Type="Int32" Nullable="false" />
           <Property Name="RoleID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Busket" Relationship="Self.FK_Busket_Staff" FromRole="Staff" ToRole="Busket" />
           <NavigationProperty Name="DepartamentCompany" Relationship="Self.FK_Staff_DepartamentCompany" FromRole="Staff" ToRole="DepartamentCompany" />
+          <NavigationProperty Name="EditStaff" Relationship="Self.FK_EditStaff_Staff" FromRole="Staff" ToRole="EditStaff" />
+          <NavigationProperty Name="EditStaff1" Relationship="Self.FK_EditStaff_Staff1" FromRole="Staff" ToRole="EditStaff" />
           <NavigationProperty Name="Order" Relationship="Self.FK_Order_Staff" FromRole="Staff" ToRole="Order" />
           <NavigationProperty Name="Passport" Relationship="Self.FK_User_Passport" FromRole="Staff" ToRole="Passport" />
-          <NavigationProperty Name="PassportOfStaff" Relationship="Self.FK_PassportOfStaff_Staff" FromRole="Staff" ToRole="PassportOfStaff" />
           <NavigationProperty Name="Role" Relationship="Self.FK_User_Role" FromRole="Staff" ToRole="Role" />
           <NavigationProperty Name="StatusUser" Relationship="Self.FK_User_StatusUser" FromRole="Staff" ToRole="StatusUser" />
         </EntityType>
@@ -1205,7 +1197,7 @@
           </Key>
           <Property Name="StatusDepartamentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="NameStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="DepartamentCompany" Relationship="Self.FK_DepartamentCompany_StatusDepartament" FromRole="StatusDepartament" ToRole="DepartamentCompany" />
+          <NavigationProperty Name="DepartamentCompany" Relationship="Self.FK_DepartamentCompany_StatusDepartament1" FromRole="StatusDepartament" ToRole="DepartamentCompany" />
         </EntityType>
         <EntityType Name="StatusOrder">
           <Key>
@@ -1240,7 +1232,7 @@
           <Property Name="ProductID" Type="Int32" Nullable="false" />
           <Property Name="Amount" Type="Int32" Nullable="false" />
           <Property Name="StorageNum" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="StatusProductID" Type="Int32" Nullable="false" />
+          <Property Name="StatusProductID" Type="Int32" />
           <NavigationProperty Name="DepartamentCompany" Relationship="Self.FK_Storage_DepartamentCompany" FromRole="Storage" ToRole="DepartamentCompany" />
           <NavigationProperty Name="Product" Relationship="Self.FK_Storage_Product" FromRole="Storage" ToRole="Product" />
           <NavigationProperty Name="StatusProduct" Relationship="Self.FK_Storage_StatusProduct" FromRole="Storage" ToRole="StatusProduct" />
@@ -1263,16 +1255,6 @@
           <Property Name="StreetID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="City" Relationship="Self.FK_StreetsOfCity_City" FromRole="StreetsOfCity" ToRole="City" />
           <NavigationProperty Name="Street" Relationship="Self.FK_StreetsOfCity_Street" FromRole="StreetsOfCity" ToRole="Street" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="TypeOfIssueOrder">
           <Key>
@@ -1323,7 +1305,7 @@
           <End Role="DepartamentCompany" Type="Self.DepartamentCompany" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Adress">
-              <PropertyRef Name="Adress1" />
+              <PropertyRef Name="AdressID" />
             </Principal>
             <Dependent Role="DepartamentCompany">
               <PropertyRef Name="AdressID" />
@@ -1335,14 +1317,14 @@
           <End Role="Passport" Type="Self.Passport" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Adress">
-              <PropertyRef Name="Adress1" />
+              <PropertyRef Name="AdressID" />
             </Principal>
             <Dependent Role="Passport">
               <PropertyRef Name="AdressRegID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AdressClient_Client">
+        <Association Name="FK_AdressClient_Client1">
           <End Role="Client" Type="Self.Client" Multiplicity="1" />
           <End Role="AdressClient" Type="Self.AdressClient" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1354,7 +1336,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Client_AdressClient">
+        <Association Name="FK_Client_AdressClient1">
           <End Role="AdressClient" Type="Self.AdressClient" Multiplicity="0..1" />
           <End Role="Client" Type="Self.Client" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1438,6 +1420,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Client_DepartamentCompany">
+          <End Role="DepartamentCompany" Type="Self.DepartamentCompany" Multiplicity="0..1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartamentCompany">
+              <PropertyRef Name="DepartamentID" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="SelectedDepID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Client_Gender">
           <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
           <End Role="Client" Type="Self.Client" Multiplicity="*" />
@@ -1474,7 +1468,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DepartamentCompany_StatusDepartament">
+        <Association Name="FK_DepartamentCompany_StatusDepartament1">
           <End Role="StatusDepartament" Type="Self.StatusDepartament" Multiplicity="1" />
           <End Role="DepartamentCompany" Type="Self.DepartamentCompany" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1487,7 +1481,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_DepartamentCompany">
-          <End Role="DepartamentCompany" Type="Self.DepartamentCompany" Multiplicity="0..1" />
+          <End Role="DepartamentCompany" Type="Self.DepartamentCompany" Multiplicity="1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DepartamentCompany">
@@ -1499,7 +1493,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Staff_DepartamentCompany">
-          <End Role="DepartamentCompany" Type="Self.DepartamentCompany" Multiplicity="0..1" />
+          <End Role="DepartamentCompany" Type="Self.DepartamentCompany" Multiplicity="1" />
           <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DepartamentCompany">
@@ -1531,6 +1525,30 @@
             </Principal>
             <Dependent Role="Passport">
               <PropertyRef Name="DepOfIssueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EditStaff_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+          <End Role="EditStaff" Type="Self.EditStaff" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="EditStaff">
+              <PropertyRef Name="StaffID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EditStaff_Staff1">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+          <End Role="EditStaff" Type="Self.EditStaff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="StaffID" />
+            </Principal>
+            <Dependent Role="EditStaff">
+              <PropertyRef Name="WhoEditStaffID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1583,7 +1601,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_TypeOfIssueOrder">
-          <End Role="TypeOfIssueOrder" Type="Self.TypeOfIssueOrder" Multiplicity="1" />
+          <End Role="TypeOfIssueOrder" Type="Self.TypeOfIssueOrder" Multiplicity="0..1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TypeOfIssueOrder">
@@ -1606,18 +1624,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PassportOfStaff_Passport1">
-          <End Role="Passport" Type="Self.Passport" Multiplicity="1" />
-          <End Role="PassportOfStaff" Type="Self.PassportOfStaff" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Passport">
-              <PropertyRef Name="PassportID" />
-            </Principal>
-            <Dependent Role="PassportOfStaff">
-              <PropertyRef Name="PassportID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_User_Passport">
           <End Role="Passport" Type="Self.Passport" Multiplicity="1" />
           <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
@@ -1627,18 +1633,6 @@
             </Principal>
             <Dependent Role="Staff">
               <PropertyRef Name="PassportID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PassportOfStaff_Staff">
-          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
-          <End Role="PassportOfStaff" Type="Self.PassportOfStaff" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Staff">
-              <PropertyRef Name="StaffID" />
-            </Principal>
-            <Dependent Role="PassportOfStaff">
-              <PropertyRef Name="StaffID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1703,7 +1697,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Storage_StatusProduct">
-          <End Role="StatusProduct" Type="Self.StatusProduct" Multiplicity="1" />
+          <End Role="StatusProduct" Type="Self.StatusProduct" Multiplicity="0..1" />
           <End Role="Storage" Type="Self.Storage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="StatusProduct">
@@ -1736,10 +1730,10 @@
           <EntitySet Name="ClientEnterPC" EntityType="Self.ClientEnterPC" />
           <EntitySet Name="DepartamentCompany" EntityType="Self.DepartamentCompany" />
           <EntitySet Name="DepartamentIssue" EntityType="Self.DepartamentIssue" />
+          <EntitySet Name="EditStaff" EntityType="Self.EditStaff" />
           <EntitySet Name="Gender" EntityType="Self.Gender" />
           <EntitySet Name="Order" EntityType="Self.Order" />
           <EntitySet Name="Passport" EntityType="Self.Passport" />
-          <EntitySet Name="PassportOfStaff" EntityType="Self.PassportOfStaff" />
           <EntitySet Name="PaymentType" EntityType="Self.PaymentType" />
           <EntitySet Name="Product" EntityType="Self.Product" />
           <EntitySet Name="ProductGroup" EntityType="Self.ProductGroup" />
@@ -1754,7 +1748,6 @@
           <EntitySet Name="Storage" EntityType="Self.Storage" />
           <EntitySet Name="Street" EntityType="Self.Street" />
           <EntitySet Name="StreetsOfCity" EntityType="Self.StreetsOfCity" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="TypeOfIssueOrder" EntityType="Self.TypeOfIssueOrder" />
           <AssociationSet Name="FK_Adress_City" Association="Self.FK_Adress_City">
             <End Role="City" EntitySet="City" />
@@ -1776,11 +1769,11 @@
             <End Role="Adress" EntitySet="Adress" />
             <End Role="Passport" EntitySet="Passport" />
           </AssociationSet>
-          <AssociationSet Name="FK_AdressClient_Client" Association="Self.FK_AdressClient_Client">
+          <AssociationSet Name="FK_AdressClient_Client1" Association="Self.FK_AdressClient_Client1">
             <End Role="Client" EntitySet="Client" />
             <End Role="AdressClient" EntitySet="AdressClient" />
           </AssociationSet>
-          <AssociationSet Name="FK_Client_AdressClient" Association="Self.FK_Client_AdressClient">
+          <AssociationSet Name="FK_Client_AdressClient1" Association="Self.FK_Client_AdressClient1">
             <End Role="AdressClient" EntitySet="AdressClient" />
             <End Role="Client" EntitySet="Client" />
           </AssociationSet>
@@ -1808,6 +1801,10 @@
             <End Role="City" EntitySet="City" />
             <End Role="StreetsOfCity" EntitySet="StreetsOfCity" />
           </AssociationSet>
+          <AssociationSet Name="FK_Client_DepartamentCompany" Association="Self.FK_Client_DepartamentCompany">
+            <End Role="DepartamentCompany" EntitySet="DepartamentCompany" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
           <AssociationSet Name="FK_Client_Gender" Association="Self.FK_Client_Gender">
             <End Role="Gender" EntitySet="Gender" />
             <End Role="Client" EntitySet="Client" />
@@ -1820,7 +1817,7 @@
             <End Role="Client" EntitySet="Client" />
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
-          <AssociationSet Name="FK_DepartamentCompany_StatusDepartament" Association="Self.FK_DepartamentCompany_StatusDepartament">
+          <AssociationSet Name="FK_DepartamentCompany_StatusDepartament1" Association="Self.FK_DepartamentCompany_StatusDepartament1">
             <End Role="StatusDepartament" EntitySet="StatusDepartament" />
             <End Role="DepartamentCompany" EntitySet="DepartamentCompany" />
           </AssociationSet>
@@ -1839,6 +1836,14 @@
           <AssociationSet Name="FK_Passport_DateOfIsue" Association="Self.FK_Passport_DateOfIsue">
             <End Role="DepartamentIssue" EntitySet="DepartamentIssue" />
             <End Role="Passport" EntitySet="Passport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EditStaff_Staff" Association="Self.FK_EditStaff_Staff">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="EditStaff" EntitySet="EditStaff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EditStaff_Staff1" Association="Self.FK_EditStaff_Staff1">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="EditStaff" EntitySet="EditStaff" />
           </AssociationSet>
           <AssociationSet Name="FK_Passport_Gender" Association="Self.FK_Passport_Gender">
             <End Role="Gender" EntitySet="Gender" />
@@ -1864,17 +1869,9 @@
             <End Role="Order" EntitySet="Order" />
             <End Role="ProductGroup" EntitySet="ProductGroup" />
           </AssociationSet>
-          <AssociationSet Name="FK_PassportOfStaff_Passport1" Association="Self.FK_PassportOfStaff_Passport1">
-            <End Role="Passport" EntitySet="Passport" />
-            <End Role="PassportOfStaff" EntitySet="PassportOfStaff" />
-          </AssociationSet>
           <AssociationSet Name="FK_User_Passport" Association="Self.FK_User_Passport">
             <End Role="Passport" EntitySet="Passport" />
             <End Role="Staff" EntitySet="Staff" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PassportOfStaff_Staff" Association="Self.FK_PassportOfStaff_Staff">
-            <End Role="Staff" EntitySet="Staff" />
-            <End Role="PassportOfStaff" EntitySet="PassportOfStaff" />
           </AssociationSet>
           <AssociationSet Name="FK_ProductOrder_Product" Association="Self.FK_ProductOrder_Product">
             <End Role="Product" EntitySet="Product" />
@@ -1904,48 +1901,7 @@
             <End Role="Street" EntitySet="Street" />
             <End Role="StreetsOfCity" EntitySet="StreetsOfCity" />
           </AssociationSet>
-          <FunctionImport Name="sp_alterdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_creatediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_dropdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(DBModel.sp_helpdiagramdefinition_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(DBModel.sp_helpdiagrams_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_renamediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="new_diagramname" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_upgraddiagrams" />
         </EntityContainer>
-        <ComplexType Name="sp_helpdiagramdefinition_Result">
-          <Property Type="Int32" Name="version" Nullable="true" />
-          <Property Type="Binary" Name="definition" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagrams_Result">
-          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-          <Property Type="Int32" Name="OwnerID" Nullable="false" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1955,7 +1911,7 @@
           <EntitySetMapping Name="Adress">
             <EntityTypeMapping TypeName="DBModel.Adress">
               <MappingFragment StoreEntitySet="Adress">
-                <ScalarProperty Name="Adress1" ColumnName="Adress" />
+                <ScalarProperty Name="AdressID" ColumnName="AdressID" />
                 <ScalarProperty Name="RegionID" ColumnName="RegionID" />
                 <ScalarProperty Name="CityID" ColumnName="CityID" />
                 <ScalarProperty Name="StreetID" ColumnName="StreetID" />
@@ -2006,6 +1962,7 @@
             <EntityTypeMapping TypeName="DBModel.Client">
               <MappingFragment StoreEntitySet="Client">
                 <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
                 <ScalarProperty Name="PhoneNum" ColumnName="PhoneNum" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -2013,7 +1970,9 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="AuthCode" ColumnName="AuthCode" />
                 <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="DateAdd" ColumnName="DateAdd" />
                 <ScalarProperty Name="GenderID" ColumnName="GenderID" />
+                <ScalarProperty Name="SelectedDepID" ColumnName="SelectedDepID" />
                 <ScalarProperty Name="SelectedAdressID" ColumnName="SelectedAdressID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2045,6 +2004,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="EditStaff">
+            <EntityTypeMapping TypeName="DBModel.EditStaff">
+              <MappingFragment StoreEntitySet="EditStaff">
+                <ScalarProperty Name="EditStaffID" ColumnName="EditStaffID" />
+                <ScalarProperty Name="WhoEditStaffID" ColumnName="WhoEditStaffID" />
+                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+                <ScalarProperty Name="DateEdit" ColumnName="DateEdit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Gender">
             <EntityTypeMapping TypeName="DBModel.Gender">
               <MappingFragment StoreEntitySet="Gender">
@@ -2065,11 +2034,11 @@
                 <ScalarProperty Name="OrderIssue" ColumnName="OrderIssue" />
                 <ScalarProperty Name="ShellLife" ColumnName="ShellLife" />
                 <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
-                <ScalarProperty Name="StatusOrderID" ColumnName="StatusOrderID" />
-                <ScalarProperty Name="TypeOfIssueD" ColumnName="TypeOfIssueD" />
                 <ScalarProperty Name="DepartamentCompanyID" ColumnName="DepartamentCompanyID" />
                 <ScalarProperty Name="DeliveryAdress" ColumnName="DeliveryAdress" />
                 <ScalarProperty Name="CancelDescription" ColumnName="CancelDescription" />
+                <ScalarProperty Name="StatusOrderID" ColumnName="StatusOrderID" />
+                <ScalarProperty Name="TypeOfIssueD" ColumnName="TypeOfIssueD" />
                 <ScalarProperty Name="PaymentTypetID" ColumnName="PaymentTypetID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2085,15 +2054,6 @@
                 <ScalarProperty Name="DateOfIssue" ColumnName="DateOfIssue" />
                 <ScalarProperty Name="DepOfIssueID" ColumnName="DepOfIssueID" />
                 <ScalarProperty Name="AdressRegID" ColumnName="AdressRegID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PassportOfStaff">
-            <EntityTypeMapping TypeName="DBModel.PassportOfStaff">
-              <MappingFragment StoreEntitySet="PassportOfStaff">
-                <ScalarProperty Name="PassportOfStaffID" ColumnName="PassportOfStaffID" />
-                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
-                <ScalarProperty Name="PassportID" ColumnName="PassportID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2123,6 +2083,9 @@
                 <ScalarProperty Name="ProducGroupID" ColumnName="ProducGroupID" />
                 <ScalarProperty Name="OrderID" ColumnName="OrderID" />
                 <ScalarProperty Name="ProductOrderID" ColumnName="ProductOrderID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="OverAllPrice" ColumnName="OverAllPrice" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2132,8 +2095,6 @@
                 <ScalarProperty Name="ProductOrderID" ColumnName="ProductOrderID" />
                 <ScalarProperty Name="Photo" ColumnName="Photo" />
                 <ScalarProperty Name="NameProduct" ColumnName="NameProduct" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2166,6 +2127,9 @@
                 <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
                 <ScalarProperty Name="PhoneNum" ColumnName="PhoneNum" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="AddDate" ColumnName="AddDate" />
+                <ScalarProperty Name="LastEditDate" ColumnName="LastEditDate" />
+                <ScalarProperty Name="BlockDate" ColumnName="BlockDate" />
                 <ScalarProperty Name="PassportID" ColumnName="PassportID" />
                 <ScalarProperty Name="StatusID" ColumnName="StatusID" />
                 <ScalarProperty Name="DepartamentID" ColumnName="DepartamentID" />
@@ -2234,17 +2198,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="DBModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TypeOfIssueOrder">
             <EntityTypeMapping TypeName="DBModel.TypeOfIssueOrder">
               <MappingFragment StoreEntitySet="TypeOfIssueOrder">
@@ -2253,30 +2206,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Хранилище DBModel.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Хранилище DBModel.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Хранилище DBModel.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Хранилище DBModel.sp_helpdiagramdefinition">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DBModel.sp_helpdiagramdefinition_Result">
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Хранилище DBModel.sp_helpdiagrams">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DBModel.sp_helpdiagrams_Result">
-                <ScalarProperty Name="Database" ColumnName="Database" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Хранилище DBModel.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Хранилище DBModel.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

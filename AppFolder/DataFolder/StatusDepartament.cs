@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GoncharovCarPartsAS.AppFolder.DataFolder
+namespace GoncharovVympelSale.AppFolder.DataFolder
 {
     using System;
     using System.Collections.Generic;

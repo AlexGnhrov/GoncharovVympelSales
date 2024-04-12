@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GoncharovCarPartsAS.AppFolder.DataFolder
+namespace GoncharovVympelSale.AppFolder.DataFolder
 {
     using System;
     using System.Collections.Generic;
@@ -18,8 +18,8 @@ namespace GoncharovCarPartsAS.AppFolder.DataFolder
         public Staff()
         {
             this.Busket = new HashSet<Busket>();
+            this.EditStaff1 = new HashSet<EditStaff>();
             this.Order = new HashSet<Order>();
-            this.PassportOfStaff = new HashSet<PassportOfStaff>();
         }
     
         public int StaffID { get; set; }
@@ -31,19 +31,23 @@ namespace GoncharovCarPartsAS.AppFolder.DataFolder
         public string Patronymic { get; set; }
         public string PhoneNum { get; set; }
         public string Email { get; set; }
+        public Nullable<System.DateTime> AddDate { get; set; }
+        public Nullable<System.DateTime> LastEditDate { get; set; }
+        public Nullable<System.DateTime> BlockDate { get; set; }
         public int PassportID { get; set; }
         public int StatusID { get; set; }
-        public Nullable<int> DepartamentID { get; set; }
+        public int DepartamentID { get; set; }
         public int RoleID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Busket> Busket { get; set; }
         public virtual DepartamentCompany DepartamentCompany { get; set; }
+        public virtual EditStaff EditStaff { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EditStaff> EditStaff1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Order { get; set; }
         public virtual Passport Passport { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PassportOfStaff> PassportOfStaff { get; set; }
         public virtual Role Role { get; set; }
         public virtual StatusUser StatusUser { get; set; }
     }

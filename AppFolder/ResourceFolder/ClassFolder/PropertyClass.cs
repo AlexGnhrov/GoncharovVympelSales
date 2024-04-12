@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Media.Imaging;
 
-namespace GoncharovCarPartsAS.AppFolder.ResourceFolder.ClassFolder
+namespace GoncharovVympelSale.AppFolder.ResourceFolder.ClassFolder
 {
 
 
@@ -52,6 +46,8 @@ namespace GoncharovCarPartsAS.AppFolder.ResourceFolder.ClassFolder
             }
         }
 
+
+
         //----Текст по верх тексбока-----------------------------------------
 
 
@@ -70,9 +66,58 @@ namespace GoncharovCarPartsAS.AppFolder.ResourceFolder.ClassFolder
         }
 
 
+        //----Установка длины для Editable CombobBox-----------------------------------------
+
+
+
+        public static readonly DependencyProperty LengthTextForCBProperty = DependencyProperty.RegisterAttached("LengthTextForCB",
+                                                                                                        typeof(int),
+                                                                                                        typeof(PropertyClass));
+
+        public static void SetLengthTextForCB(DependencyObject element, int value)
+        {
+            element.SetValue(LengthTextForCBProperty, value);
+        }
+
+        public static int GetLengthTextForCB(DependencyObject element)
+        {
+            return (int)element.GetValue(LengthTextForCBProperty);
+        }
+
+        //----Установка WrapText для Editable CombobBox-----------------------------------------
+
+
+
+        public static readonly DependencyProperty WrapTextForCBProperty = DependencyProperty.Register("WrapTextForCB", typeof(TextWrapping), typeof(PropertyClass));
+
+        public static TextWrapping GetWrapTextForCB(DependencyObject obj)
+        {
+            return (TextWrapping)obj.GetValue(WrapTextForCBProperty);
+        }
+
+        public static void SetWrapTextForCB(DependencyObject obj, TextWrapping value)
+        {
+            obj.SetValue(WrapTextForCBProperty, value);
+        }
+
+
+        //----Установка Показать пароль для PasswordBox-----------------------------------------
+
+
+
+        public static readonly DependencyProperty ShowPasswordProperty = DependencyProperty.RegisterAttached("ShowPassword",
+                                                                                                        typeof(bool),
+                                                                                                        typeof(PropertyClass));
+
+        public static void SetShowPassword(DependencyObject element, bool value)
+        {
+            element.SetValue(ShowPasswordProperty, value);
+        }
+
+        public static bool GetShowPassword(DependencyObject element)
+        {
+            return (bool)element.GetValue(ShowPasswordProperty);
+        }
 
     }
-
-
-
 }

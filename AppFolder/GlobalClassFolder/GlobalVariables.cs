@@ -1,15 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GoncharovVympelSale.AppFolder.WinFolder;
+using System.Windows;
+using System.Windows.Controls;
 
-namespace GoncharovCarPartsAS.AppFolder.ClassFolder
+namespace GoncharovVympelSale.AppFolder.ClassFolder
 {
     class GlobalVarriabels
     {
+
+        public static Frame FrontFrame;
+        public static MainWin MainWindow;
+
+        public static bool IsFrontFrameActive = false;
+        public static bool isReadOnly = false;
+
         public static int currentUserID;
-        public static int? curDepCompanyID;
+        public static int curDepCompanyID;
 
 
         public static readonly string ErrorTag = "InvalidData";
@@ -18,27 +23,27 @@ namespace GoncharovCarPartsAS.AppFolder.ClassFolder
         public static readonly string UsingBtnTag = "Using";
         public static readonly string NotUsingBtnTag = "NoUse";
 
+        public static readonly string IsEditBtnTag = "IsEdit";
 
+
+        public static bool isDepWorker = false;
+        public static bool isClient = false;
+        public static string currentClientPC = "";
 
         public enum RoleName
         {
             MainAdmin = 1,
-            MainManager,
-            DepAdmin,
-            DepManager,
-            DepWork,
-        }
-
-        public static RoleName CurrentRoleID;
-
-
-        public enum MessageCode
-        {
-            Error,
-            Info,
-            Question,
+            MainManager = 2,
+            DepAdmin = 3,
+            DepManager = 4,
+            DepWork = 5,
+            Client = 6,
 
         }
+
+        public static RoleName currentRoleName;
+
+
 
     }
 }

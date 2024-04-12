@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GoncharovCarPartsAS.AppFolder.DataFolder
+namespace GoncharovVympelSale.AppFolder.DataFolder
 {
     using System;
     using System.Collections.Generic;
@@ -17,6 +17,9 @@ namespace GoncharovCarPartsAS.AppFolder.DataFolder
         public int ProducGroupID { get; set; }
         public int OrderID { get; set; }
         public int ProductOrderID { get; set; }
+        public decimal Price { get; set; }
+        public int Amount { get; set; }
+        public Nullable<decimal> OverAllPrice { get; set; }
     
         public virtual Order Order { get; set; }
         public virtual ProductOrder ProductOrder { get; set; }

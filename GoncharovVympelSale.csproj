@@ -1,0 +1,478 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{16DADE07-8F73-46A4-B6A8-1848DF4BBF0B}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>GoncharovVympelSale</RootNamespace>
+    <AssemblyName>GoncharovVympelSale</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>AppFolder\ResourceFolder\ImageFolder\Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Extensions.DependencyInjection.8.0.0\lib\net462\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Extensions.DependencyInjection.Abstractions.8.0.0\lib\net462\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework.Aero2" />
+    <Reference Include="PresentationFramework.AeroLite" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppFolder\DataFolder\Adress.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\AdressClient.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\Busket.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\Category.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\City.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\Client.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\ClientEnterPC.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\ContextClass.cs" />
+    <Compile Include="AppFolder\DataFolder\DepartamentCompany.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\DepartamentIssue.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\EditStaff.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\ExtenedClassFOlder\BuscketExtClass.cs" />
+    <Compile Include="AppFolder\DataFolder\ExtenedClassFOlder\DepoCompanyExtClass.cs" />
+    <Compile Include="AppFolder\DataFolder\ExtenedClassFOlder\FullAdressExtClass.cs" />
+    <Compile Include="AppFolder\DataFolder\ExtenedClassFOlder\OrderExtClass.cs" />
+    <Compile Include="AppFolder\DataFolder\ExtenedClassFOlder\ProductExtClass.cs" />
+    <Compile Include="AppFolder\DataFolder\ExtenedClassFOlder\StorageExtClass.cs" />
+    <Compile Include="AppFolder\DataFolder\Gender.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\Model.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\Model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\Model.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\Order.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\Passport.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\PaymentType.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\Product.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\ProductGroup.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\ProductOrder.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\Region.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\Role.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\Staff.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\StatusDepartament.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\StatusOrder.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\StatusProduct.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\StatusUser.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\Storage.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\Street.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\StreetsOfCity.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\TypeOfIssueOrder.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\GlobalClassFolder\ConfigSettingsClass.cs" />
+    <Compile Include="AppFolder\GlobalClassFolder\EmailClass.cs" />
+    <Compile Include="AppFolder\GlobalClassFolder\GlobalVariables.cs" />
+    <Compile Include="AppFolder\GlobalClassFolder\InsertDataClass.cs" />
+    <Compile Include="AppFolder\GlobalClassFolder\PhotoImageClass.cs" />
+    <Compile Include="AppFolder\GlobalClassFolder\ValidationDataClass.cs" />
+    <Compile Include="AppFolder\PageFolder\AdditionalFolder\EditUserPage.xaml.cs">
+      <DependentUpon>EditUserPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\PageFolder\AdditionalFolder\QuestionPage.xaml.cs">
+      <DependentUpon>QuestionPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\PageFolder\CatalogFolder\AEPageProduct\AEProductStoragePage.xaml.cs">
+      <DependentUpon>AEProductStoragePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\PageFolder\CatalogFolder\AEPageProduct\AEProductMaPage.xaml.cs">
+      <DependentUpon>AEProductMaPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\PageFolder\CatalogFolder\CatalogListPage.xaml.cs">
+      <DependentUpon>CatalogListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\PageFolder\CatalogFolder\PreviewProductAddPage.xaml.cs">
+      <DependentUpon>PreviewProductAddPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\PageFolder\CatalogFolder\PurchaseListPage.xaml.cs">
+      <DependentUpon>PurchaseListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\PageFolder\ClientFolder\ClientListPage.xaml.cs">
+      <DependentUpon>ClientListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\PageFolder\DeportamentFolder\AEDeportamenPage.xaml.cs">
+      <DependentUpon>AEDeportamenPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\PageFolder\DeportamentFolder\DeportamentListPage.xaml.cs">
+      <DependentUpon>DeportamentListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\PageFolder\OrderFolder\AdditionalPage\CancelOrderPage.xaml.cs">
+      <DependentUpon>CancelOrderPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\PageFolder\OrderFolder\OrderListPage.xaml.cs">
+      <DependentUpon>OrderListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\PageFolder\StaffFolder\AEStaffPage.xaml.cs">
+      <DependentUpon>AEStaffPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\PageFolder\StaffFolder\StaffInfoPage.xaml.cs">
+      <DependentUpon>StaffInfoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\PageFolder\StaffFolder\StaffListPage.xaml.cs">
+      <DependentUpon>StaffListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\ResourceFolder\ClassFolder\AnimWinPageClass.cs" />
+    <Compile Include="AppFolder\ResourceFolder\ClassFolder\PropertyClass.cs" />
+    <Compile Include="AppFolder\WinFolder\AuthorizationWin.xaml.cs">
+      <DependentUpon>AuthorizationWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\WinFolder\MainWin.xaml.cs">
+      <DependentUpon>MainWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\WinFolder\MessageWin.xaml.cs">
+      <DependentUpon>MessageWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EntityDeploy Include="AppFolder\DataFolder\Model.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="AppFolder\DataFolder\Model.edmx.diagram">
+      <DependentUpon>Model.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="AppFolder\PageFolder\AdditionalFolder\EditUserPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppFolder\PageFolder\AdditionalFolder\QuestionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppFolder\PageFolder\CatalogFolder\AEPageProduct\AEProductStoragePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="AppFolder\PageFolder\CatalogFolder\AEPageProduct\AEProductMaPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppFolder\PageFolder\CatalogFolder\CatalogListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppFolder\PageFolder\CatalogFolder\PreviewProductAddPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppFolder\PageFolder\CatalogFolder\PurchaseListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppFolder\PageFolder\ClientFolder\ClientListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppFolder\PageFolder\DeportamentFolder\AEDeportamenPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppFolder\PageFolder\DeportamentFolder\DeportamentListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppFolder\PageFolder\OrderFolder\AdditionalPage\CancelOrderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppFolder\PageFolder\OrderFolder\OrderListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppFolder\PageFolder\StaffFolder\AEStaffPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppFolder\PageFolder\StaffFolder\StaffInfoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppFolder\PageFolder\StaffFolder\StaffListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppFolder\ResourceFolder\Dictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppFolder\WinFolder\AuthorizationWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppFolder\WinFolder\MainWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppFolder\WinFolder\MessageWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 и x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\IconForTextBox\LoginIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\IconForTextBox\PasswordIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\IconForTextBox\PhoneIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\IconForTextBox\EmailIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\IconForTextBox\KeyIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\MainLogo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\IconForButton\EditPenIcon.png" />
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\IconForButton\TrashBinIcon.png" />
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\Icon.ico" />
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\IconForTextBox\arrowUpIcon.png" />
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\IconForTextBox\arrowDownIcon.png" />
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\Portrait_Placeholder.png" />
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\IconForTextBox\SearchIcon.png" />
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\IconForMenuButton\CatalogIcon.png" />
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\BackgroundImage.png" />
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\IconForMenuButton\OrderIcon.png" />
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\IconForMenuButton\CartIcon.png" />
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\IconForMenuButton\SignOutIcon.png" />
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\IconForMenuButton\ShrinkArrowIcon1.png" />
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\IconForMenuButton\ShrinkArrowIcon.png" />
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\IconForMenuButton\ClientIcon.png" />
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\IconForMenuButton\StaffIcon.png" />
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\IconForMenuButton\DeportamentIcon.png" />
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\TGicon.png" />
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\VKicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\IconForTextBox\PassportIcon.png" />
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\IconForMenuItem\DeleteIcon.png" />
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\IconForMenuItem\EditIcon.png" />
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\IconForMenuItem\UpdateIcon.png" />
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\IconForButton\CancelIcon.png" />
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\IconForButton\ApplyIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\IconForTextBox\eyeIcon.png" />
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\ProductImagePlaceholder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\arrowDownWHITEIcon.png" />
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\arrowUpWHITEIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="AppFolder\ResourceFolder\ImageFolder\GreenTickImage.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AppFolder\DataFolder\Model.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="AppFolder\DataFolder\Model.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

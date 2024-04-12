@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GoncharovCarPartsAS.AppFolder.DataFolder
+namespace GoncharovVympelSale.AppFolder.DataFolder
 {
     public partial class DBEntities : DbContext
     {

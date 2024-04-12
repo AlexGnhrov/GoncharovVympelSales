@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GoncharovCarPartsAS.AppFolder.DataFolder
+namespace GoncharovVympelSale.AppFolder.DataFolder
 {
     using System;
     using System.Collections.Generic;
@@ -24,6 +24,7 @@ namespace GoncharovCarPartsAS.AppFolder.DataFolder
         }
     
         public int ClientID { get; set; }
+        public byte[] Photo { get; set; }
         public long PhoneNum { get; set; }
         public string Password { get; set; }
         public string Name { get; set; }
@@ -31,7 +32,9 @@ namespace GoncharovCarPartsAS.AppFolder.DataFolder
         public string Email { get; set; }
         public string AuthCode { get; set; }
         public System.DateTime DateOfBirth { get; set; }
+        public Nullable<System.DateTime> DateAdd { get; set; }
         public int GenderID { get; set; }
+        public Nullable<int> SelectedDepID { get; set; }
         public Nullable<int> SelectedAdressID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -39,6 +42,7 @@ namespace GoncharovCarPartsAS.AppFolder.DataFolder
         public virtual AdressClient AdressClient1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Busket> Busket { get; set; }
+        public virtual DepartamentCompany DepartamentCompany { get; set; }
         public virtual Gender Gender { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ClientEnterPC> ClientEnterPC { get; set; }

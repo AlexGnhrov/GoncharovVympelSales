@@ -1,0 +1,166 @@
+﻿<Page x:Class="GoncharovVympelSale.AppFolder.PageFolder.CatalogFolder.AEProductStoragePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:GoncharovVympelSale.AppFolder.ResourceFolder.ClassFolder"
+      mc:Ignorable="d" 
+      d:DesignHeight="750" d:DesignWidth="1200"
+      Loaded="Page_Loaded">
+
+    <Grid>
+        <Border Style="{StaticResource BackgroundPage}"/>
+
+        <Grid Width="1000" Height="700">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+            <Border Background="White" Grid.Column="1" CornerRadius="{StaticResource CornerValue}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="120"/>
+                        <RowDefinition/>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="10"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Border Background="{StaticResource SecondColor}" Height="5"  CornerRadius="2"
+                                VerticalAlignment="Center"  Margin="10,50,10,40"/>
+                        <Label Name="NamePageLB" Content="Добавление товара" Style="{StaticResource MainLabel}"
+                               Margin="10,5" Grid.Column="1" VerticalAlignment="Center"/>
+                        <Border Background="{StaticResource SecondColor}" Height="5"
+                                CornerRadius="2" VerticalAlignment="Center" Grid.Column="2" Margin="10,50,10,40"/>
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="350"/>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+
+                        <Border x:Name="BorderPhoto" 
+                                 Margin="15,10,15,15" BorderBrush="Transparent"
+                                  Height="305">
+                            <Border.Style>
+                                <Style TargetType="Border" BasedOn="{StaticResource BorderImage}">
+                                    <Setter Property="Cursor" Value="Arrow"/>
+                                    
+                                    <Setter Property="Background">
+                                        <Setter.Value>
+                                            <ImageBrush ImageSource="{Binding Photo}" Stretch="Uniform"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Photo}" Value="{x:Null}">
+                                            <Setter Property="Background">
+                                                <Setter.Value>
+                                                    <ImageBrush ImageSource="/GoncharovVympelSale;component/AppFolder/ResourceFolder/ImageFolder/ProductImagePlaceholder.png" Stretch="UniformToFill"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                        </Border>
+
+                        <StackPanel Grid.Column="1">
+                            <ComboBox Name="ProductCB" Width="530"  Margin="10,25,0,10"
+                                                  IsEditable="True" 
+                                                  StaysOpenOnEdit="True" 
+                                                  local:PropertyClass.HintTB="Товар*" 
+                                                  HorizontalAlignment="Left" 
+                                                  local:PropertyClass.WrapTextForCB="Wrap" 
+                                                  SelectionChanged="ComboBox_SelectionChanged"
+                                                  SelectedValuePath="ProductID">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding NameProduct}" TextWrapping="Wrap"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+
+
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Категория:" Margin="10,10,0,0" Padding="2,3"
+                                      FontSize="18" FontWeight="SemiBold"
+                                           HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                                <TextBox  Width="385" Margin="0,10,0,0" Padding="5,3" BorderBrush="Transparent" IsReadOnly="True"
+                                      Text="{Binding Category.NameCategory}"
+                                      FontSize="16"  HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <TextBlock Text="Описание товара:" Margin="10,10,0,0" Padding="2,3"
+                                      FontSize="18" FontWeight="SemiBold" HorizontalAlignment="Left"/>
+
+
+
+                            <TextBox MaxLength="8000" BorderBrush="Transparent" Height="220" Width="530" HorizontalAlignment="Left"
+                                     TextWrapping="Wrap" AcceptsReturn="True" Padding="2,3" 
+                                     VerticalContentAlignment="Top" FontSize="16" 
+                                     IsReadOnly="True" Text="{Binding Description}"
+                                     ScrollViewer.CanContentScroll="True" 
+                                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                     Margin="10,0,0,15"/>
+
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox x:Name="AmountTB" MaxLength="10" Width="240"
+                                     HorizontalAlignment="Left"
+                                     local:PropertyClass.HintTB="Количество*"
+                                     TextChanged="TextBox_TextChanged" 
+                                     GotFocus="TextBox_GotFocus"
+                                     LostFocus="TextBox_LostFocus"
+                                     PreviewTextInput="Text_PreviewTextInput"/>
+
+                                <TextBox x:Name="NumStorageTB" MaxLength="10" Width="270"
+                                     HorizontalAlignment="Left"
+                                     local:PropertyClass.HintTB="Номер хранилища*"
+                                     TextChanged="TextBox_TextChanged" 
+                                     GotFocus="TextBox_GotFocus"
+                                     LostFocus="TextBox_LostFocus"/>
+                            </StackPanel>
+
+                        </StackPanel>
+
+                    </Grid>
+
+
+
+                    <Button x:Name="AddEditBTN" Content="Добавить" Grid.Row="2" IsTabStop="True"
+                            Width="300" Height="45" HorizontalAlignment="Left" Margin="15,0"
+                            Style="{StaticResource YesButton}"
+                            Click="AddEditBTN_Click"/>
+
+                    <TextBlock Name="ErrorLB" Grid.Row="2"
+                               Width="430" TextAlignment="Center" VerticalAlignment="Center"
+                               HorizontalAlignment="Right" Style="{StaticResource ErrorText}"/>
+
+                </Grid>
+            </Border>
+
+
+            <Label Name="CloseLB" Grid.Column="2" Style="{StaticResource ClosePageLB}"
+                   MouseLeftButtonUp="CloseLB_MouseLeftButtonUp" >
+                <Label.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="0"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Label.RenderTransform>
+            </Label>
+
+        </Grid>
+
+    </Grid>
+</Page>

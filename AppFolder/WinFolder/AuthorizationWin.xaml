@@ -1,9 +1,9 @@
-﻿<Window x:Class="GoncharovCarPartsAS.AppFolder.WinFolder.AuthorizationWin"
+﻿<Window x:Class="GoncharovVympelSale.AppFolder.WinFolder.AuthorizationWin"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GoncharovCarPartsAS.AppFolder.ResourceFolder.ClassFolder"
+        xmlns:local="clr-namespace:GoncharovVympelSale.AppFolder.ResourceFolder.ClassFolder"
         mc:Ignorable="d"
         Title="Авторизация"
         WindowStartupLocation="CenterScreen"
@@ -11,7 +11,9 @@
         AllowsTransparency="True"
         ResizeMode="NoResize"
         Style="{StaticResource WinStyle}"
-        Height="485" Width="355"
+        MinHeight="500" MaxHeight="680" Height="490"
+        Width="355"
+        Loaded="Window_Loaded"
         KeyDown="Window_KeyDown">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -25,25 +27,31 @@
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="1" Grid.Column="1" >
-            <Border Style="{StaticResource WinBorder}" >
+            <Border Style="{StaticResource WinBorder}">
                 <Grid>
 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="45"/>
                         <RowDefinition/>
                         <RowDefinition Height="10"/>
                     </Grid.RowDefinitions>
 
-                    <Image Source="/GoncharovCarPartsAS;component/AppFolder/ResourceFolder/ImageFolder/IconForTextBox/MainLogo.png"
-                           HorizontalAlignment="Left" Width="150" Height="20"
-                           Margin="10"/>
+                    <StackPanel Orientation="Horizontal" Margin="10,0" HorizontalAlignment="Left" >
+                        <Image Source="/GoncharovVympelSale;component/AppFolder/ResourceFolder/ImageFolder/MainLogo.png"
+                               HorizontalAlignment="Left" Margin="0,5,10,5"
+                               RenderOptions.BitmapScalingMode="HighQuality"/>
+
+                        <TextBlock Text="ВЫМПЕЛ ПРОДАЖИ" FontSize="18" VerticalAlignment="Center"
+                                   Foreground="#09155F" HorizontalAlignment="Left"
+                                   FontWeight="Bold" />
+                    </StackPanel>
 
                     <Border Background="Transparent" Grid.ColumnSpan="3"
                             MouseLeftButtonDown="Border_MouseLeftButtonDown"/>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button x:Name="CloseWinBTN" Content="❌" Style="{StaticResource WinButtonClose}"
-                                VerticalAlignment="Bottom" Margin="10,5"
+                                VerticalAlignment="Center" Margin="10,5"
                                 Click="CloseWinBTN_Click"/>
                     </StackPanel>
 
@@ -60,55 +68,62 @@
                                 <ColumnDefinition Width="325"/>
                                 <ColumnDefinition Width="325"/>
                             </Grid.ColumnDefinitions>
-                            <StackPanel>
-                                <Label Content="Авторизация" Style="{DynamicResource MainLabel}"
+
+                            <StackPanel x:Name="AuthorizationSP">
+                                <StackPanel>
+                                    <Label Content="Авторизация" Style="{DynamicResource MainLabel}"
                                        Margin="10,20,10,30"/>
 
-                                <TextBox x:Name="LoginTB" MaxLength="30" 
+                                    <TextBox x:Name="LoginTB" MaxLength="30" 
                                      local:PropertyClass.HintTB="Почта или телефон"
                                      local:PropertyClass.ImageForTB="/AppFolder/ResourceFolder/ImageFolder/IconForTextBox/LoginIcon.png"  
-                                     Style="{StaticResource TextBoxForIcon}"
+                                     Style="{StaticResource TextBoxForAuthIcon}"
                                      TextChanged="TextBox_TextChanged"
+                                             InputLanguageManager.InputLanguage="en-us"
+                                     LostFocus="TextBox_LostFocus"
                                      PreviewTextInput="Text_PreviewTextInput"/>
 
-                                <Grid>
-                                    <PasswordBox x:Name="PasswordPB" MaxLength="30" 
-                                             
-                                             local:PropertyClass.ImageForTB="/AppFolder/ResourceFolder/ImageFolder/IconForTextBox/PasswordIcon.png" 
-                                             Style="{StaticResource PasswordPB}"
-                                             PasswordChanged="PasswordPB_PasswordChanged"
-                                             PreviewTextInput="PasswordPB_PreviewTextInput"/>
-                                    <Label Name="PasswordAuthHintLB"  Content="Пароль" Margin="54,16"
-                                           Style="{StaticResource LabelForTB}" />
-                                </Grid>
-
-                                <Grid  Margin="15,5">
-                                    <CheckBox x:Name="RemeberChB" Content="Запомнить" HorizontalAlignment="Left"/>
-                                    <TextBlock x:Name="ForgetPasswordTBl" Text="Забыли пароль?" Margin="0" Style="{DynamicResource TextBlockUnderline}" 
+                                    <Grid>
+                                        <PasswordBox x:Name="PasswordPB" MaxLength="30" 
+                                                     local:PropertyClass.HintTB="Пароль"
+                                                     local:PropertyClass.ImageForTB="/AppFolder/ResourceFolder/ImageFolder/IconForTextBox/PasswordIcon.png" 
+                                                     PasswordChanged="PasswordPB_PasswordChanged"
+                                                     InputLanguageManager.InputLanguage="en-us"
+                                                     PreviewTextInput="PasswordPB_PreviewTextInput"
+                                                     Style="{StaticResource PasswordBoxAuth}"/>
+                                    </Grid>
+                                    <Grid  Margin="15,5">
+                                        <CheckBox x:Name="RemeberChB" Padding="5,0"
+                                                  Content="Запомнить" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="20" Margin="0,0,0,1"/>
+                                        <TextBlock x:Name="ForgetPasswordTBl" Text="Забыли пароль?" 
+                                                   Margin="0" Style="{DynamicResource TextBlockUnderline}" 
                                            HorizontalAlignment="Right" MouseLeftButtonUp="ForgetPasswordTBl_MouseLeftButtonUp"/>
-                                </Grid>
+                                    </Grid>
 
 
+                                </StackPanel>
+
+                                <StackPanel VerticalAlignment="Bottom" >
+                                    <TextBlock Name="ErrorTBl" 
+                                               Style="{StaticResource ErrorText}" />
+
+                                    <Button x:Name="SignInBTN" Content="Войти" Style="{StaticResource MainButton}"
+                                             Width="250" Margin="10" IsEnabled="False"
+                                             Click="SignInBTN_Click"/>
+
+
+                                    <TextBlock x:Name="RegTBl" Text="Зарегистрироваться" 
+                                               HorizontalAlignment="Center"
+                                               MouseLeftButtonUp="UnderTBlClick_MouseLeftButtonUp"
+                                               Style="{DynamicResource TextBlockUnderline}"
+                                               Margin="10"/>
+                                </StackPanel>
                             </StackPanel>
-                            
-                            <StackPanel VerticalAlignment="Bottom">
-                                <TextBlock Name="ErrorLB" Text="" TextWrapping="Wrap" Margin="10"
-                                   Foreground="Red" FontSize="16" 
-                                   HorizontalAlignment="Center"/>
-
-                                <Button x:Name="SignInBTN" Content="Войти" Style="{StaticResource MainButton}"
-                                    Width="250" Margin="10"
-                                    Click="SignInBTN_Click"/>
-
-
-                                <TextBlock x:Name="RegTBl" Text="Зарегистрироваться"
-                                       HorizontalAlignment="Center"  MouseLeftButtonUp="UnderTBlClick_MouseLeftButtonUp"
-                                       Style="{DynamicResource TextBlockUnderline}" Margin="10"/>
-                            </StackPanel>
 
 
 
-                            <StackPanel Grid.Column="1" >
+
+                            <StackPanel x:Name="RegistrationSP" Grid.Column="1" >
                                 <Label Name="RegLogoLB" Content="Регистрация"
                                        Style="{DynamicResource MainLabel}"
                                         Margin="10,20,10,30"/>
@@ -117,100 +132,105 @@
                                     <TextBox x:Name="EmailTB" MaxLength="30" 
                                              local:PropertyClass.HintTB="Почта"
                                              local:PropertyClass.ImageForTB="/AppFolder/ResourceFolder/ImageFolder/IconForTextBox/EmailIcon.png"  
-
-                                             Style="{StaticResource TextBoxForIcon}"
+                                             Style="{StaticResource TextBoxForAuthIcon}"
                                              TextChanged="TextBox_TextChanged"
+                                             LostFocus="TextBox_LostFocus"
                                              PreviewTextInput="Text_PreviewTextInput"/>
 
                                     <TextBox x:Name="CodeTB" MaxLength="10" 
-                                     local:PropertyClass.HintTB="Код" IsEnabled="False"
-                                     local:PropertyClass.ImageForTB="/AppFolder/ResourceFolder/ImageFolder/IconForTextBox/KeyIcon.png"  
+                                             local:PropertyClass.HintTB="Код" IsEnabled="False"
+                                             local:PropertyClass.ImageForTB="/AppFolder/ResourceFolder/ImageFolder/IconForTextBox/KeyIcon.png"  
+                                             Style="{StaticResource TextBoxForAuthIcon}"
+                                             LostFocus="TextBox_LostFocus"
+                                             TextChanged="TextBox_TextChanged"/>
 
-                                     Style="{StaticResource TextBoxForIcon}"
-                                     TextChanged="TextBox_TextChanged"/>
+                                    <StackPanel Name="RepeatCodePanelSP"  Orientation="Horizontal"
+                                            HorizontalAlignment="Center" Opacity="0.56">
+                                        <TextBlock Text="Повторить код можно через - "
+                                               Margin="0,0,0,0" FontSize="16"/>
+                                        <TextBlock x:Name="RepeatCodeTimerTBl" Text="1:00"
+                                               Margin="0,0,0,0" Foreground="Red" FontSize="16"/>
+
+                                    </StackPanel>
                                 </StackPanel>
 
                                 <StackPanel x:Name="ResetCodeSP" Visibility="Collapsed">
                                     <Grid>
                                         <PasswordBox x:Name="PasswordResetPB" MaxLength="30" 
-                                             
-                                             local:PropertyClass.ImageForTB="/AppFolder/ResourceFolder/ImageFolder/IconForTextBox/PasswordIcon.png" 
-                                             Style="{StaticResource PasswordPB}"
-                                             PasswordChanged="PasswordPB_PasswordChanged"
-                                             PreviewTextInput="PasswordPB_PreviewTextInput"/>
-                                        <Label Name="PasswordResetHintLB"  Content="Новый пароль" Margin="54,16"
-                                           Style="{StaticResource LabelForTB}" />
+                                                     local:PropertyClass.ShowPassword="False"
+                                                     local:PropertyClass.ImageForTB="/AppFolder/ResourceFolder/ImageFolder/IconForTextBox/PasswordIcon.png" 
+                                                     local:PropertyClass.HintTB="Новый пароль"
+                                                     PasswordChanged="PasswordPB_PasswordChanged"
+                                                     InputLanguageManager.InputLanguage="en-us"
+                                                     PreviewTextInput="PasswordPB_PreviewTextInput"
+                                                     Style="{StaticResource PasswordBoxAuth}"/>
                                     </Grid>
                                     <Grid>
                                         <PasswordBox x:Name="PasswordReset2PB" MaxLength="30" 
-                                             
-                                             local:PropertyClass.ImageForTB="/AppFolder/ResourceFolder/ImageFolder/IconForTextBox/PasswordIcon.png" 
-                                             Style="{StaticResource PasswordPB}"
-                                             PasswordChanged="PasswordPB_PasswordChanged"
-                                             PreviewTextInput="PasswordPB_PreviewTextInput"/>
-                                        <Label Name="PasswordResetHint2LB"  Content="Повторить пароль" Margin="54,16"
-                                           Style="{StaticResource LabelForTB}" />
+                                                     local:PropertyClass.ImageForTB="/AppFolder/ResourceFolder/ImageFolder/IconForTextBox/PasswordIcon.png" 
+                                                     local:PropertyClass.HintTB="Повторить пароль"
+                                                     PasswordChanged="PasswordPB_PasswordChanged"
+                                                     InputLanguageManager.InputLanguage="en-us"
+                                                     PreviewTextInput="PasswordPB_PreviewTextInput"
+                                                     Style="{StaticResource PasswordBoxAuth}"/>
                                     </Grid>
                                 </StackPanel>
 
                                 <StackPanel x:Name="RegFormSP" Visibility="Hidden">
-                                    <TextBox x:Name="PasswordRegTB" MaxLength="30" 
-                                             local:PropertyClass.HintTB="Пароль"
-                                             local:PropertyClass.ImageForTB="/AppFolder/ResourceFolder/ImageFolder/IconForTextBox/PasswordIcon.png"  
-
-                                             Style="{StaticResource TextBoxForIcon}"
-                                             LostFocus="TextBox_LostFocus"
-                                             TextChanged="TextBox_TextChanged"
-                                             PreviewTextInput="Text_PreviewTextInput"/>
+                                    <PasswordBox x:Name="PasswordRegPB" MaxLength="30" 
+                                                local:PropertyClass.HintTB="Пароль"
+                                                local:PropertyClass.ImageForTB="/AppFolder/ResourceFolder/ImageFolder/IconForTextBox/PasswordIcon.png"
+                                                PasswordChanged="PasswordPB_PasswordChanged"
+                                                 InputLanguageManager.InputLanguage="en-us"
+                                                PreviewTextInput="PasswordPB_PreviewTextInput"
+                                                Style="{StaticResource PasswordBoxAuth}"/>
 
                                     <TextBox x:Name="PhoneRegTB" MaxLength="18" 
-                                             Style="{StaticResource TextBoxForIcon}"
+                                             Style="{StaticResource TextBoxForAuthIcon}"
                                              local:PropertyClass.HintTB="Телефон"
                                              local:PropertyClass.ImageForTB="/AppFolder/ResourceFolder/ImageFolder/IconForTextBox/PhoneIcon.png"  
                                              TextChanged="TextBox_TextChanged"
+                                             SpellCheck.IsEnabled="True"
                                              GotFocus="TextBox_GotFocus"
                                              LostFocus="TextBox_LostFocus"
                                              PreviewTextInput="Text_PreviewTextInput"/>
-                                    
+
                                     <TextBox x:Name="NameRegTB" MaxLength="30" 
+                                             Style="{StaticResource TextBoxForAuthorization}"
                                              local:PropertyClass.HintTB="Имя"
                                              LostFocus="TextBox_LostFocus"
+                                             InputLanguageManager.InputLanguage="ru-ru"
                                              TextChanged="TextBox_TextChanged"/>
-                                    
+
                                     <TextBox x:Name="SurnameRegTB" MaxLength="30" 
+                                             Style="{StaticResource TextBoxForAuthorization}"
                                              local:PropertyClass.HintTB="Фамилия"
+                                             InputLanguageManager.InputLanguage="ru-ru"
                                              LostFocus="TextBox_LostFocus"
                                              TextChanged="TextBox_TextChanged"/>
 
                                     <StackPanel Orientation="Horizontal">
-                                        <DatePicker Name="DateOfBirthDP" Width="170"
+                                        <DatePicker Name="DateOfBirthDP" Width="169" Style="{StaticResource DatePickerAuth}"
                                                     local:PropertyClass.HintTB="День рождения" 
                                                     LostFocus="DateOfBirthDP_LostFocus"/>
-                                        
-                                        
+                                                        
+
                                         <RadioButton x:Name="ManChB" Content="Муж." Margin="0,10"/>
                                         <RadioButton x:Name="WomanChB" Content="Жен." Margin="0,10"/>
                                     </StackPanel>
-                                    
+
                                 </StackPanel>
-                                
-                                
-                                
+
+
+
                             </StackPanel>
 
-                            <StackPanel VerticalAlignment="Bottom" Grid.Column="1">
-                                <StackPanel Name="RepeatCodePanelSP" Margin="10,0" Orientation="Horizontal"
-                                            HorizontalAlignment="Center" Opacity="0.56">
-                                    <TextBlock Text="Повторить код можно через - "
-                                               Margin="0,0,0,0" FontSize="16"/>
-                                    <TextBlock x:Name="RepeatCodeTimerTBl" Text="1:00"
-                                               Margin="0,0,0,0" Foreground="Red" FontSize="16"/>
 
-                                </StackPanel>
+                            <StackPanel VerticalAlignment="Bottom" Grid.Column="1" >
 
-                                <TextBlock Name="ErrorRegLB" Text="" TextWrapping="WrapWithOverflow"  Margin="10"
-                                   Foreground="Red" FontSize="16"  TextAlignment="Left"
-                                   HorizontalAlignment="Center"/>
+                                <TextBlock Name="ErrorRegTBl"
+                                            VerticalAlignment="Center"
+                                           Style="{StaticResource ErrorText}"/>
 
                                 <Button x:Name="RegBTN" Content="Получить код" Style="{StaticResource MainButton}"
                                         Width="250" Margin="10" IsEnabled="False"
@@ -222,13 +242,24 @@
                                        Text="Вернуться к авторизации" 
                                        HorizontalAlignment="Center"
                                        Style="{DynamicResource TextBlockUnderline}" Margin="10"/>
-                                
-                               
+
+
                             </StackPanel>
                         </Grid>
 
                     </Grid>
                 </Grid>
+            </Border>
+            <Border x:Name="SuccseedBorder" Opacity="1" Visibility="Collapsed"
+                    Style="{StaticResource WinBorder}">
+
+                <StackPanel VerticalAlignment="Center" Orientation="Vertical">
+                    <Image Source="/AppFolder/ResourceFolder/ImageFolder/GreenTickImage.jpg" Width="100"/>
+                    <TextBlock x:Name="SuccsesTextTBL" Text="Пароль успешно восстановлен!" TextWrapping="Wrap" FontWeight="Bold" Margin="10"
+                               FontSize="20" Foreground="#199A01" TextAlignment="Center"
+                               HorizontalAlignment="Center"/>
+                </StackPanel>
+
             </Border>
         </Grid>
     </Grid>

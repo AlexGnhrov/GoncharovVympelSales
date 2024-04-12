@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GoncharovCarPartsAS.AppFolder.DataFolder
+namespace GoncharovVympelSale.AppFolder.DataFolder
 {
     using System;
     using System.Collections.Generic;
@@ -21,7 +21,7 @@ namespace GoncharovCarPartsAS.AppFolder.DataFolder
             this.Passport = new HashSet<Passport>();
         }
     
-        public int Adress1 { get; set; }
+        public int AdressID { get; set; }
         public int RegionID { get; set; }
         public int CityID { get; set; }
         public int StreetID { get; set; }

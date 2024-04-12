@@ -1,7 +1,7 @@
-﻿using GoncharovCarPartsAS.AppFolder.WinFolder;
+﻿using GoncharovVympelSale.AppFolder.WinFolder;
 using System.Windows;
 
-namespace GoncharovCarPartsAS.AppFolder.ClassFolder
+namespace GoncharovVympelSale.AppFolder.ClassFolder
 {
     public static class ConfigSettingsClass
     {

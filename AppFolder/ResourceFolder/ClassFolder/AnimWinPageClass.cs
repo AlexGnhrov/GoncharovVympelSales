@@ -1,21 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using GoncharovVympelSale.AppFolder.ClassFolder;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace GoncharovCarPartsAS.AppFolder.ResourceFolder.ClassFolder
+namespace GoncharovVympelSale.AppFolder.ResourceFolder.ClassFolder
 {
-   public static class AnimWinPageClass
+    public static class AnimWinPageClass
     {
         public static async Task AnimWinClose(this Window window)
         {
 
             window.IsEnabled = false;
 
-            await Task.Delay(500);
+
+
+            await Task.Delay(320);
 
         }
 
@@ -24,7 +23,24 @@ namespace GoncharovCarPartsAS.AppFolder.ResourceFolder.ClassFolder
 
             frame.IsEnabled = false;
 
-            await Task.Delay(500);
+            await Task.Delay(320);
+
+            GlobalVarriabels.MainWindow.WinBorder.IsEnabled = true;
+            GlobalVarriabels.MainWindow.LeftToolBarSP.IsEnabled = true;
+            GlobalVarriabels.MainWindow.CloseWinBTN.IsEnabled = true;
+
+            frame.Navigate(null);
+
+        }
+
+        public static void FrameErrorBack(this Frame frame)
+        {
+
+            GlobalVarriabels.MainWindow.WinBorder.IsEnabled = true;
+            GlobalVarriabels.MainWindow.LeftToolBarSP.IsEnabled = true;
+            GlobalVarriabels.MainWindow.CloseWinBTN.IsEnabled = true;
+
+            frame.Navigate(null);
 
         }
 

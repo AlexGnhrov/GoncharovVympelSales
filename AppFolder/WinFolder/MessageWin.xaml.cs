@@ -1,79 +1,148 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using GoncharovVympelSale.AppFolder.ClassFolder;
+using GoncharovVympelSale.AppFolder.ResourceFolder.ClassFolder;
+using System;
+using System.Data.Entity.Core;
+using System.Data.Entity.Infrastructure;
 using System.Media;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
-namespace GoncharovCarPartsAS.AppFolder.WinFolder
+namespace GoncharovVympelSale.AppFolder.WinFolder
 {
     /// <summary>
     /// Логика взаимодействия для MessageWin.xaml
     /// </summary>
     public partial class MessageWin : Window
     {
-        private readonly string titleText;
-        private readonly string messageText;
-        private readonly Exception exception;
-        private readonly int messageCode;
+
+        //private readonly int messageCode;
+        Exception exception;
 
 
-        public MessageWin(string titleText, Exception exception,int messageCode)
+        public enum MessageCode
+        {
+            Error,
+            Info,
+            Question,
+        }
+
+        private MessageCode messageCode;
+
+
+        public MessageWin(string titleText, Exception exception, MessageCode messageCode)
         {
             InitializeComponent();
 
-            this.titleText = titleText;
+            DataContext = this;
             this.exception = exception;
+
+
+            Owner = GlobalVarriabels.MainWindow;
+
+
+            Title = titleText;
             this.messageCode = messageCode;
+
+
+            WhatException(exception);
         }
 
-        public MessageWin(string titleText,string messageText ,int messageCode)
+
+
+        public MessageWin(Exception exception, MessageCode messageCode)
         {
             InitializeComponent();
 
-            this.titleText = titleText;
-            this.messageText = messageText;
+            DataContext = this;
+            this.exception = exception;
+
+            Owner = GlobalVarriabels.MainWindow;
+            this.messageCode = messageCode;
+
+            WhatException(exception);
+        }
+
+        public MessageWin(string titleText, string messageText, MessageCode messageCode)
+        {
+            InitializeComponent();
+
+            DataContext = this;
+            MessageTBl.ContextMenu.Visibility = Visibility.Hidden;
+
+            Owner = GlobalVarriabels.MainWindow;
+            
+
+            Title = titleText;
+            MessageTBl.Text = messageText;
             this.messageCode = messageCode;
         }
+
+        public MessageWin(string messageText, MessageCode messageCode)
+        {
+            InitializeComponent();
+
+            DataContext = this;
+
+            Owner = GlobalVarriabels.MainWindow;
+            MessageTBl.ContextMenu.Visibility = Visibility.Hidden;
+
+            MessageTBl.Text = messageText;
+            this.messageCode = messageCode;
+        }
+
+
+
+        private void WhatException(Exception exception)
+        {
+
+            if (exception is EntityException)
+            {
+
+                EntityException entityException = exception as EntityException;
+
+                MessageTBl.Text = entityException.Message;
+            }
+            else if (exception is DbUpdateException)
+            {
+                DbUpdateException entityException = exception as DbUpdateException;
+
+                MessageTBl.Text = entityException.Message;
+            }
+            else
+            {
+                MessageTBl.Text = exception.Message;
+            }
+        }
+
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+
+
             switch (messageCode)
             {
-                case 0:
+                case MessageCode.Error:
                     {
                         SystemSounds.Hand.Play();
-
-                        Title = titleText == "" || titleText == null ? "Ошибка" : titleText;
-
+                        if (Title == "") Title = "Ошибка";
 
                     }
                     break;
 
-                case 1:
+                case MessageCode.Info:
                     {
                         SystemSounds.Exclamation.Play();
 
-                        Title = titleText == "" || titleText == null ? "Информация" : titleText;
-
-
-
+                        if (Title == "") Title = "Информация";
                     }
                     break;
-                case 2:
+                case MessageCode.Question:
                     {
-
                         SystemSounds.Question.Play();
-                        Title = titleText == "" || titleText == null ? "Вопрос" : titleText;
+                        if (Title == "") Title = "Вопрос";
 
+                        QuestionButtonsSP.Visibility = Visibility.Visible;
+                        OkBTN.Visibility = Visibility.Hidden;
                     }
                     break;
 
@@ -83,7 +152,7 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
             }
 
 
-  
+
         }
 
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -91,8 +160,38 @@ namespace GoncharovCarPartsAS.AppFolder.WinFolder
             DragMove();
         }
 
-        private void CloseWinBTN_Click(object sender, RoutedEventArgs e)
+        private async void CloseWinBTN_Click(object sender, RoutedEventArgs e)
         {
+            await this.AnimWinClose();
+            Close();
+        }
+
+        private async void OkBTN_Click(object sender, RoutedEventArgs e)
+        {
+
+
+            await this.AnimWinClose();
+            Close();
+        }
+
+
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(exception.ToString());
+        }
+
+        private async void YesBTN_Click(object sender, RoutedEventArgs e)
+        {
+            await this.AnimWinClose();
+            DialogResult = true;
+            Close();
+        }
+
+        private async void NoBTN_Click(object sender, RoutedEventArgs e)
+        {
+            await this.AnimWinClose();
+            DialogResult = false;
             Close();
         }
     }

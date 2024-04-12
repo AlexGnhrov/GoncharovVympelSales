@@ -1,0 +1,75 @@
+﻿<Page x:Class="GoncharovVympelSale.AppFolder.PageFolder.OrderFolder.AdditionalPage.CancelOrderPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:GoncharovVympelSale.AppFolder.ResourceFolder.ClassFolder"
+      mc:Ignorable="d" 
+      d:DesignHeight="750" d:DesignWidth="1200">
+
+    <Grid>
+        <Border Style="{StaticResource BackgroundPage}"/>
+
+        <Grid Width="650" Height="350">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Background="White" Grid.Column="1" CornerRadius="{StaticResource CornerValue}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="95"/>
+                        <RowDefinition/>
+                        <RowDefinition Height="80"/>
+                    </Grid.RowDefinitions>
+                    
+                    <StackPanel x:Name="NameOfPageSP"  VerticalAlignment="Center">
+                        <Label Name="NamePageLB" Content="Отмена заказа" Style="{StaticResource MainLabel}"   Margin="10,5"/>
+                        <Border Background="{StaticResource SecondColor}" Height="5" Width="50" CornerRadius="2"/>
+                    </StackPanel>
+
+                    <Grid Grid.Row="1">
+                        <TextBox x:Name="CancelDescriptionTB" VerticalContentAlignment="Top"
+                                 local:PropertyClass.HintTB="Причина отказа (макс. 255)"
+                                 Padding="10" 
+                                 MaxLength="255" AcceptsReturn="True" TextWrapping="Wrap" TextChanged="CancelDescriptionTB_TextChanged"/>
+                    </Grid>
+
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Name="ErrorLB" TextWrapping="WrapWithOverflow" Grid.Row="2"
+                                TextAlignment="Center" 
+                               HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Style="{StaticResource ErrorText}" Margin="15,0,0,0" Height="50"/>
+
+                        <Button x:Name="ConfirmBTN" Content="Подтвердить" HorizontalAlignment="Right"
+                                Width="150" Margin="15,20" Grid.Column="1"
+                                Style="{StaticResource YesButton}" Click="ConfirmBTN_Click"/>
+                    </Grid>
+                </Grid>
+            </Border>
+
+
+            <Label Name="CloseLB" Grid.Column="2" Style="{StaticResource ClosePageLB}" 
+                   MouseLeftButtonUp="CloseLB_MouseLeftButtonUp" >
+                <Label.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="0"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Label.RenderTransform>
+            </Label>
+
+        </Grid>
+
+
+    </Grid>
+</Page>

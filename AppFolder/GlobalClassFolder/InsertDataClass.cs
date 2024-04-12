@@ -1,10 +1,11 @@
-﻿using GoncharovCarPartsAS.AppFolder.WinFolder;
+﻿using GoncharovVympelSale.AppFolder.WinFolder;
 using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using static GoncharovVympelSale.AppFolder.WinFolder.MessageWin;
 
-namespace GoncharovCarPartsAS.AppFolder.ClassFolder
+namespace GoncharovVympelSale.AppFolder.ClassFolder
 {
     public static class InsertDataClass
     {
@@ -23,8 +24,7 @@ namespace GoncharovCarPartsAS.AppFolder.ClassFolder
                 if(ex is OverflowException)
                 {
                     new MessageWin(null, $"Превышен лимит в {int.MaxValue}.\n" +
-                                         $"Поэтому значение поставлено на 0",
-                                         (int)GlobalVarriabels.MessageCode.Error).Show();
+                                         $"Поэтому значение поставлено на 0", MessageCode.Error).Show();
                 }
             }
 
@@ -50,7 +50,7 @@ namespace GoncharovCarPartsAS.AppFolder.ClassFolder
 
                     new MessageWin(null, $"Превышен лимит в {long.MaxValue}.\n" +
                                          $"Поэтому значение поставлено на 0",
-                                         (int)GlobalVarriabels.MessageCode.Error).Show();
+                                         MessageCode.Error).Show();
                 }
             }
 

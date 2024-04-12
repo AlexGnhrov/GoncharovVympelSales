@@ -1,0 +1,466 @@
+﻿<Page x:Class="GoncharovVympelSale.AppFolder.PageFolder.StaffFolder.AEStaffPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:GoncharovVympelSale.AppFolder.ResourceFolder.ClassFolder"
+      mc:Ignorable="d" 
+      d:DesignHeight="750" d:DesignWidth="1200"
+      Loaded="Page_Loaded">
+
+    <Grid>
+        <Border Style="{StaticResource BackgroundPage}"/>
+
+        <Grid Width="700" Height="630">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Background="White" Grid.Column="1" CornerRadius="{StaticResource CornerValue}" ClipToBounds="True" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="95"/>
+                        <RowDefinition/>
+                        <RowDefinition Height="84"/>
+                        <RowDefinition Height="10"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Border Background="{StaticResource SecondColor}" Height="5"  CornerRadius="2"
+                                VerticalAlignment="Center"  Margin="10,50,10,40"/>
+                        <Label Name="NamePageLB" Content="Добавление сотрудника" Style="{StaticResource MainLabel}"
+                               Margin="10,5" Grid.Column="1" VerticalAlignment="Center"/>
+                        <Border Background="{StaticResource SecondColor}" Height="5"
+                                CornerRadius="2" VerticalAlignment="Center" Grid.Column="2" Margin="10,50,10,40"/>
+                    </Grid>
+
+
+                    <Grid Grid.Row="1" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid x:Name="MainGrid" Grid.Column="1" Margin="0,0,0,0">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="580"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="580"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid x:Name="LeftGrid">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="75"/>
+                                    <RowDefinition />
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Label  Content="Данные сотрудника" Style="{StaticResource MainLabel}"
+                                        FontSize="24"  HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="10,0" />
+
+                                <Button x:Name="RightArrowBTN" Content="→"
+                                        FontSize="32" FontWeight="Bold"
+                                        Padding="0,-5,0,0" Margin="10,0" HorizontalAlignment="Right"
+                                        Width="45" Height="45"
+                                        Style="{StaticResource MainButton}"
+                                        Click="ArrowBTN_Click"/>
+
+
+                                <StackPanel  Grid.Row="2">
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <Border x:Name="BorderPhoto" Width="200" Height="190" 
+                                                Margin="15,10,15,15" HorizontalAlignment="Left"
+                                                AllowDrop="True" 
+                                                MouseLeftButtonUp="BorderPhoto_MouseLeftButtonUp"
+                                                Style="{DynamicResource BorderImage}"
+                                                Drop="BorderPhoto_Drop">
+                                            <Border.Background>
+                                                <ImageBrush x:Name="ImagePhoto" Stretch="UniformToFill" ImageSource="/AppFolder/ResourceFolder/ImageFolder/Portrait_Placeholder.png"/>
+                                            </Border.Background>
+                                        </Border>
+
+                                        <StackPanel>
+                                            <StackPanel >
+                                                <TextBox x:Name="SNPstaffTB" MaxLength="90" Width="330" BorderBrush="{StaticResource SecondColor}"
+                                                         local:PropertyClass.HintTB="ФИО Сотрудника"
+                                                         TextChanged="TextBox_TextChanged"
+                                                         GotFocus="TextBox_GotFocus"
+                                                         LostFocus="TextBox_LostFocus"
+                                                         PreviewTextInput="Text_PreviewTextInput"/>
+
+                                                <TextBox x:Name="LoginTB" MaxLength="30" Width="330" HorizontalAlignment="Left"
+                                                         Style="{StaticResource TextBoxForIcon}"
+                                                         local:PropertyClass.HintTB="Логин"
+                                                         local:PropertyClass.ImageForTB="/AppFolder/ResourceFolder/ImageFolder/IconForTextBox/LoginIcon.png"  
+                                                         TextChanged="TextBox_TextChanged"
+                                                         GotFocus="TextBox_GotFocus"
+                                                         LostFocus="TextBox_LostFocus"
+                                                         PreviewTextInput="Text_PreviewTextInput"/>
+
+                                                <PasswordBox x:Name="PasswordPB" MaxLength="30" Width="330" HorizontalAlignment="Left"
+                                                             local:PropertyClass.HintTB="Пароль"
+                                                             
+                                                             local:PropertyClass.ImageForTB="/AppFolder/ResourceFolder/ImageFolder/IconForTextBox/PasswordIcon.png"  
+                                                             PasswordChanged="PasswordPB_PasswordChanged"
+                                                             PreviewTextInput="PasswordPB_PreviewTextInput"/>
+
+                                            </StackPanel>
+                                        </StackPanel>
+
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal">
+
+                                        <TextBox x:Name="PhoneTB" MaxLength="18" Width="210" BorderBrush="{StaticResource SecondColor}"
+                                             Style="{StaticResource TextBoxForIcon}"
+                                             local:PropertyClass.HintTB="Телефон"
+                                             local:PropertyClass.ImageForTB="/AppFolder/ResourceFolder/ImageFolder/IconForTextBox/PhoneIcon.png"  
+                                             TextChanged="TextBox_TextChanged"
+                                             GotFocus="TextBox_GotFocus"
+                                             LostFocus="TextBox_LostFocus"
+                                             PreviewTextInput="Text_PreviewTextInput"/>
+
+                                        <TextBox x:Name="EmailTB" MaxLength="30" Width="330" BorderBrush="{StaticResource SecondColor}"
+                                             Style="{StaticResource TextBoxForIcon}"
+                                             local:PropertyClass.HintTB="Почта"
+                                             local:PropertyClass.ImageForTB="/AppFolder/ResourceFolder/ImageFolder/IconForTextBox/EmailIcon.png"  
+                                             TextChanged="TextBox_TextChanged"
+                                             GotFocus="TextBox_GotFocus"
+                                             LostFocus="TextBox_LostFocus"
+                                             PreviewTextInput="Text_PreviewTextInput"/>
+                                    </StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <ComboBox Name="RoleCB"
+                                                  local:PropertyClass.HintTB="Роль*"
+                                                  SelectedValuePath="RoleID"
+                                                  SelectionChanged="ComboBox_SelectionChanged"
+                                                  DisplayMemberPath="NameRole"/>
+
+                                        <ComboBox Name="DeportamentCB" Width="140" Grid.Column="1"
+                                                  local:PropertyClass.HintTB="№ Отдела*"
+                                                  SelectionChanged="ComboBox_SelectionChanged"
+                                                  SelectedValuePath="DepartamentID">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding DepartamentID, StringFormat={} №{0}}"/>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+
+                                        <ComboBox Name="StatusCB" Grid.Column="2"
+                                                  local:PropertyClass.HintTB="Статус*"
+                                                  SelectionChanged="ComboBox_SelectionChanged"
+                                                  SelectedValuePath="StatusUserID">
+                                            <ComboBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding NameStatus}" FontWeight="DemiBold">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding StatusUserID}" Value="1">
+                                                                        <Setter Property="Foreground"  Value="{StaticResource PassColor}"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding StatusUserID}" Value="2">
+                                                                        <Setter Property="Foreground" Value="{StaticResource YellowColor}"/>
+                                                                    </DataTrigger>
+                                                                    <DataTrigger Binding="{Binding StatusUserID}" Value="3">
+                                                                        <Setter Property="Foreground" Value="{StaticResource ErrorColor}"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                </DataTemplate>
+                                            </ComboBox.ItemTemplate>
+                                        </ComboBox>
+                                    </Grid>
+                                </StackPanel>
+
+                            </Grid>
+
+
+                            <Grid  x:Name="RightGrid" Grid.Column="2" VerticalAlignment="Bottom">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="80"/>
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+
+                                <Button x:Name="LeftArrowBTN" Content="←"
+                                        FontSize="32" FontWeight="Bold"
+                                        Padding="0,-5,0,0" Margin="10,0"
+                                        HorizontalAlignment="Left" 
+                                        Width="45" Height="45"
+                                        Style="{StaticResource MainButton}"
+                                        Click="ArrowBTN_Click"/>
+
+                                <Label  Content="Паспортные данные" Style="{StaticResource MainLabel}"
+                                        FontSize="24" HorizontalAlignment="Right" HorizontalContentAlignment="Right"
+                                        Margin="10,5" />
+
+                                <Grid Grid.Row="1" VerticalAlignment="Bottom">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="115"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <ComboBox Name="DepoIssueCB" IsEditable="True" Height="40" Margin="10,25,10,10"
+                                              SelectedValuePath="DepartamentID"
+                                              DisplayMemberPath="NameDep"
+                                              local:PropertyClass.HintTB="Депортамент пасспорта*"
+                                              local:PropertyClass.LengthTextForCB="300"
+                                              SelectionChanged="ComboBox_SelectionChanged"
+                                              TextBoxBase.TextChanged="ComboBox_TextChanged"
+                                              LostFocus="ComboBox_LostFocus"/>
+
+                                    <TextBox x:Name="EditDepoIssueTB" Height="40" Margin="10,25,10,10"
+                                             Background="White" Visibility="Hidden"
+                                             TextChanged="EditTB_TextChanged" />
+
+                                    <TextBox x:Name="CodeDepTB" Grid.Column="1" IsEnabled="False" 
+                                             Height="40" HorizontalAlignment="Center" Width="95"
+                                             TextChanged="TextBox_TextChanged"
+                                             GotFocus="TextBox_GotFocus"
+                                             local:PropertyClass.HintTB="Код деп*"
+                                             MaxLength="7" Margin="10,25,10,10" />
+
+                                    <TextBox x:Name="EditCodeDepTB" Grid.Column="1" MaxLength="7"
+                                             HorizontalAlignment="Center" Width="95"
+                                             Visibility="Hidden" Background="White"
+                                             Height="40"  Margin="10,25,10,10"
+                                             TextChanged="EditTB_TextChanged"/>
+
+                                    <StackPanel x:Name="ButtonDepoIssueSP" Grid.Column="2" Style="{StaticResource ComboboxButtonPannel}" Width="120" Margin="0,10,0,0">
+                                        <Button x:Name="EditDepBTN"  Style="{StaticResource EditForCB}" Width="40" Height="40"
+                                                Click="EditItemComboBoxBTN_Click">
+                                            <Button.Content>
+                                                <Image x:Name="ImageEDep"/>
+                                            </Button.Content>
+                                        </Button>
+                                        <Button x:Name="DeleteDepBTN" Style="{StaticResource DeleteForCB}" Width="40" Height="40"
+                                                Click="DeleteItemComboBoxBTN_Click">
+                                            <Button.Content>
+                                                <Image x:Name="ImageDDep"/>
+                                            </Button.Content>
+                                        </Button>
+                                    </StackPanel>
+
+
+                                </Grid>
+                                
+                                <Border Grid.Row="1" Height="2" Background="LightGray" Margin="10,0"
+                                        CornerRadius="{StaticResource CornerValue}"
+                                        VerticalAlignment="Bottom"/>
+
+                                <StackPanel Grid.Row="2" Orientation="Horizontal"  >
+                                    <StackPanel Margin="0,15,0,0">
+                                        <TextBox x:Name="PassportTB" MaxLength="12" Width="195" HorizontalAlignment="Left"
+                                                         Style="{StaticResource TextBoxForIcon}"
+                                                         local:PropertyClass.HintTB="Паспорт"
+                                                         local:PropertyClass.ImageForTB="/AppFolder/ResourceFolder/ImageFolder/IconForTextBox/PassportIcon.png"  
+                                                         TextChanged="TextBox_TextChanged"
+                                                         GotFocus="TextBox_GotFocus"
+                                                         LostFocus="TextBox_LostFocus"
+                                                         PreviewTextInput="Text_PreviewTextInput"/>
+
+                                        <DatePicker Name="DateOfIssueDP" 
+                                                    local:PropertyClass.HintTB="Дата выдачи"
+                                                    LostFocus="DateOfPicker_LostFocus"/>
+
+                                        <DatePicker Name="DateOfBirthDP" 
+                                                    local:PropertyClass.HintTB="Дата рождения"
+                                                    LostFocus="DateOfPicker_LostFocus"/>
+
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="15">
+                                            <RadioButton x:Name="ManRB" Content="Муж." Click="RadioButton_Click" />
+                                            <RadioButton x:Name="WomanRB" Content="Жен." Click="RadioButton_Click" />
+                                        </StackPanel>
+
+                                    </StackPanel>
+                                    <Border Background="LightGray" Width="2" CornerRadius="0,0,2,2"/>
+                                    <StackPanel Width="365" ClipToBounds="False">
+                                        <Grid Margin="0,15,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <ComboBox Name="RegionCB" IsEditable="True" 
+                                                      SelectedValuePath="RegionID"
+                                                      DisplayMemberPath="NameRegion"
+                                                      local:PropertyClass.HintTB="Регион*"
+                                                      local:PropertyClass.LengthTextForCB="60"
+                                                      SelectionChanged="ComboBox_SelectionChanged"
+                                                      TextBoxBase.TextChanged="ComboBox_TextChanged"
+                                                      LostFocus="ComboBox_LostFocus"/>
+
+                                            <TextBox x:Name="EditRegionTB"
+                                                      Background="White" Visibility="Hidden"
+                                                      TextChanged="EditTB_TextChanged" />
+
+                                            <StackPanel x:Name="ButtonRegionSP" Grid.Column="1" Style="{StaticResource ComboboxButtonPannel}" Width="120">
+                                                <Button x:Name="EditRegionBTN"  Style="{StaticResource EditForCB}" Width="40"
+                                                         Click="EditItemComboBoxBTN_Click">
+                                                    <Button.Content>
+                                                        <Image x:Name="ImageERegion"/>
+                                                    </Button.Content>
+                                                </Button>
+                                                <Button x:Name="DeleteRegionBTN"
+                                                        Style="{StaticResource DeleteForCB}" Width="40"
+                                                        Click="DeleteItemComboBoxBTN_Click">
+                                                    <Button.Content>
+                                                        <Image x:Name="ImageDRegion"/>
+                                                    </Button.Content>
+                                                </Button>
+                                            </StackPanel>
+
+
+                                        </Grid>
+
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <ComboBox Name="CityCB" IsEnabled="False" IsEditable="True"
+                                                      SelectedValuePath="CityID"
+                                                      DisplayMemberPath="NameCity"
+                                                      local:PropertyClass.HintTB="Город*"
+                                                      local:PropertyClass.LengthTextForCB="60"
+                                                      SelectionChanged="ComboBox_SelectionChanged"
+                                                      TextBoxBase.TextChanged="ComboBox_TextChanged"/>
+
+                                            <TextBox x:Name="EditCityTB" Background="White" Visibility="Hidden"
+                                                     TextChanged="EditTB_TextChanged" />
+
+                                            <StackPanel x:Name="ButtonCitySP" Grid.Column="1" Style="{StaticResource ComboboxButtonPannel}" 
+                                                        Width="120">
+                                                <Button x:Name="EditCityBTN" Style="{StaticResource EditForCB}" Width="40"
+                                                        Click="EditItemComboBoxBTN_Click">
+                                                    <Button.Content>
+                                                        <Image x:Name="ImageECity"/>
+                                                    </Button.Content>
+                                                </Button>
+                                                <Button x:Name="DeleteCityBTN" Grid.Column="1" Style="{StaticResource DeleteForCB}"
+                                                        Click="DeleteItemComboBoxBTN_Click">
+                                                    <Button.Content>
+                                                        <Image x:Name="ImageDCity"/>
+                                                    </Button.Content>
+                                                </Button>
+                                            </StackPanel>
+
+                                        </Grid>
+
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <ComboBox Name="StreetCB" IsEnabled="False" IsEditable="True"
+                                                      SelectedValuePath="Street.StreetID"
+                                                      DisplayMemberPath="Street.NameStreet"
+                                                      local:PropertyClass.HintTB="Улица*"
+                                                      local:PropertyClass.LengthTextForCB="60"
+                                                      SelectionChanged="ComboBox_SelectionChanged"
+                                                      TextBoxBase.TextChanged="ComboBox_TextChanged"/>
+
+
+                                            <TextBox x:Name="EditStreetTB" Visibility="Hidden"
+                                                     Background="White"
+                                                     TextChanged="EditTB_TextChanged" />
+
+                                            <StackPanel x:Name="ButtonStreetSP" Grid.Column="1" Style="{StaticResource ComboboxButtonPannel}" Width="120">
+                                                <Button x:Name="EditStreetBTN" Style="{StaticResource EditForCB}" Width="40"
+                                                        Click="EditItemComboBoxBTN_Click">
+                                                    <Button.Content>
+                                                        <Image x:Name="ImageEStreet"/>
+                                                    </Button.Content>
+                                                </Button>
+                                                <Button x:Name="DeleteStreetBTN" Grid.Column="1" Style="{StaticResource DeleteForCB}"
+                                                          Click="DeleteItemComboBoxBTN_Click">
+                                                    <Button.Content>
+                                                        <Image x:Name="ImageDStreet"/>
+                                                    </Button.Content>
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="90"/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBox x:Name="HomeTB" HorizontalContentAlignment="Center" MaxLength="4"
+                                                             local:PropertyClass.HintTB="Дом*"
+                                                             PreviewTextInput="Text_PreviewTextInput"/>
+                                            <TextBox x:Name="BuildingTB" Grid.Column="1" MaxLength="5" Width="80"
+                                                     HorizontalAlignment="Left" HorizontalContentAlignment="Center" 
+                                                     local:PropertyClass.HintTB="Корп." />
+                                            <TextBox x:Name="AppartamentTB" Grid.Column="1" Width="80" MaxLength="4"
+                                                     HorizontalAlignment="Right" HorizontalContentAlignment="Center" 
+                                                     local:PropertyClass.HintTB="Кв*"
+                                                     PreviewTextInput="Text_PreviewTextInput"/>
+
+                                        </Grid>
+                                    </StackPanel>
+                                </StackPanel>
+
+                            </Grid>
+
+                        </Grid>
+
+
+                    </Grid>
+
+
+                    <Button x:Name="AddEditBTN" Content="Добавить" Grid.Row="2"
+                            Width="300" Height="45"
+                            HorizontalAlignment="Left"
+                            Margin="20,10"
+                            Style="{StaticResource YesButton}"
+                            Click="AddEditBTN_Click"/>
+
+                    <TextBlock Name="ErrorLB" TextWrapping="WrapWithOverflow" Grid.Row="2"
+                               Width="250" TextAlignment="Center"
+                               HorizontalAlignment="Right" VerticalAlignment="Center"
+                               Style="{StaticResource ErrorText}"/>
+                </Grid>
+            </Border>
+
+
+            <Label Name="CloseLB" Grid.Column="2"  Style="{StaticResource ClosePageLB}" 
+                   MouseLeftButtonUp="CloseLB_MouseLeftButtonUp"  >
+                <Label.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform />
+                        <TranslateTransform />
+                    </TransformGroup>
+                </Label.RenderTransform>
+            </Label>
+
+        </Grid>
+
+
+    </Grid>
+</Page>

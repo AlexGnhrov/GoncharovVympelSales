@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace GoncharovCarPartsAS.AppFolder.ClassFolder
+namespace GoncharovVympelSale.AppFolder.ClassFolder
 {
     public static class ValidationDataClass
     {
@@ -14,7 +14,7 @@ namespace GoncharovCarPartsAS.AppFolder.ClassFolder
 
         public static void OnlyEnglish(this TextCompositionEventArgs e)
         {
-            e.Handled = !new Regex($"^[a-zA-Z0-9_';:-@!#$%^&*()+№.]*$").IsMatch(e.Text);
+            e.Handled = !new Regex($"^[a-zA-Z0-9_';:@!#$%^&*()+№.-]*$").IsMatch(e.Text);
         }
 
         public static void Login(this TextCompositionEventArgs e)
@@ -25,7 +25,12 @@ namespace GoncharovCarPartsAS.AppFolder.ClassFolder
 
         public static void Phone(this TextBox PhoneNumText)
         {
-
+            if (PhoneNumText.Text == "7")
+            {
+                PhoneNumText.Text = PhoneNumText.Text.Insert(0, "+");
+                PhoneNumText.Text += " ";
+                PhoneNumText.CaretIndex = 3;
+            }
             try
             {
                 if (!Keyboard.IsKeyDown(Key.Back))
@@ -90,8 +95,10 @@ namespace GoncharovCarPartsAS.AppFolder.ClassFolder
 
 
             if (trimmedTextBox.EndsWith("@ya.ru") || trimmedTextBox.EndsWith("@yandex.ru") ||
-                trimmedTextBox.EndsWith("@yandex.ru") ||
-                trimmedTextBox.EndsWith("@mail.ru") || trimmedTextBox.EndsWith("@gmail.com"))
+                trimmedTextBox.EndsWith("@inbox.ru") || trimmedTextBox.EndsWith("@list.ru") ||
+                trimmedTextBox.EndsWith("@bk.ru") || 
+                trimmedTextBox.EndsWith("@mail.ru") ||
+                trimmedTextBox.EndsWith("@gmail.com"))
             {
                 return true;
             }
@@ -101,7 +108,7 @@ namespace GoncharovCarPartsAS.AppFolder.ClassFolder
         public static void FloatNums(this TextBox textBox)
         {
             string result = "";
-            char[] validChars = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '.', 'б' };
+            char[] validChars = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '.' };
 
             bool CommaIsUsing = false;
             int i = 1;
@@ -114,11 +121,10 @@ namespace GoncharovCarPartsAS.AppFolder.ClassFolder
                 if (Array.IndexOf(validChars, c) != -1)
                 {
 
-                    if (c == ',' || c == '.' || c == 'б')
+                    if (c == ',' || c == '.')
                     {
                         if (i != 1 && !CommaIsUsing)
                         {
-
                             result += ",";
                             CommaIsUsing = true;
                         }
@@ -141,24 +147,190 @@ namespace GoncharovCarPartsAS.AppFolder.ClassFolder
             textBox.Text = result;
 
 
-
-            if (!Keyboard.IsKeyDown(Key.Back))
+            if (!Keyboard.IsKeyDown(Key.Back) &&
+                (textBox.CaretIndex == textBox.Text.Length || textBox.CaretIndex == 0))
             {
-
-                if (textBox.CaretIndex == textBox.Text.Length ||
-                    textBox.CaretIndex == 0)
-                {
-                    textBox.CaretIndex = textBox.Text.Length;
-                }
-
-
+                textBox.CaretIndex = textBox.Text.Length;
             }
         }
 
 
 
 
-       
+        //public static void Phone(this TextBox PhoneNumText)
+        //{
+        //    string result = "";
+        //    int saveCaret = PhoneNumText.CaretIndex;
+        //    string textBoxTimmed = PhoneNumText.Text.Trim();
+
+
+        //    char[] validChars = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+
+        //    int i = 1;
+
+        //    foreach (char c in textBoxTimmed)
+        //    {
+
+        //        if (Array.IndexOf(validChars, c) != -1)
+        //        {
+
+        //            if (i == 1)
+        //            {
+        //                result += "+";
+        //                result += c;
+        //                result += " ";
+
+        //                saveCaret += 3;
+        //            }
+        //            else if(i == 6)
+        //            {
+        //                result += ")";
+        //                saveCaret += 1;
+        //            }
+        //            //else if (i == 3)
+        //            //{
+        //            //    result += "(";
+
+        //            //    //if (!Keyboard.IsKeyDown(Key.Back) && (!(textBoxTimmed.Length > 5) || !(textBoxTimmed.Length > 2)))
+        //            //    //{
+        //            //    ++saveCaret;
+        //            //    //}
+        //            //}
+        //            result += c;
+        //        }
+
+        //        ++i;
+        //    }
+
+        //    PhoneNumText.Text = result;
+        //    PhoneNumText.CaretIndex = saveCaret;
+
+        //}
+
+
+
+        public static void PassportNum(this TextBox textBox)
+        {
+            string result = "";
+            int saveCaret = textBox.CaretIndex;
+            string textBoxTimmed = textBox.Text.Trim();
+
+
+            char[] validChars = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+
+            int i = 1;
+
+            foreach (char c in textBoxTimmed)
+            {
+
+                if (Array.IndexOf(validChars, c) != -1)
+                {
+
+                    result += c;
+
+                    if (i == 2 || i == 5)
+                    {
+                        result += " ";
+
+                        if (!Keyboard.IsKeyDown(Key.Back) && (!(textBoxTimmed.Length > 5) || !(textBoxTimmed.Length > 2)))
+                        {
+                            ++saveCaret;
+                        }
+
+
+                    }
+                }
+
+                ++i;
+            }
+
+            textBox.Text = result;
+            textBox.CaretIndex = saveCaret;
+
+        }
+
+
+        public static void StorageNum(this TextBox textBox)
+        {
+            string result = "";
+            int saveCaret = textBox.CaretIndex;
+            string textBoxTimmed = textBox.Text.Trim();
+
+
+            char[] validChars = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+
+            int i = 1;
+
+            foreach (char c in textBoxTimmed)
+            {
+
+                if (Array.IndexOf(validChars, c) != -1)
+                {
+
+                    result += c;
+
+                    if (i == 2 || i == 5)
+                    {
+                        result += "-";
+
+                        if (!Keyboard.IsKeyDown(Key.Back) && (!(textBoxTimmed.Length > 5) || !(textBoxTimmed.Length > 2)))
+                        {
+                            ++saveCaret;
+                        }
+
+
+                    }
+                }
+
+                ++i;
+            }
+
+            textBox.Text = result;
+            textBox.CaretIndex = saveCaret;
+
+        }
+
+
+
+        public static void CodeDepNum(this TextBox textBox)
+        {
+            string result = "";
+            int saveCaret = textBox.CaretIndex;
+            string textBoxTimmed = textBox.Text.Trim();
+
+
+            char[] validChars = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+
+            int i = 1;
+
+            foreach (char c in textBoxTimmed)
+            {
+
+                if (Array.IndexOf(validChars, c) != -1)
+                {
+
+                    result += c;
+
+                    if (i == 3)
+                    {
+                        result += "-";
+
+                        if (!Keyboard.IsKeyDown(Key.Back) && (!(textBoxTimmed.Length > 5) || !(textBoxTimmed.Length > 2)))
+                        {
+                            ++saveCaret;
+                        }
+
+
+                    }
+                }
+
+                ++i;
+            }
+
+            textBox.Text = result;
+            textBox.CaretIndex = saveCaret;
+
+        }
 
 
         public static bool CheckLengthPhone(this TextBox phone)
@@ -223,43 +395,73 @@ namespace GoncharovCarPartsAS.AppFolder.ClassFolder
         }
 
 
-        public static bool CheckPassword(this TextBox password,  out string message)
+
+
+        public static void CheckFields(ref bool error, PasswordBox textBox)
         {
 
-            message = "";
-
-            if (password.Text.Length < 6)
+            if (string.IsNullOrWhiteSpace(textBox.Password))
             {
+                textBox.Tag = GlobalVarriabels.ErrorTag;
 
-                message = "Пароль должен содержать не меньше 6 символов";
-                return  false;
+                error = true;
             }
-            if (password.Text.IndexOfAny(numSym.ToCharArray()) == -1)
+
+            if (error) return;
+            error = false;
+        }
+
+        public static void CheckFields(ref bool error, TextBox textBox)
+        {
+
+            if (string.IsNullOrWhiteSpace(textBox.Text))
             {
+                textBox.Tag = GlobalVarriabels.ErrorTag;
 
-                message = "Пароль должен cодержать одну цифру";
-                return false;
+                error = true;
             }
-            if (password.Text.IndexOfAny(BigSym.ToCharArray()) == -1)
+
+            if (error) return;
+            error = false;
+        }
+
+        public static void CheckFields(ref bool error, ComboBox textBox, bool isValue)
+        {
+
+            if (isValue)
             {
+                if (textBox.SelectedValue == null)
+                {
+                    textBox.Tag = GlobalVarriabels.ErrorTag;
 
-                message = "Пароль должен содержать одну прописную букву";
-                return false;
+                    error = true;
+                }
             }
-            if (password.Text.IndexOfAny(LitSym.ToCharArray()) == -1)
+            else if (string.IsNullOrWhiteSpace(textBox.Text))
             {
+                textBox.Tag = GlobalVarriabels.ErrorTag;
 
-                message = "Пароль должен содержать одну строчную букву";
-                return false;
+                error = true;
             }
-            if (password.Text.IndexOfAny(someSym.ToCharArray()) == -1)
+
+
+            if (error) return;
+            error = false;
+        }
+
+        public static void CheckFields(ref bool error, DatePicker textBox)
+        {
+
+            if (textBox.SelectedDate == null)
             {
+                textBox.Tag = GlobalVarriabels.ErrorTag;
 
-                message = "Пароль должен содержать один из символов: " + someSym;
-                return false;
+
+                error = true;
             }
-            return true;
 
+            if (error) return;
+            error = false;
         }
 
     }

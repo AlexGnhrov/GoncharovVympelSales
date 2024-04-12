@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GoncharovCarPartsAS.AppFolder.DataFolder
+namespace GoncharovVympelSale.AppFolder.DataFolder
 {
     using System;
     using System.Collections.Generic;
@@ -24,16 +24,16 @@ namespace GoncharovCarPartsAS.AppFolder.DataFolder
         public string UQnum { get; set; }
         public Nullable<int> StaffID { get; set; }
         public Nullable<int> ClientID { get; set; }
-        public decimal Price { get; set; }
+        public Nullable<decimal> Price { get; set; }
         public Nullable<System.DateTime> OrderStart { get; set; }
-        public System.DateTime OrderIssue { get; set; }
+        public Nullable<System.DateTime> OrderIssue { get; set; }
         public Nullable<System.DateTime> ShellLife { get; set; }
-        public System.DateTime DeliveryDate { get; set; }
-        public int StatusOrderID { get; set; }
-        public int TypeOfIssueD { get; set; }
-        public Nullable<int> DepartamentCompanyID { get; set; }
+        public Nullable<System.DateTime> DeliveryDate { get; set; }
+        public int DepartamentCompanyID { get; set; }
         public string DeliveryAdress { get; set; }
         public string CancelDescription { get; set; }
+        public int StatusOrderID { get; set; }
+        public Nullable<int> TypeOfIssueD { get; set; }
         public int PaymentTypetID { get; set; }
     
         public virtual Client Client { get; set; }

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GoncharovCarPartsAS.AppFolder.DataFolder
+namespace GoncharovVympelSale.AppFolder.DataFolder
 {
     using System;
     using System.Collections.Generic;
@@ -17,7 +17,6 @@ namespace GoncharovCarPartsAS.AppFolder.DataFolder
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Passport()
         {
-            this.PassportOfStaff = new HashSet<PassportOfStaff>();
             this.Staff = new HashSet<Staff>();
         }
     
@@ -33,8 +32,6 @@ namespace GoncharovCarPartsAS.AppFolder.DataFolder
         public virtual Adress Adress { get; set; }
         public virtual DepartamentIssue DepartamentIssue { get; set; }
         public virtual Gender Gender { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PassportOfStaff> PassportOfStaff { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Staff> Staff { get; set; }
     }

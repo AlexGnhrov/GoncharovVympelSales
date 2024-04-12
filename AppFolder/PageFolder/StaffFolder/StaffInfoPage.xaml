@@ -1,0 +1,254 @@
+﻿<Page x:Class="GoncharovVympelSale.AppFolder.PageFolder.StaffFolder.StaffInfoPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:GoncharovVympelSale.AppFolder.PageFolder.StaffFolder"
+      mc:Ignorable="d" 
+      d:DesignHeight="750" d:DesignWidth="1200"
+      Loaded="Page_Loaded">
+    <Page.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid>
+        <Border Style="{StaticResource BackgroundPage}"/>
+
+        <Grid Width="1000" MinHeight="700" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+            <Border Background="White" Grid.Column="1" CornerRadius="{StaticResource CornerValue}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="95"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <StackPanel x:Name="NameOfPageSP" >
+                        <Label Name="NamePageLB" Content="Информация о сотруднике" Style="{StaticResource MainLabel}"   Margin="10,5"/>
+                        <Border Background="{StaticResource SecondColor}" Height="5" Width="50" CornerRadius="2"/>
+                    </StackPanel>
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="400" />
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Border x:Name="BorderPhoto"  
+                                                 HorizontalAlignment="Center"
+                                                Style="{DynamicResource BorderImage}" VerticalAlignment="Center"
+                                                Width="315" Cursor="Arrow" Height="320">
+                            <Border.Background>
+                                <ImageBrush ImageSource="{Binding Photo}"/>
+                            </Border.Background>
+
+                        </Border>
+                        <StackPanel Grid.Column="1" Margin="10">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="ФИО:" FontSize="20" FontWeight="DemiBold"/>
+                                <TextBlock>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} {1} {2}">
+                                                <Binding Path="Surname" />
+                                                <Binding Path="Name" />
+                                                <Binding Path="Patronymic" FallbackValue="" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                            </TextBlock>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <TextBlock>
+                                <Run Text="Пол: " FontSize="20" FontWeight="DemiBold"/>
+                                <Run Text="{Binding Passport.Gender.NameGender}"/>
+                            </TextBlock>
+
+                            <TextBlock TextWrapping="Wrap">
+                                <Run Text="Дата рождения: " FontSize="20" FontWeight="DemiBold"/>
+                                <Run Text="{Binding Passport.DateOfBirth,StringFormat={}{0:dd.MM.yyyy}}" />
+                            </TextBlock>
+
+                            <TextBlock>
+                                <Run Text="Телефон: " FontSize="20" FontWeight="DemiBold"/>
+                                <Run Text="{Binding PhoneNum}"/>
+                            </TextBlock>
+
+                            <TextBlock>
+                                <Run Text="Почта: " FontSize="20" FontWeight="DemiBold"/>
+                                <Run Text="{Binding Email,TargetNullValue='-'}"/>
+                            </TextBlock>
+
+                            <TextBlock>
+                                <Run Text="Роль: " FontSize="20" FontWeight="DemiBold"/>
+                                <Run Text="{Binding Role.NameRole}"/>
+                            </TextBlock>
+
+
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Статус: " FontSize="20" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding StatusUser.NameStatus}"
+                                           FontSize="18"
+                                           FontWeight="DemiBold"
+                                           VerticalAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding StatusID}" Value="1">
+                                                    <Setter Property="Foreground"  Value="{StaticResource PassColor}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding StatusID}" Value="2">
+                                                    <Setter Property="Foreground" Value="{StaticResource YellowColor}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding StatusID}" Value="3">
+                                                    <Setter Property="Foreground" Value="{StaticResource ErrorColor}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+
+
+                            <StackPanel Orientation="Horizontal">
+
+                                <TextBlock Text="Текущий отдел: " VerticalAlignment="Top" FontSize="20" FontWeight="DemiBold"/>
+
+                                <TextBlock TextWrapping="Wrap" Width="310"  >
+                                    <Run Text="{Binding DepartamentCompany.Adress.Region.NameRegion,StringFormat='{}{0},'}" />
+                                    <Run Text="{Binding DepartamentCompany.Adress.City.NameCity,StringFormat='{}г. {0},'}" />
+                                    <LineBreak/>
+                                    <Run Text="{Binding DepartamentCompany.Adress.Street.NameStreet,StringFormat='{}ул. {0},'}" />
+                                    <Run Text="{Binding DepartamentCompany.Adress.Home ,StringFormat='{}д. {0}'}" />
+                                    <Run Text="{Binding DepartamentCompany.Adress.Building,StringFormat='{},кор. {0}',TargetNullValue=''}" />
+                                    <Run Text="{Binding DepartamentCompany.Adress.Apprtament}" />
+                                    <Run Text="{Binding DepartamentID, StringFormat={}(№{0})}"/>
+                                </TextBlock>
+                            </StackPanel>
+
+                        </StackPanel>
+
+
+                        <StackPanel Grid.Column="1" Grid.Row="1" Margin="10,15">
+                            <TextBlock Text="Паспорт" FontSize="24" Margin="5,10" FontWeight="DemiBold"/>
+
+
+                            <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
+                                <TextBlock Text="Номер и серия:" FontSize="18" FontWeight="DemiBold"/>
+                                <TextBlock>
+                                    <TextBlock >
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0:##-##} {1} ">
+                                                <Binding Path="Passport.Series" />
+                                                <Binding Path="Passport.Num" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                            </TextBlock>
+                                </TextBlock>
+                            </StackPanel>
+
+
+                            <StackPanel Orientation="Horizontal">
+
+                                <TextBlock Text="Кем выдан: " VerticalAlignment="Top" Margin="10,5"  FontSize="18" FontWeight="DemiBold"/>
+
+                                <TextBlock TextWrapping="Wrap" Width="325"  Margin="40,0,0,0" >
+                                <Run Text="{Binding Passport.DepartamentIssue.NameDep}" />
+                                <Run Text="{Binding Passport.DepartamentIssue.CodeDep, StringFormat={}(№{0})}" />
+                                </TextBlock>
+                            </StackPanel>
+
+
+
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Дата выдачи: " FontSize="18" FontWeight="DemiBold" Margin="10,5"/>
+                                <TextBlock Text="{Binding Passport.DateOfIssue,StringFormat={}{0:dd.MM.yyyy}}" Margin="25,0,0,0"/>
+
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal">
+
+                                <TextBlock Text="Адрес регистр: " VerticalAlignment="Top" Margin="10,5"
+                                           FontSize="18" FontWeight="DemiBold"/>
+
+                                <TextBlock TextWrapping="Wrap" Width="320"  Margin="10,0,0,0">
+                                <Run Text="{Binding Passport.Adress.Region.NameRegion,StringFormat='{}{0},'}" />
+                                <Run Text="{Binding Passport.Adress.City.NameCity,StringFormat='{}г. {0},'}" />
+                                     <LineBreak/>
+                                <Run Text="{Binding Passport.Adress.Street.NameStreet ,StringFormat='{}ул. {0},'}" />
+                                <Run Text="{Binding Passport.Adress.Home ,StringFormat='{}д. {0},'}" />
+                                <Run Text="{Binding Passport.Adress.Building,StringFormat='{}кор. {0},',TargetNullValue=''}" />
+                                <Run Text="{Binding Passport.Adress.Appartament,StringFormat='{}кв. {0}'}" />
+                                </TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+
+
+
+                        <StackPanel Grid.Row="1" Margin="10,15">
+
+                            <TextBlock Text="Информация о записи" FontSize="24" Margin="0,10,5,10" FontWeight="DemiBold"/>
+
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Дата добавления: " FontSize="18" FontWeight="DemiBold" Margin="5"/>
+                                <TextBlock Text="{Binding AddDate,StringFormat={}{0:dd.MM.yyyy}}" Margin="62,0,0,0"/>
+
+                            </StackPanel>
+
+                            <StackPanel x:Name="InfoStaffSP">
+
+                                <TextBlock TextWrapping="Wrap">
+                                <Run Text="Дата последнего редакт.: " FontSize="18" FontWeight="DemiBold"/>
+                                <Run Text="{Binding DateEdit,StringFormat={}{0:dd.MM.yyyy},FallbackValue=-,TargetNullValue=-}" />
+                                </TextBlock>
+
+                                <StackPanel>
+
+                                    <TextBlock Text="Кто отредактировал: " VerticalAlignment="Top"
+                                           FontSize="18" FontWeight="DemiBold"/>
+
+                                    <TextBlock TextWrapping="Wrap" HorizontalAlignment="Left"  >
+                                     <Run Text="{Binding Staff1.Surname}" />
+                                     <Run Text="{Binding Staff1.Name}" />
+                                     <Run Text="{Binding Staff1.Patronymic}" />
+                                     <Run Text="{Binding Staff1.DepartamentID, StringFormat={}(№{0})}"/>
+
+                                    </TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+
+                    </Grid>
+                </Grid>
+            </Border>
+
+
+
+            <Label Name="CloseLB" Grid.Column="2" Style="{StaticResource ClosePageLB}" 
+                   MouseLeftButtonUp="CloseLB_MouseLeftButtonUp" >
+                <Label.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="0"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Label.RenderTransform>
+            </Label>
+
+        </Grid>
+
+
+    </Grid>
+</Page>

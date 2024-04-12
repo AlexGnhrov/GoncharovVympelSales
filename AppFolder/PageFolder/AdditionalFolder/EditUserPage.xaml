@@ -1,0 +1,164 @@
+﻿<Page x:Class="GoncharovVympelSale.AppFolder.PageFolder.AdditionalFolder.EditUserPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:local="clr-namespace:GoncharovVympelSale.AppFolder.ResourceFolder.ClassFolder"
+      mc:Ignorable="d" 
+      d:DesignHeight="750" d:DesignWidth="1200"
+      Loaded="Page_Loaded" Visibility="Visible">
+
+    <Grid>
+        <Border Style="{StaticResource BackgroundPage}"/>
+
+        <Grid Width="650" 
+              VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
+            <Border Background="White" Grid.Column="1" CornerRadius="{StaticResource CornerValue}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70"/>
+                        <RowDefinition/>
+                        <RowDefinition Height="100"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel x:Name="NameOfPageSP" >
+                        <Label Name="NamePageLB" Content="Редактирование" Style="{StaticResource MainLabel}"   Margin="10,5"/>
+                    </StackPanel>
+
+                    
+                    <StackPanel Grid.Row="1" Margin="10">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Ellipse x:Name="UserPicture" Stroke="{StaticResource SecondColor}"
+                                     Grid.Row="1" StrokeThickness="2"
+                                     Cursor="Hand"
+                                     Width="128" Height="128" Margin="10"
+                                     MouseLeftButtonUp="Ellipse_MouseLeftButtonUp"
+                                     AllowDrop="True"
+                                     Drop="BorderPhoto_Drop">
+                                <Ellipse.Fill>
+                                    <ImageBrush x:Name="PhotoUserIB" Stretch="UniformToFill" ImageSource="/GoncharovVympelSale;component/AppFolder/ResourceFolder/ImageFolder/Portrait_Placeholder.png" />
+                                </Ellipse.Fill>
+                            </Ellipse>
+
+                            <Grid Grid.Column="1" VerticalAlignment="Center">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBox x:Name="NameTB" MaxLength="30" 
+                                             Style="{StaticResource TextBoxForAuthorization}"
+                                             local:PropertyClass.HintTB="Имя"
+                                             LostFocus="TextBox_LostFocus"
+                                             TextChanged="TextBox_TextChanged"/>
+
+                                <TextBox x:Name="SurnameTB" MaxLength="30" Grid.Row="1"
+                                             Style="{StaticResource TextBoxForAuthorization}"
+                                             local:PropertyClass.HintTB="Фамилия"
+                                             LostFocus="TextBox_LostFocus"
+                                             TextChanged="TextBox_TextChanged"/>
+
+                            </Grid>
+                        </Grid>
+
+                        <TextBox x:Name="EmailTB" MaxLength="30" IsReadOnly="True"
+                                             BorderBrush="Transparent" 
+                                             Background="{StaticResource AuthorizationBackgroundTB}"
+                                             Style="{StaticResource TextBoxForIcon}"
+                                             Cursor="No"
+                                             local:PropertyClass.HintTB="Почта"
+                                             local:PropertyClass.ImageForTB="/AppFolder/ResourceFolder/ImageFolder/IconForTextBox/EmailIcon.png"  />
+
+
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="320"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                             </Grid.RowDefinitions>
+                            
+                            
+                            
+
+
+                            <TextBox x:Name="PhoneTB" MaxLength="18"  Grid.Row="1"
+                                             Style="{StaticResource TextBoxForAuthIcon}"
+                                             local:PropertyClass.HintTB="Телефон"
+                                             local:PropertyClass.ImageForTB="/AppFolder/ResourceFolder/ImageFolder/IconForTextBox/PhoneIcon.png"  
+                                             TextChanged="TextBox_TextChanged"
+                                             GotFocus="TextBox_GotFocus"
+                                             LostFocus="TextBox_LostFocus"
+                                             PreviewTextInput="Text_PreviewTextInput"/>
+
+                            <PasswordBox x:Name="PasswordPB" MaxLength="30" HorizontalAlignment="Left" Width="300"
+                                                     local:PropertyClass.HintTB="Новый пароль"
+                                                     local:PropertyClass.ImageForTB="/AppFolder/ResourceFolder/ImageFolder/IconForTextBox/PasswordIcon.png" 
+                                                     PasswordChanged="PasswordPB_PasswordChanged"
+                                                     PreviewTextInput="PasswordPB_PreviewTextInput"
+                                                     Style="{StaticResource PasswordBoxAuth}"/>
+
+
+                            <DatePicker Name="DateOfBirthDP" Width="170" Grid.Column="1"
+                                            Style="{StaticResource DatePickerAuth}"
+                                        local:PropertyClass.HintTB="День рождения" 
+                                        LostFocus="DateOfBirthDP_LostFocus"/>
+
+                            <StackPanel Orientation="Horizontal" Margin="20,10"
+                                        Grid.Column="1" Grid.Row="1">
+                                <RadioButton x:Name="ManRB" Content="Муж." Margin="10"/>
+                                <RadioButton x:Name="WomanRB" Content="Жен." Margin="0,10"/>
+                            </StackPanel>
+                        </Grid>
+
+
+
+                    </StackPanel>
+
+                    <Grid Grid.Row="2" Margin="10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="250"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="EditBTN" Content="Редактировать" Grid.Row="2" IsTabStop="True"
+                                 Height="45" Style="{StaticResource YesButton}" 
+                                Click="EditBTN_Click"/>
+
+                        <TextBlock Name="ErrorLB" TextWrapping="WrapWithOverflow" Grid.Column="2"
+                                   Width="250" TextAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Style="{StaticResource ErrorText}"/>
+                    </Grid>
+                    
+                </Grid>
+            </Border>
+
+
+            <Label Name="CloseLB" Grid.Column="2" Style="{StaticResource ClosePageLB}" 
+                   MouseLeftButtonUp="CloseLB_MouseLeftButtonUp" >
+                <Label.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="0"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Label.RenderTransform>
+            </Label>
+
+
+        </Grid>
+
+    </Grid>
+</Page>

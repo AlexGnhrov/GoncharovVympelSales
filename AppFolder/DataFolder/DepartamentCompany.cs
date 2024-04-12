@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GoncharovCarPartsAS.AppFolder.DataFolder
+namespace GoncharovVympelSale.AppFolder.DataFolder
 {
     using System;
     using System.Collections.Generic;
@@ -17,6 +17,7 @@ namespace GoncharovCarPartsAS.AppFolder.DataFolder
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public DepartamentCompany()
         {
+            this.Client = new HashSet<Client>();
             this.Order = new HashSet<Order>();
             this.Staff = new HashSet<Staff>();
             this.Storage = new HashSet<Storage>();
@@ -27,6 +28,8 @@ namespace GoncharovCarPartsAS.AppFolder.DataFolder
         public int StatusDepartamentID { get; set; }
     
         public virtual Adress Adress { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Client> Client { get; set; }
         public virtual StatusDepartament StatusDepartament { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Order { get; set; }

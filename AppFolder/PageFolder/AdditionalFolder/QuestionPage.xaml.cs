@@ -1,21 +1,13 @@
-﻿using GoncharovCarPartsAS.AppFolder.ResourceFolder.ClassFolder;
-using GoncharovCarPartsAS.AppFolder.WinFolder;
-using System;
-using System.Collections.Generic;
+﻿using GoncharovVympelSale.AppFolder.ClassFolder;
+using GoncharovVympelSale.AppFolder.DataFolder;
+using GoncharovVympelSale.AppFolder.ResourceFolder.ClassFolder;
+using GoncharovVympelSale.AppFolder.WinFolder;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace GoncharovCarPartsAS.AppFolder.PageFolder.AdditionalFolder
+namespace GoncharovVympelSale.AppFolder.PageFolder.AdditionalFolder
 {
     /// <summary>
     /// Логика взаимодействия для QuestionPage.xaml
@@ -23,77 +15,132 @@ namespace GoncharovCarPartsAS.AppFolder.PageFolder.AdditionalFolder
     public partial class QuestionPage : Page
     {
 
-        Frame frontFrame;
-        Window window;
-        bool islogOut;
+        private MainWin mainWin;
+        private bool islogOut;
 
-        public QuestionPage(Frame frontFrame, string question, Window window, bool islogOut)
+
+
+        public bool isYes = false;
+        public bool isNo = false;
+
+        public QuestionPage(string CaptionName ,string question, MainWin mainWin, bool islogOut)
         {
             InitializeComponent();
 
-            this.frontFrame = frontFrame;
-            QuestionTBl.Text = question;
 
-            this.window = window;
+            CaptionLB.Content = CaptionName;
+            QuestionTBl.Text = question;
+            this.mainWin = mainWin;
             this.islogOut = islogOut;
 
-            //window.IsEnabled = false;
-
-
         }
-        DataGrid dataGrid;
 
-        public QuestionPage(Frame frontFrame, string Question, DataGrid dataGrid)
+
+        //ListView listView;
+
+        public QuestionPage(string CaptionName, string Question)
         {
             InitializeComponent();
 
-            this.frontFrame = frontFrame;
-            QuestionTBl.Text = QuestionTBl.Text;
-            this.dataGrid = dataGrid;
+
+            QuestionTBl.Text = Question;
+            CaptionLB.Content = CaptionName;
+            //this.listView = listView;
         }
 
-        ListView listView;
 
-        public QuestionPage(Frame frontFrame, string Question, ListView listView)
-        {
-            InitializeComponent();
 
-            this.frontFrame = frontFrame;
-            QuestionTBl.Text = QuestionTBl.Text;
-            this.listView = listView;
-        }
 
 
         private async void YesBTN_Click(object sender, RoutedEventArgs e)
         {
-            if (window != null)
+            if (mainWin != null)
             {
 
-
-                await window.AnimWinClose();
+                GlobalVarriabels.isReadOnly = false;
+                await mainWin.AnimWinClose();
 
                 if (islogOut)
                 {
+                    if (GlobalVarriabels.currentRoleName == GlobalVarriabels.RoleName.Client)
+                    {
+                        try
+                        {
+                            var setPC = DBEntities.GetContext().ClientEnterPC.Where(u => u.ClientID == GlobalVarriabels.currentUserID && u.NamePC == GlobalVarriabels.currentClientPC);
+
+                            foreach (var item in setPC)
+                            {
+                                item.NamePC = null;
+                            }
+
+
+                            DBEntities.GetContext().SaveChanges();
+                        }
+                        catch { }
+
+                    }
+
                     new AuthorizationWin().Show();
-                    window.Close();
+                    mainWin.Close();
                     return;
                 }
 
                 App.Current.Shutdown();
-                window.Close();
 
             }
+            else
+            {
+                isYes = true;
+                await GlobalVarriabels.FrontFrame.AnimWinClose();
+            }
+
+            
         }
 
 
 
         private async void NoBTN_Click(object sender, RoutedEventArgs e)
         {
-            await frontFrame.AnimWinClose();
-
-            frontFrame.Navigate(null);
+            if (mainWin != null)
+            {
+                await GlobalVarriabels.FrontFrame.AnimWinClose();
+            }
+            else
+            {
+                isYes = false;
+                await GlobalVarriabels.FrontFrame.AnimWinClose();
+            }
         }
 
 
+
+
+
+
+        private void Page_KeyDown(object sender, KeyEventArgs e)
+        {
+            Focus();
+
+            if (e.Key == Key.Enter)
+            {
+                YesBTN_Click(null, null);
+            }
+            else if (e.Key == Key.Escape)
+            {
+
+                NoBTN_Click(null, null);
+
+            }
+        }
+
+        private void Page_KeyUp(object sender, KeyEventArgs e)
+        {
+            Focus();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            Focus();
+        }
     }
 }
