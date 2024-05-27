@@ -83,7 +83,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.DeportamentFolder
 
                     if (editDeportamentCompany == null)
                     {
-                        throw new Exception("Отсутствует подключение или департамент был удалён.");
+                        throw new Exception("Отсутствует подключение или отдел был удалён.");
                     }
 
                     RegionCB.SelectedValue = Convert.ToInt32(editDeportamentCompany.Adress.RegionID);
@@ -193,7 +193,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.DeportamentFolder
                             checkPassportStaff = DBEntities.GetContext().Passport.FirstOrDefault(u => u.Adress.Region.NameRegion == selectedText);
 
                             if (checkAdress != null)
-                                throw new Exception("Данный регион уже используется департаментом.\nУдаление невозможно.");
+                                throw new Exception("Данный регион уже используется отделом.\nУдаление невозможно.");
 
                             if (checkPassportStaff != null)
                                 throw new Exception("Данный регион уже используется в паспорте сотрудника.\nУдаление невозможно.");
@@ -247,7 +247,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.DeportamentFolder
 
                             if (checkAdress != null)
                             {
-                                throw new Exception("Данный город уже используется департаментом.\nУдаление невозможно.");
+                                throw new Exception("Данный город уже используется отделом.\nУдаление невозможно.");
                             }
                             if (checkPassportStaff != null)
                             {
@@ -301,7 +301,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.DeportamentFolder
                             checkPassportStaff = DBEntities.GetContext().Passport.FirstOrDefault(u => u.Adress.Street.NameStreet == selectedText);
 
                             if (checkAdress != null)
-                                throw new Exception("Данная улица уже используется департаментом.\nУдаление невозможно.");
+                                throw new Exception("Данная улица уже используется отделом.\nУдаление невозможно.");
 
                             if (checkPassportStaff != null)
                                 throw new Exception("Данная улица уже используется в паспорте сотрудника.\nУдаление невозможно.");
@@ -893,7 +893,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.DeportamentFolder
 
                     if (newAdress != null)
                     {
-                        new MessageWin("Данный адрес департамента уже существует", MessageCode.Error).ShowDialog();
+                        new MessageWin("Данный адрес отдела уже существует", MessageCode.Error).ShowDialog();
                         return;
                     }
 
@@ -915,7 +915,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.DeportamentFolder
 
 
                     if (editDeportamentCompany == null)
-                        throw new Exception("Отсутствует подключение или департамент был удалён.");
+                        throw new Exception("Отсутствует подключение или отдел был удалён.");
 
                     editDeportamentCompany.Adress.RegionID = newRegion.RegionID;
                     editDeportamentCompany.Adress.CityID = newCity.CityID;
@@ -963,7 +963,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.DeportamentFolder
                 DBEntities.GetContext().SaveChanges();
                 deportamentListPage.UpdateList();
 
-                new MessageWin("Департамент успешно добавлен", MessageCode.Info).ShowDialog();
+                new MessageWin("Отдел успешно добавлен", MessageCode.Info).ShowDialog();
 
                 await GlobalVarriabels.FrontFrame.AnimWinClose();
             }

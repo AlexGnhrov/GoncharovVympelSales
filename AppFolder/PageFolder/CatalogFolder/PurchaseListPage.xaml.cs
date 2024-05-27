@@ -304,16 +304,17 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.CatalogFolder
 
                 orderDone = true;
 
+
+
                 GlobalVarriabels.MainWindow.SetAmountBuscket();
                 GlobalVarriabels.MainWindow.SetAmountOrder();
 
                 GlobalVarriabels.MainWindow.orderListPage?.timerForUpdate.Start();
                 GlobalVarriabels.MainWindow.catalogListPage.timerForUpdate.Start();
 
-                await BorderSucced();
 
 
-
+               await BorderSucced();
 
             }
             catch (Exception ex)
@@ -535,8 +536,10 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.CatalogFolder
         private void DeleteItemAdressBTN_Click(object sender, RoutedEventArgs e)
         {
             if (IsEdit)
+            {
                 editChange();
-
+                return;
+            }
             try
             {
                 MessageWin messageWin = null;

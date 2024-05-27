@@ -152,7 +152,7 @@
                                     </Button>
                                 </StackPanel>
 
-                                <TextBlock Text="{Binding AmoutOfDep,StringFormat='{}Кол.в департаментах: {0}'}"
+                                <TextBlock Text="{Binding AmoutOfDep,StringFormat='{}Кол.в отделов: {0}'}"
                                        Margin="15,0,0,0" 
                                        FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center" HorizontalAlignment="Left"
                                        Grid.Row="3" >

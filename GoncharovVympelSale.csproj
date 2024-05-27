@@ -189,6 +189,12 @@
     <Compile Include="AppFolder\DataFolder\Role.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="AppFolder\DataFolder\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\sp_helpdiagrams_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="AppFolder\DataFolder\Staff.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -213,7 +219,13 @@
     <Compile Include="AppFolder\DataFolder\StreetsOfCity.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="AppFolder\DataFolder\sysdiagrams.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="AppFolder\DataFolder\TypeOfIssueOrder.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppFolder\DataFolder\User.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="AppFolder\GlobalClassFolder\ConfigSettingsClass.cs" />

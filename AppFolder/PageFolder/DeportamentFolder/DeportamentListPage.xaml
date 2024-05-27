@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:GoncharovVympelSale.AppFolder.PageFolder.DeportamentFolder"
       mc:Ignorable="d" 
       d:DesignHeight="750" d:DesignWidth="1200"
-      Title="Список департаментов">
+      Title="Список отделов">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -50,7 +50,7 @@
                             </MenuItem.Icon>
                         </MenuItem>
                         <Separator/>
-                        <MenuItem Name="InfoStaffOfDepMI" Header="Просмотр сотрудников департамента"
+                        <MenuItem Name="InfoStaffOfDepMI" Header="Просмотр сотрудников отдела"
                                   Click="ContextMenuItem_Click"/>
 
                         <MenuItem Name="EditMI" Header="Редактировать"

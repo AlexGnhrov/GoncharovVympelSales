@@ -117,7 +117,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.StaffFolder
 
                     if (editStaff == null)
                     {
-                        throw new Exception("Отсутствует подключение или департамент был удалён.");
+                        throw new Exception("Отсутствует подключение или отдел был удалён.");
                     }
 
                     selectedPhoto = "Есть фото";
@@ -127,12 +127,12 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.StaffFolder
                     SNPstaffTB.Text = $"{editStaff.Surname} {editStaff.Name}";
                     SNPstaffTB.Text += editStaff.Patronymic != null ? $" {editStaff.Patronymic}" : null;
 
-                    LoginTB.Text = saveLogin = editStaff.Login;
-                    PasswordPB.Password = editStaff.Password;
+                    LoginTB.Text = saveLogin = editStaff.User.Login;
+                    PasswordPB.Password = editStaff.User.Passsword;
                     PhoneTB.Text = savePhone = editStaff.PhoneNum;
                     EmailTB.Text = editStaff.Email;
 
-                    RoleCB.SelectedValue = Convert.ToInt32(editStaff.RoleID);
+                    RoleCB.SelectedValue = Convert.ToInt32(editStaff.User.RoleID);
                     DeportamentCB.SelectedValue = Convert.ToInt32(editStaff.DepartamentID);
                     StatusCB.SelectedValue = saveStatusID = Convert.ToInt32(editStaff.StatusID);
 
@@ -997,7 +997,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.StaffFolder
                             checkPassportStaff = DBEntities.GetContext().Passport.FirstOrDefault(u => u.Adress.Region.NameRegion == selectedText);
 
                             if (checkAdress != null)
-                                throw new Exception("Данный регион уже используется департаментом.\nУдаление невозможно.");
+                                throw new Exception("Данный регион уже используется отделом.\nУдаление невозможно.");
 
                             if (checkPassportStaff != null)
                                 throw new Exception("Данный регион уже используется в паспорте сотрудника.\nУдаление невозможно.");
@@ -1050,7 +1050,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.StaffFolder
                             checkPassportStaff = DBEntities.GetContext().Passport.FirstOrDefault(u => u.Adress.City.NameCity == selectedText);
 
                             if (checkAdress != null)
-                                throw new Exception("Данный город уже используется департаментом.\nУдаление невозможно.");
+                                throw new Exception("Данный город уже используется отделом.\nУдаление невозможно.");
 
                             if (checkPassportStaff != null)
                                 throw new Exception("Данный город уже используется в паспорте сотрудника.\nУдаление невозможно.");
@@ -1103,7 +1103,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.StaffFolder
                             checkPassportStaff = DBEntities.GetContext().Passport.FirstOrDefault(u => u.Adress.Street.NameStreet == selectedText);
 
                             if (checkAdress != null)
-                                throw new Exception("Данная улица уже используется департаментом.\nУдаление невозможно.");
+                                throw new Exception("Данная улица уже используется отделом.\nУдаление невозможно.");
 
                             if (checkPassportStaff != null)
                                 throw new Exception("Данная улица уже используется в паспорте сотрудника.\nУдаление невозможно.");
@@ -1436,13 +1436,13 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.StaffFolder
                     {
                         PhoneTB.Tag = GlobalVarriabels.ErrorTag;
                         PhoneTB.Focus();
-                        throw new Exception($"Данный телефон уже привязан к сотруднику: {checkPhone.Login}");
+                        throw new Exception($"Данный телефон уже привязан к сотруднику: {checkPhone.User.Login}");
                     }
                 }
 
                 if (saveLogin != LoginTB.Text)
                 {
-                    var checkLogin = DBEntities.GetContext().Staff.FirstOrDefault(u => u.Login == LoginTB.Text);
+                    var checkLogin = DBEntities.GetContext().Staff.FirstOrDefault(u => u.User.Login == LoginTB.Text);
 
                     if (checkLogin != null)
                     {
@@ -1462,7 +1462,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.StaffFolder
                         PassportTB.Tag = GlobalVarriabels.ErrorTag;
                         PassportTB.Focus();
 
-                        throw new Exception("Данный паспорт уже привязан к сотруднику: " + checkPassport.Login);
+                        throw new Exception("Данный паспорт уже привязан к логину: " + checkPassport.User.Login);
                     }
                 }
 
@@ -1501,7 +1501,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.StaffFolder
 
 
                     if (editStaff == null)
-                        throw new Exception("Отсутствует подключение или департамент был удалён.");
+                        throw new Exception("Отсутствует подключение или отдел был удалён.");
 
                     if (selectedPhoto != "Есть фото")
                         editStaff.Photo = PhotoImageClass.SetImageToBytes(ref selectedPhoto);
@@ -1511,8 +1511,8 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.StaffFolder
                     editStaff.Name = SNParray[1];
                     editStaff.Patronymic = SNParray.Length > 2 ? SNParray[2] : null;
 
-                    editStaff.Login = LoginTB.Text;
-                    editStaff.Password = PasswordPB.Password;
+                    editStaff.User.Login = LoginTB.Text;
+                    editStaff.User.Passsword = PasswordPB.Password;
 
                     editStaff.PhoneNum = PhoneTB.Text;
                     editStaff.Email = EmailTB.Text != "" ? EmailTB.Text : null;
@@ -1541,7 +1541,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.StaffFolder
                     }
 
 
-                    editStaff.RoleID = Convert.ToInt32(RoleCB.SelectedValue);
+                    editStaff.User.RoleID = Convert.ToInt32(RoleCB.SelectedValue);
 
                     if (DeportamentCB.IsVisible)
                         editStaff.DepartamentID = Convert.ToInt32(DeportamentCB.SelectedValue);
@@ -1581,10 +1581,11 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.StaffFolder
 
 
 
-                //---------------Добавление сотрудника------------------------------------------
+                //---------------Добавление сотрудника-------------------------------------------------------------------------------------------------------------------------
 
 
                 //----------Адресс---------------
+
 
                 newAdress = new Adress();
 
@@ -1598,6 +1599,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.StaffFolder
                 DBEntities.GetContext().Adress.Add(newAdress);
 
                 //----------Паспорт---------------
+
 
                 newPassport = new Passport();
 
@@ -1622,22 +1624,27 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.StaffFolder
                 editStaff.Name = SNParray[1];
                 editStaff.Patronymic = SNParray.Length > 2 ? SNParray[2] : null;
 
-                editStaff.Login = LoginTB.Text;
-                editStaff.Password = PasswordPB.Password;
+
+                User user = new User();
+
+                user.Login = LoginTB.Text;
+                user.Passsword = PasswordPB.Password;
+                user.RoleID = Convert.ToInt32(RoleCB.SelectedValue);
+
+                DBEntities.GetContext().User.Add(user);
 
                 editStaff.PassportID = newPassport.PassportID;
 
                 editStaff.PhoneNum = PhoneTB.Text;
                 editStaff.Email = EmailTB.Text != "" ? EmailTB.Text : null;
 
-                editStaff.RoleID = Convert.ToInt32(RoleCB.SelectedValue);
-                if (DeportamentCB.IsVisible)
-                    editStaff.DepartamentID = Convert.ToInt32(DeportamentCB.SelectedValue);
-                else
-                    editStaff.DepartamentID = GlobalVarriabels.curDepCompanyID;
+
+                if (DeportamentCB.IsVisible) editStaff.DepartamentID = Convert.ToInt32(DeportamentCB.SelectedValue);
+                else editStaff.DepartamentID = GlobalVarriabels.curDepCompanyID;
+
                 editStaff.StatusID = Convert.ToInt32(StatusCB.SelectedValue);
 
-
+                editStaff.UserID = user.UserID;
 
 
                 DBEntities.GetContext().Staff.Add(editStaff);

@@ -237,7 +237,6 @@ namespace GoncharovVympelSale.AppFolder.ClassFolder
                             ++saveCaret;
                         }
 
-
                     }
                 }
 

@@ -12,18 +12,21 @@ namespace GoncharovVympelSale.AppFolder.DataFolder
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Role()
+        public User()
         {
-            this.User = new HashSet<User>();
+            this.Staff = new HashSet<Staff>();
         }
     
+        public int UserID { get; set; }
+        public string Login { get; set; }
+        public string Passsword { get; set; }
         public int RoleID { get; set; }
-        public string NameRole { get; set; }
     
+        public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> User { get; set; }
+        public virtual ICollection<Staff> Staff { get; set; }
     }
 }

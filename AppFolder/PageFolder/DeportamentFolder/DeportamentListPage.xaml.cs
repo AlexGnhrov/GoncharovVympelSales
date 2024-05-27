@@ -167,14 +167,14 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.DeportamentFolder
 
                 if (checkDep != null)
                 {
-                    new MessageWin("Удаление департамента", "Данный депортамент находиться в заказах.\nУдаление его невозможно.", MessageCode.Info).ShowDialog();
+                    new MessageWin("Удаление отдела", "Данный депортамент находиться в заказах.\nУдаление его невозможно.", MessageCode.Info).ShowDialog();
 
                     return;
                 }
                 if (checkStaff != null)
                 {
-                    new MessageWin("Удаление департамента",
-                                   "К данному департаменту привязаны сотрудники.\nПереместите сотрудников в другой отдел",
+                    new MessageWin("Удаление отдела",
+                                   "К данному отделу привязаны сотрудники.\nПереместите сотрудников в другой отдел",
                                    MessageCode.Info).ShowDialog();
 
                     return;
@@ -182,7 +182,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.DeportamentFolder
 
 
 
-                QuestionPage questionPage = new QuestionPage("Удалить", "Вы действительно хотите удалить данный департамент");
+                QuestionPage questionPage = new QuestionPage("Удалить", "Вы действительно хотите удалить данный отдел");
 
                 GlobalVarriabels.FrontFrame.Navigate(questionPage);
 
@@ -236,10 +236,10 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.DeportamentFolder
 
                 if (statusID == 2)
                 {
-                    message += "При статусе \"Приостановлено\", клиентам не будет доступен самовывоз или покупка в департаменте.\n\n";
+                    message += "При статусе \"Приостановлено\", клиентам не будет доступен самовывоз или покупка в отделе.\n\n";
                 }
 
-                message += "Вы действительно хотите сменить статус департамента?";
+                message += "Вы действительно хотите сменить статус отдела?";
 
 
                 QuestionPage questionPage = new QuestionPage("Смена статуса", message);

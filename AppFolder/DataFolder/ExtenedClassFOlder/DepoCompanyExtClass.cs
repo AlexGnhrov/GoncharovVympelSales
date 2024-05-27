@@ -15,11 +15,11 @@ namespace GoncharovVympelSale.AppFolder.DataFolder
 
 
 
-                text += "Глав. Админ - " + staff.Where(u => u.RoleID == (int)GlobalVarriabels.RoleName.MainAdmin).ToArray().Length.ToString();
-                text += "\nГлав. Менеджер - " + staff.Where(u => u.RoleID == (int)GlobalVarriabels.RoleName.MainManager).ToArray().Length.ToString();
-                text += "\n\nАдмин - " + staff.Where(u => u.RoleID == (int)GlobalVarriabels.RoleName.DepAdmin).ToArray().Length.ToString();
-                text += "\nМенеджер - " + staff.Where(u => u.RoleID == (int)GlobalVarriabels.RoleName.DepManager).ToArray().Length.ToString();
-                text += "\nСотрудников - " + staff.Where(u => u.RoleID == (int)GlobalVarriabels.RoleName.DepWork).ToArray().Length.ToString();
+                text += "Глав. Админ - " + staff.Where(u => u.User.RoleID == (int)GlobalVarriabels.RoleName.MainAdmin).ToArray().Length.ToString();
+                text += "\nГлав. Менеджер - " + staff.Where(u => u.User.RoleID == (int)GlobalVarriabels.RoleName.MainManager).ToArray().Length.ToString();
+                text += "\n\nАдмин - " + staff.Where(u => u.User.RoleID == (int)GlobalVarriabels.RoleName.DepAdmin).ToArray().Length.ToString();
+                text += "\nМенеджер - " + staff.Where(u => u.User.RoleID == (int)GlobalVarriabels.RoleName.DepManager).ToArray().Length.ToString();
+                text += "\nСотрудников - " + staff.Where(u => u.User.RoleID == (int)GlobalVarriabels.RoleName.DepWork).ToArray().Length.ToString();
 
 
                 return text;

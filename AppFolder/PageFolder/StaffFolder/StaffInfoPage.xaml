@@ -56,7 +56,7 @@
                         </Border>
                         <StackPanel Grid.Column="1" Margin="10">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="ФИО:" FontSize="20" FontWeight="DemiBold"/>
+                                <TextBlock Text="ФИО:                  " FontSize="20" FontWeight="DemiBold"/>
                                 <TextBlock>
                                     <TextBlock>
                                         <TextBlock.Text>
@@ -71,33 +71,33 @@
                             </StackPanel>
 
                             <TextBlock>
-                                <Run Text="Пол: " FontSize="20" FontWeight="DemiBold"/>
+                                <Run Text="Пол:                     " FontSize="20" FontWeight="DemiBold"/>
                                 <Run Text="{Binding Passport.Gender.NameGender}"/>
                             </TextBlock>
 
                             <TextBlock TextWrapping="Wrap">
-                                <Run Text="Дата рождения: " FontSize="20" FontWeight="DemiBold"/>
+                                <Run Text="Дата рождения:  " FontSize="20" FontWeight="DemiBold"/>
                                 <Run Text="{Binding Passport.DateOfBirth,StringFormat={}{0:dd.MM.yyyy}}" />
                             </TextBlock>
 
                             <TextBlock>
-                                <Run Text="Телефон: " FontSize="20" FontWeight="DemiBold"/>
+                                <Run Text="Телефон:             " FontSize="20" FontWeight="DemiBold"/>
                                 <Run Text="{Binding PhoneNum}"/>
                             </TextBlock>
 
                             <TextBlock>
-                                <Run Text="Почта: " FontSize="20" FontWeight="DemiBold"/>
+                                <Run Text="Почта:                  " FontSize="20" FontWeight="DemiBold"/>
                                 <Run Text="{Binding Email,TargetNullValue='-'}"/>
                             </TextBlock>
 
                             <TextBlock>
-                                <Run Text="Роль: " FontSize="20" FontWeight="DemiBold"/>
+                                <Run Text="Роль:                    " FontSize="20" FontWeight="DemiBold"/>
                                 <Run Text="{Binding Role.NameRole}"/>
                             </TextBlock>
 
 
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Статус: " FontSize="20" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                                <TextBlock Text="Статус:                 " FontSize="20" FontWeight="DemiBold" VerticalAlignment="Center"/>
                                 <TextBlock Text="{Binding StatusUser.NameStatus}"
                                            FontSize="18"
                                            FontWeight="DemiBold"
@@ -140,7 +140,7 @@
                         </StackPanel>
 
 
-                        <StackPanel Grid.Column="1" Grid.Row="1" Margin="10,15">
+                        <StackPanel Grid.Column="1" Grid.Row="1" Margin="15,20">
                             <TextBlock Text="Паспорт" FontSize="24" Margin="5,10" FontWeight="DemiBold"/>
 
 
@@ -149,7 +149,7 @@
                                 <TextBlock>
                                     <TextBlock >
                                         <TextBlock.Text>
-                                            <MultiBinding StringFormat="{}{0:##-##} {1} ">
+                                            <MultiBinding StringFormat="{} {0:##-##} {1} ">
                                                 <Binding Path="Passport.Series" />
                                                 <Binding Path="Passport.Num" />
                                             </MultiBinding>
@@ -179,8 +179,8 @@
 
                             <StackPanel Orientation="Horizontal">
 
-                                <TextBlock Text="Адрес регистр: " VerticalAlignment="Top" Margin="10,5"
-                                           FontSize="18" FontWeight="DemiBold"/>
+                                <TextBlock Text="Адрес регистрации: " VerticalAlignment="Top" Width="135" Margin="10,5"
+                                           FontSize="18" FontWeight="DemiBold" TextWrapping="Wrap"/>
 
                                 <TextBlock TextWrapping="Wrap" Width="320"  Margin="10,0,0,0">
                                 <Run Text="{Binding Passport.Adress.Region.NameRegion,StringFormat='{}{0},'}" />
@@ -196,22 +196,24 @@
 
 
 
-                        <StackPanel Grid.Row="1" Margin="10,15">
+                        <StackPanel Grid.Row="1" Margin="20">
 
                             <TextBlock Text="Информация о записи" FontSize="24" Margin="0,10,5,10" FontWeight="DemiBold"/>
 
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Дата добавления: " FontSize="18" FontWeight="DemiBold" Margin="5"/>
-                                <TextBlock Text="{Binding AddDate,StringFormat={}{0:dd.MM.yyyy}}" Margin="62,0,0,0"/>
+                                <TextBlock Text="{Binding AddDate,StringFormat={}{0:dd.MM.yyyy}}" Margin="0,0,0,0"/>
 
                             </StackPanel>
 
                             <StackPanel x:Name="InfoStaffSP">
 
-                                <TextBlock TextWrapping="Wrap">
-                                <Run Text="Дата последнего редакт.: " FontSize="18" FontWeight="DemiBold"/>
-                                <Run Text="{Binding DateEdit,StringFormat={}{0:dd.MM.yyyy},FallbackValue=-,TargetNullValue=-}" />
-                                </TextBlock>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock TextWrapping="Wrap" Width="150" HorizontalAlignment="Left">
+                                    <Run Text="Дата последнего редактирования: " FontSize="18" FontWeight="DemiBold"/>
+                                    </TextBlock>
+                                    <TextBlock Text="{Binding DateEdit,StringFormat={}{0:dd.MM.yyyy},FallbackValue=-,TargetNullValue=-}"/>
+                                </StackPanel>
 
                                 <StackPanel>
 

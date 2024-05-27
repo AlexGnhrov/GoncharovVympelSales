@@ -129,7 +129,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder
                     || u.Patronymic.Contains(SearchTB.Text)
                     || u.Email.Contains(SearchTB.Text)
                     || u.PhoneNum.Contains(SearchTB.Text)
-                    || u.Login.Contains(SearchTB.Text));
+                    || u.User.Login.Contains(SearchTB.Text));
 
                 if (GlobalVarriabels.isDepWorker)
                     source = source.Where(u => u.DepartamentID == GlobalVarriabels.curDepCompanyID);
@@ -140,7 +140,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder
 
 
 
-                StafListDG.ItemsSource = source.OrderBy(u => u.DepartamentID).ThenBy(u => u.RoleID).ThenBy(u => u.StatusID).ToList();
+                StafListDG.ItemsSource = source.OrderBy(u => u.DepartamentID).ThenBy(u => u.User.RoleID).ThenBy(u => u.StatusID).ToList();
 
                 MessageListBorder.Visibility = StafListDG.Items.Count > 0 ? Visibility.Collapsed : Visibility.Visible;
 
@@ -268,7 +268,12 @@ namespace GoncharovVympelSale.AppFolder.PageFolder
 
             try
             {
-                if (selectedItem.StatusID != 3)
+
+                DBEntities.NullContext();
+
+                Staff removeStaff = DBEntities.GetContext().Staff.FirstOrDefault(u=>u.StaffID == selectedItem.StaffID);
+
+                if (removeStaff?.StatusID != 3)
                 {
                     message = "Чтобы удалить сотрудника, нужно чтобы был статус \"Заблокирован\" и пройти с момента блокировки полгода\n\n";
                     message += "Хотите сменить статус на \"Заблокирован\"?";
@@ -293,7 +298,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder
 
 
 
-                if (selectedItem.BlockDate > DateTime.Now)
+                if (removeStaff?.BlockDate > DateTime.Now)
                 {
 
                     message = "Сотрудника можно будет удалить: " + selectedItem.BlockDate;
@@ -320,7 +325,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder
                     await Task.Delay(50);
                 }
 
-                Staff removeStaff = DBEntities.GetContext().Staff.FirstOrDefault(u => u.StaffID == selectedItem.StaffID);
+
                 if (removeStaff == null)
                 {
                     UpdateList();
@@ -330,10 +335,14 @@ namespace GoncharovVympelSale.AppFolder.PageFolder
                 Passport removePassport = DBEntities.GetContext().Passport.FirstOrDefault(u => u.PassportID == removeStaff.PassportID);
                 Adress removeAdresPassport = DBEntities.GetContext().Adress.FirstOrDefault(u => u.AdressID == removePassport.AdressRegID);
                 EditStaff LogStaff = DBEntities.GetContext().EditStaff.FirstOrDefault(u => u.StaffID == removeStaff.StaffID);
+                User user = DBEntities.GetContext().User.FirstOrDefault(u => u.UserID == removeStaff.UserID);
+
 
                 DBEntities.GetContext().Staff.Remove(removeStaff);
                 DBEntities.GetContext().Passport.Remove(removePassport);
                 DBEntities.GetContext().Adress.Remove(removeAdresPassport);
+                DBEntities.GetContext().User.Remove(user);
+
                 if (LogStaff != null)
                     DBEntities.GetContext().EditStaff.Remove(LogStaff);
 
@@ -439,27 +448,43 @@ namespace GoncharovVympelSale.AppFolder.PageFolder
             {
                 if (GlobalVarriabels.currentRoleName == GlobalVarriabels.RoleName.MainAdmin)
                 {
-                    if (selectedItem.StaffID == GlobalVarriabels.currentUserID && selectedItem.StaffID != 1 ||
-                        selectedItem.StaffID == 1 && GlobalVarriabels.currentUserID != 1)
+                    if (selectedItem.StaffID == GlobalVarriabels.currentUserID && selectedItem.StaffID != 1
+                        || selectedItem.StaffID == 1 && GlobalVarriabels.currentUserID != 1)
                     {
                         EditMI.IsEnabled = false;
                         InfoStaffOfDepMI.IsEnabled = false;
+
                         StatusMI.IsEnabled = false;
+
                         DeleteMI.IsEnabled = false;
                     }
                     else
                     {
                         EditMI.IsEnabled = true;
                         InfoStaffOfDepMI.IsEnabled = true;
-                        StatusMI.IsEnabled = true;
-                        DeleteMI.IsEnabled = true;
+
+
+                        if (selectedItem.StaffID == 1)
+                        {
+                            StatusMI.IsEnabled = false;
+                            DeleteMI.IsEnabled = false;
+                        }
+                        else
+                        {
+                            StatusMI.IsEnabled = true;
+                            DeleteMI.IsEnabled = true;
+                        }
                     }
                 }
-                else if(GlobalVarriabels.currentRoleName == GlobalVarriabels.RoleName.DepAdmin)
+                else if (GlobalVarriabels.currentRoleName == GlobalVarriabels.RoleName.MainManager)
                 {
-                    if(selectedItem.RoleID == (int)GlobalVarriabels.RoleName.MainAdmin ||
-                       selectedItem.RoleID == (int)GlobalVarriabels.RoleName.MainManager ||
-                        selectedItem.RoleID == (int)GlobalVarriabels.currentRoleName ||
+                    InfoStaffOfDepMI.IsEnabled = selectedItem.User.RoleID != (int)GlobalVarriabels.RoleName.MainAdmin;
+                }
+                else if (GlobalVarriabels.currentRoleName == GlobalVarriabels.RoleName.DepAdmin)
+                {
+                    if (selectedItem.User.RoleID == (int)GlobalVarriabels.RoleName.MainAdmin ||
+                       selectedItem.User.RoleID == (int)GlobalVarriabels.RoleName.MainManager ||
+                        selectedItem.User.RoleID == (int)GlobalVarriabels.currentRoleName ||
                         selectedItem.StaffID == GlobalVarriabels.currentUserID)
                     {
                         EditMI.IsEnabled = false;
@@ -474,6 +499,13 @@ namespace GoncharovVympelSale.AppFolder.PageFolder
                         StatusMI.IsEnabled = true;
                         DeleteMI.IsEnabled = true;
                     }
+                }
+                else if (GlobalVarriabels.currentRoleName == GlobalVarriabels.RoleName.DepManager)
+                {
+                    InfoStaffOfDepMI.IsEnabled =
+                        selectedItem.User.RoleID != (int)GlobalVarriabels.RoleName.MainAdmin &&
+                        selectedItem.User.RoleID != (int)GlobalVarriabels.RoleName.MainManager &&
+                        selectedItem.User.RoleID != (int)GlobalVarriabels.RoleName.DepAdmin;
                 }
 
 
@@ -490,6 +522,12 @@ namespace GoncharovVympelSale.AppFolder.PageFolder
         {
             timerForUpdate.Stop();
             timerForUpdate.Start();
+        }
+
+        private void StafListDG_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            //if (StafListDG.SelectedItem != null)
+            //    GlobalVarriabels.FrontFrame.Navigate(new StaffInfoPage(StafListDG.SelectedItem as Staff));
         }
     }
 }

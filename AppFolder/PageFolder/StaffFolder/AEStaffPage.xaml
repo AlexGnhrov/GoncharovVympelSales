@@ -223,7 +223,7 @@
                                     <ComboBox Name="DepoIssueCB" IsEditable="True" Height="40" Margin="10,25,10,10"
                                               SelectedValuePath="DepartamentID"
                                               DisplayMemberPath="NameDep"
-                                              local:PropertyClass.HintTB="Депортамент пасспорта*"
+                                              local:PropertyClass.HintTB="Депортамент паспорта*"
                                               local:PropertyClass.LengthTextForCB="300"
                                               SelectionChanged="ComboBox_SelectionChanged"
                                               TextBoxBase.TextChanged="ComboBox_TextChanged"

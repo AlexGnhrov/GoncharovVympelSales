@@ -994,7 +994,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type PasswordBox}">
                     <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="{StaticResource CornerValue}"
-                            BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
                         <Grid>
 
                             <Grid.ColumnDefinitions>

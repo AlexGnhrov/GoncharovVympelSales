@@ -29,9 +29,6 @@ namespace GoncharovVympelSale.AppFolder.WinFolder
 
 
 
-        //private readonly string VKlink = "https://vk.me/club156570033";
-        //private readonly string TGlink = "https://t.me/autorus_bot";
-
         private readonly BitmapImage LeftArrowImage = new BitmapImage(new Uri("pack://application:,,,/GoncharovVympelSale;component/AppFolder/ResourceFolder/ImageFolder/IconForMenuButton/ShrinkArrowIcon1.png"));
         private readonly BitmapImage RightArrowImage = new BitmapImage(new Uri("pack://application:,,,/GoncharovVympelSale;component/AppFolder/ResourceFolder/ImageFolder/IconForMenuButton/ShrinkArrowIcon.png"));
 
@@ -206,16 +203,12 @@ namespace GoncharovVympelSale.AppFolder.WinFolder
             switch ((sender as Button).Name)
             {
                 case "HideWinBTN":
-
-
                     WindowState = WindowState.Minimized;
                     break;
                 case "FullScreenBTN":
                     WindowState = WindowState == WindowState.Normal ? WindowState.Maximized : WindowState.Normal;
                     break;
                 case "CloseWinBTN":
-
-
                     string question = "Вы действительно хотите закрыть приложение?";
 
                     FrontFrame.Focus();
@@ -417,20 +410,16 @@ namespace GoncharovVympelSale.AppFolder.WinFolder
                     setActiveMenuButton(DeportamenListBtn);
                     break;
                 case StaffListPage _:
-
                     setActiveMenuButton(StaffListBtn);
                     break;
 
                 case ClientListPage _:
-
                     setActiveMenuButton(ClientListBtn);
                     break;
                 case CatalogListPage _:
-
                     setActiveMenuButton(CatalogListBtn);
                     break;
                 case OrderListPage _:
-
                     setActiveMenuButton(OrderListBtn);
                     break;
             }

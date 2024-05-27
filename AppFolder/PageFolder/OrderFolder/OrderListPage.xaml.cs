@@ -406,9 +406,14 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.OrderFolder
 
         private void CheckStaff_LeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (!GlobalVarriabels.isDepWorker && selectedOrderItem?.Staff != null)
-                GlobalVarriabels.FrontFrame.Navigate(new StaffInfoPage(selectedOrderItem?.Staff));
+            var selectedOrderItem = OrderLV.SelectedItem as Order;
 
+            if (!GlobalVarriabels.isDepWorker && selectedOrderItem?.Staff != null)
+            {
+
+
+                GlobalVarriabels.FrontFrame.Navigate(new StaffInfoPage(selectedOrderItem?.Staff));
+            }
         }
 
         private async void CancelOrderBTN_Click(object sender, RoutedEventArgs e)

@@ -308,6 +308,7 @@ namespace GoncharovVympelSale.AppFolder.WinFolder
             SignInBTN.IsEnabled = false;
             ErrorTBl.Visibility = Visibility.Hidden;
 
+            User user = null;
             Staff staff = null;
             Client client = null;
 
@@ -333,7 +334,7 @@ namespace GoncharovVympelSale.AppFolder.WinFolder
 
                     GlobalVarriabels.currentUserID = client.ClientID;
                     GlobalVarriabels.currentRoleName = GlobalVarriabels.RoleName.Client;
-                    GlobalVarriabels.curDepCompanyID = Convert.ToInt32(client.SelectedDepID);
+                    //GlobalVarriabels.curDepCompanyID = Convert.ToInt32(client.SelectedDepID);
 
 
 
@@ -355,12 +356,21 @@ namespace GoncharovVympelSale.AppFolder.WinFolder
 
                     GlobalVarriabels.currentUserID = client.ClientID;
                     GlobalVarriabels.currentRoleName = GlobalVarriabels.RoleName.Client;
-                    GlobalVarriabels.curDepCompanyID = Convert.ToInt32(client.SelectedDepID);
+                    //GlobalVarriabels.curDepCompanyID = Convert.ToInt32(client.SelectedDepID);
                 }
                 else
                 {
 
-                    staff = DBEntities.GetContext().Staff.FirstOrDefault(u => u.Login == LoginTB.Text.Trim());
+                    user = DBEntities.GetContext().User.FirstOrDefault(u => u.Login == LoginTB.Text.Trim());
+
+                    if (user == null || user.Passsword != PasswordPB.Password)
+                    {
+                        showErrorMessage(ErrorTBl, "Неверный логин или пароль");
+                        SystemSounds.Exclamation.Play();
+                        return;
+                    }
+
+                    staff = DBEntities.GetContext().Staff.FirstOrDefault(u => u.UserID == user.UserID);
 
                     if (staff?.StatusID == 3)
                     {
@@ -368,16 +378,11 @@ namespace GoncharovVympelSale.AppFolder.WinFolder
                         return;
                     }
 
-                    if (staff == null || staff.Password != PasswordPB.Password)
-                    {
-                        showErrorMessage(ErrorTBl, "Неверный логин или пароль");
-                        SystemSounds.Exclamation.Play();
-                        return;
-                    }
+
 
                     GlobalVarriabels.currentUserID = staff.StaffID;
                     GlobalVarriabels.curDepCompanyID = staff.DepartamentID;
-                    GlobalVarriabels.currentRoleName = (GlobalVarriabels.RoleName)staff.RoleID;
+                    GlobalVarriabels.currentRoleName = (GlobalVarriabels.RoleName)user.RoleID;
 
                     GlobalVarriabels.isReadOnly = GlobalVarriabels.currentRoleName == GlobalVarriabels.RoleName.MainManager || GlobalVarriabels.currentRoleName == GlobalVarriabels.RoleName.DepManager;
 
@@ -578,10 +583,7 @@ namespace GoncharovVympelSale.AppFolder.WinFolder
 
             try
             {
-                if (CheckFieldsBeforeReg())
-                {
-                    return;
-                }
+                if (CheckFieldsBeforeReg()) return;
 
                 long Phone = PhoneRegTB.FormatPhoneForDB();
 
@@ -621,16 +623,14 @@ namespace GoncharovVympelSale.AppFolder.WinFolder
                 newPC.NamePC = userPcName;
 
                 DBEntities.GetContext().ClientEnterPC.Add(newPC);
-
-
                 DBEntities.GetContext().SaveChanges();
 
                 string message = $"<h2>Вы успешно зарегистрировали учётную запись в \"Вымпел продажи\"! </h2>" + $"{CodeGenerator()}";
-
                 EmailClass.sendMessage(EmailClient, "Успешная регистрация", message);
 
 
                 GlobalVarriabels.currentUserID = newClient.ClientID;
+                GlobalVarriabels.currentClientPC = userPcName;
                 GlobalVarriabels.currentRoleName = GlobalVarriabels.RoleName.Client;
 
                 await BorderSucced(true);

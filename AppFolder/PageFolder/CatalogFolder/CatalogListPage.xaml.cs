@@ -57,8 +57,6 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.CatalogFolder
 
                 LoadFilterForCLient();
 
-                //UpdateClientList();
-
             }
             else if (GlobalVarriabels.isDepWorker)
             {
@@ -176,16 +174,29 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.CatalogFolder
 
             if (client != null)
             {
-                bool checkDep = DBEntities.GetContext().DepartamentCompany.Any(u => u.DepartamentID == client.SelectedDepID);
+                bool checkDep = DBEntities.GetContext().DepartamentCompany.Any(u => u.DepartamentID == client.SelectedDepID && u.StatusDepartamentID == 1);
 
                 if (checkDep)
+                {
                     DepoCompanyForClientCB.SelectedValue = int.Parse(client.SelectedDepID.ToString());
+                }
                 else
                 {
-                    var firstDep = DBEntities.GetContext().DepartamentCompany.FirstOrDefault();
+                    var firstDep = DBEntities.GetContext().DepartamentCompany.Where(u=> u.StatusDepartamentID == 1).FirstOrDefault();
 
                     if (firstDep != null)
+                    {
                         DepoCompanyForClientCB.SelectedValue = int.Parse(firstDep.DepartamentID.ToString());
+                    }
+                    else
+                    {
+                        client.SelectedDepID = null;
+
+                        GlobalVarriabels.curDepCompanyID = 0;
+
+                        DBEntities.GetContext().SaveChanges();
+                    }
+
 
                 }
             }
@@ -274,10 +285,14 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.CatalogFolder
         public void UpdateClientList()
         {
 
-            int? selectedDep = Convert.ToInt32(DepoCompanyForClientCB.SelectedValue);
-
             try
             {
+
+                int? selectedDep = Convert.ToInt32(DepoCompanyForClientCB.SelectedValue);
+
+                if (selectedDep == 0) return;
+
+
                 var mainSource = DBEntities.GetContext().Storage
                     .Where(u => (u.Product.NameProduct.Contains(SearchTB.Text) ||
                                  u.Product.Description.Contains(SearchTB.Text) ||
@@ -452,7 +467,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.CatalogFolder
                 {
                     if (item.Amount > 0)
                     {
-                        new MessageWin("Ошибка удаления", "Данный товар ещё не закончился в некоторых департаментах", MessageCode.Error).ShowDialog();
+                        new MessageWin("Ошибка удаления", "Данный товар ещё не закончился в некоторых отделах", MessageCode.Error).ShowDialog();
                         return;
                     }
                 }
@@ -515,6 +530,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.CatalogFolder
 
                     if (selectedIndex == 0)
                         throw new Exception("Ошибка смены отдела");
+
 
                     client.SelectedDepID = selectedIndex;
 

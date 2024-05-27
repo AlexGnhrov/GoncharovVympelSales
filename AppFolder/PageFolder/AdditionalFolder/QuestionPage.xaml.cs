@@ -23,7 +23,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.AdditionalFolder
         public bool isYes = false;
         public bool isNo = false;
 
-        public QuestionPage(string CaptionName ,string question, MainWin mainWin, bool islogOut)
+        public QuestionPage(string CaptionName, string question, MainWin mainWin, bool islogOut)
         {
             InitializeComponent();
 
@@ -62,6 +62,8 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.AdditionalFolder
 
                 if (islogOut)
                 {
+
+
                     if (GlobalVarriabels.currentRoleName == GlobalVarriabels.RoleName.Client)
                     {
                         try
@@ -80,6 +82,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.AdditionalFolder
 
                     }
 
+
                     new AuthorizationWin().Show();
                     mainWin.Close();
                     return;
@@ -94,7 +97,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.AdditionalFolder
                 await GlobalVarriabels.FrontFrame.AnimWinClose();
             }
 
-            
+
         }
 
 

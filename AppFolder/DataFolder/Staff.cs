@@ -24,8 +24,6 @@ namespace GoncharovVympelSale.AppFolder.DataFolder
     
         public int StaffID { get; set; }
         public byte[] Photo { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
         public string Surname { get; set; }
         public string Name { get; set; }
         public string Patronymic { get; set; }
@@ -37,7 +35,7 @@ namespace GoncharovVympelSale.AppFolder.DataFolder
         public int PassportID { get; set; }
         public int StatusID { get; set; }
         public int DepartamentID { get; set; }
-        public int RoleID { get; set; }
+        public Nullable<int> UserID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Busket> Busket { get; set; }
@@ -48,7 +46,7 @@ namespace GoncharovVympelSale.AppFolder.DataFolder
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Order { get; set; }
         public virtual Passport Passport { get; set; }
-        public virtual Role Role { get; set; }
+        public virtual User User { get; set; }
         public virtual StatusUser StatusUser { get; set; }
     }
 }
