@@ -26,7 +26,7 @@
                         <RowDefinition Height="10"/>
                     </Grid.RowDefinitions>
                     <StackPanel x:Name="NameOfPageSP"  VerticalAlignment="Center">
-                        <Label Name="NamePageLB" Content="Добавление депортамента" Style="{StaticResource MainLabel}"   Margin="10,5"/>
+                        <Label Name="NamePageLB" Content="Добавление отдела" Style="{StaticResource MainLabel}"   Margin="10,5"/>
                         <Border Background="{StaticResource SecondColor}" Height="5" Width="50" CornerRadius="2"/>
                     </StackPanel>
 

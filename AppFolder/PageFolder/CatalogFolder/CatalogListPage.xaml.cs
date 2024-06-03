@@ -356,8 +356,9 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.CatalogFolder
                 source = DBEntities.GetContext().Storage.Where(u => (u.Product.NameProduct.Contains(SearchTB.Text) ||
                                                                     u.Product.Description.Contains(SearchTB.Text) ||
                                                                     u.StorageNum.Contains(SearchTB.Text)) &&
-                                                                    u.DepartamentID == GlobalVarriabels.curDepCompanyID &&
-                                                                    u.StatusProductID == selectedStatus);
+                                                                    u.DepartamentID == GlobalVarriabels.curDepCompanyID);
+
+                source = source.Where(u=>u.StatusProductID == selectedStatus);
 
                 if (selectedCategor != 0)
                     source = source.Where(u => u.Product.CategoryID == selectedCategor);

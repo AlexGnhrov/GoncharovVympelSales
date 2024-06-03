@@ -9,7 +9,16 @@ namespace GoncharovVympelSale.AppFolder.DataFolder
         {
             get
             {
-                return GlobalVarriabels.isReadOnly || GlobalVarriabels.currentRoleName == GlobalVarriabels.RoleName.DepAdmin ? Visibility.Hidden : Visibility.Visible ;
+                return GlobalVarriabels.isReadOnly || GlobalVarriabels.currentRoleName == GlobalVarriabels.RoleName.DepAdmin ? Visibility.Hidden : Visibility.Visible;
+            }
+        }
+
+
+        public Visibility StorageNumVissbility
+        {
+            get
+            {
+                return GlobalVarriabels.currentRoleName == GlobalVarriabels.RoleName.Client ? Visibility.Hidden : Visibility.Visible;
             }
         }
 

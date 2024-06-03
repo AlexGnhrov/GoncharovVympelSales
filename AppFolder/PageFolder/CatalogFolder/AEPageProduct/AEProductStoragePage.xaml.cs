@@ -211,11 +211,15 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.CatalogFolder
 
 
                 if (storageProductID == 0)
+                {
                     editStorage = new Storage();
+                }
                 else
+                {
                     editStorage = DBEntities.GetContext().Storage
                         .FirstOrDefault(u => u.DepartamentID == GlobalVarriabels.curDepCompanyID &&
                         u.ProductID == storageProductID);
+                }
 
                 if (storageProductID == 0)
                 {

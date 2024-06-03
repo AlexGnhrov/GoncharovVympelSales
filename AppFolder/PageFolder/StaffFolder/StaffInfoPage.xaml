@@ -92,7 +92,7 @@
 
                             <TextBlock>
                                 <Run Text="Роль:                    " FontSize="20" FontWeight="DemiBold"/>
-                                <Run Text="{Binding Role.NameRole}"/>
+                                <Run Text="{Binding User.Role.NameRole}"/>
                             </TextBlock>
 
 

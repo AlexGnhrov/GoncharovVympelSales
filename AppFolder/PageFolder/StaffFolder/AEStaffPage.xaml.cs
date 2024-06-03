@@ -90,7 +90,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.StaffFolder
 
 
             if (GlobalVarriabels.currentRoleName == GlobalVarriabels.RoleName.DepAdmin)
-                RoleCB.ItemsSource = DBEntities.GetContext().Role.Where(u => u.RoleID != 1 && u.RoleID != 2).OrderBy(u => u.RoleID).ToList();
+                RoleCB.ItemsSource = DBEntities.GetContext().Role.Where(u => u.RoleID != 1 && u.RoleID != 2 && u.RoleID != 3).OrderBy(u => u.RoleID).ToList();
             else
                 RoleCB.ItemsSource = DBEntities.GetContext().Role.OrderBy(u => u.RoleID).ToList();
 
@@ -1428,7 +1428,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.StaffFolder
 
 
 
-                if (savePhone != PhoneTB.Text)
+                if (savePhone != PhoneTB.Text.Trim())
                 {
                     var checkPhone = DBEntities.GetContext().Staff.FirstOrDefault(u => u.PhoneNum == PhoneTB.Text);
 
@@ -1440,9 +1440,9 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.StaffFolder
                     }
                 }
 
-                if (saveLogin != LoginTB.Text)
+                if (saveLogin != LoginTB.Text.Trim() )
                 {
-                    var checkLogin = DBEntities.GetContext().Staff.FirstOrDefault(u => u.User.Login == LoginTB.Text);
+                    var checkLogin = DBEntities.GetContext().Staff.FirstOrDefault(u => u.User.Login == LoginTB.Text.Trim());
 
                     if (checkLogin != null)
                     {

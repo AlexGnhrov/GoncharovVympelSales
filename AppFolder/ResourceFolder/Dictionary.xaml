@@ -2868,9 +2868,10 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="AUTO"/>
                         </Grid.RowDefinitions>
-                        <Border x:Name="BackBorder" Background="White" Opacity="0.6" Grid.RowSpan="2"/>
+                        <Border x:Name="BackBorder" Background="White" Opacity="0.6" Grid.RowSpan="2" CornerRadius="{StaticResource CornerValue}"/>
 
-                        <Border x:Name="BorderShadow" Background="Transparent" 
+                        <Border x:Name="BorderShadow" Background="Transparent"
+                                CornerRadius="{StaticResource CornerValue}"
                                 BorderBrush="Black" BorderThickness="0.3"  Grid.RowSpan="2">
                             <Border.Effect>
                                 <BlurEffect Radius="5"/>
@@ -2878,7 +2879,8 @@
                         </Border>
 
                         <Border x:Name="Border"  BorderBrush="{TemplateBinding BorderBrush}" 
-                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="{StaticResource CornerValue}"
                                 Background="{TemplateBinding Background}" Margin="10"
                                 SnapsToDevicePixels="True" Grid.RowSpan="2"/>
 
@@ -3976,7 +3978,7 @@
         <Setter Property="TextTrimming" Value="None"/>
         <Setter Property="Foreground" Value="{StaticResource ErrorColor}"/>
         <Setter Property="FontSize" Value="16"/>
-        <Setter Property="Padding" Value="0,10"/>
+        <Setter Property="Padding" Value="0"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
         <Setter Property="Margin" Value="10"/>
     </Style>

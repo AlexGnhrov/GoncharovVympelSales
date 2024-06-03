@@ -967,7 +967,6 @@ namespace GoncharovVympelSale.AppFolder.WinFolder
 
 
             }
-            Clipboard.SetText(CodeForReg); //-----------------------------------------------------УДАЛИТЬ
 
             CodeTB.Focus();
 
