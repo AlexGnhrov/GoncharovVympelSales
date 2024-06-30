@@ -56,11 +56,11 @@
                                             <Style TargetType="Border">
                                                 <Setter Property="Background">
                                                     <Setter.Value>
-                                                        <ImageBrush ImageSource="{Binding User.Photo}" Stretch="UniformToFill"/>
+                                                        <ImageBrush ImageSource="{Binding Photo}" Stretch="UniformToFill"/>
                                                     </Setter.Value>
                                                 </Setter>
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding User}" Value="{x:Null}">
+                                                    <DataTrigger Binding="{Binding Photo}" Value="{x:Null}">
                                                         <Setter Property="Background">
                                                             <Setter.Value>
                                                                 <ImageBrush  ImageSource="/AppFolder/ResourceFolder/ImageFolder/Portrait_Placeholder.png" Stretch="UniformToFill"/>

@@ -69,7 +69,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.StaffFolder
                 NamePageLB.Content = "Редактирование сотрудника";
                 AddEditBTN.Content = "Редактировать";
 
-                if(StaffID == 1)
+                if (StaffID == 1)
                 {
                     RoleCB.IsEnabled = false;
                     StatusCB.IsEnabled = false;
@@ -1440,7 +1440,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.StaffFolder
                     }
                 }
 
-                if (saveLogin != LoginTB.Text.Trim() )
+                if (saveLogin != LoginTB.Text.Trim())
                 {
                     var checkLogin = DBEntities.GetContext().Staff.FirstOrDefault(u => u.User.Login == LoginTB.Text.Trim());
 
@@ -1480,8 +1480,8 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.StaffFolder
                     {
 
                         if (Convert.ToInt32(StatusCB.SelectedValue) == 3 && saveStatusID != 3)
-                            message += "При статусе \"Заблокирован\", сотрудник не сможет войти в свою запись." +
-                                "\nИ через полгода можно будет удалить запись.\n\n";
+                                  message += "При статусе \"Заблокирован\", сотрудник не сможет войти в свою запись." +
+                             "\nИ через полгода можно будет удалить запись.\n\n";
 
 
                         if (saveStatusID == 3 && Convert.ToInt32(StatusCB.SelectedValue) != 3)
@@ -1535,7 +1535,7 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.StaffFolder
                     {
                         editStaff.BlockDate = DateTime.Now.AddDays(180);
                     }
-                    else
+                    else if (Convert.ToInt32(StatusCB.SelectedValue) == 1 || Convert.ToInt32(StatusCB.SelectedValue) == 2)
                     {
                         editStaff.BlockDate = null;
                     }

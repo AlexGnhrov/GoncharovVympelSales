@@ -632,6 +632,7 @@ namespace GoncharovVympelSale.AppFolder.WinFolder
                 GlobalVarriabels.currentUserID = newClient.ClientID;
                 GlobalVarriabels.currentClientPC = userPcName;
                 GlobalVarriabels.currentRoleName = GlobalVarriabels.RoleName.Client;
+                GlobalVarriabels.isDepWorker = false;
 
                 await BorderSucced(true);
 

@@ -23,8 +23,9 @@ namespace GoncharovVympelSale.AppFolder.PageFolder.StaffFolder
         {
             InitializeComponent();
 
+            DBEntities.NullContext();
 
-            DataContext = staff;
+            DataContext = DBEntities.GetContext().Staff.FirstOrDefault(u => u.StaffID == staff.StaffID); 
             this.staff = staff;
 
         }

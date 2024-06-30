@@ -53,7 +53,7 @@
                                 MouseLeftButtonUp="BorderPhoto_MouseLeftButtonUp"
                                 Style="{DynamicResource BorderImage}" Height="305">
                             <Border.Background>
-                                <ImageBrush x:Name="ImagePhoto" Stretch="Uniform" ImageSource="/AppFolder/ResourceFolder/ImageFolder/ProductImagePlaceholder.png"/>
+                                <ImageBrush x:Name="ImagePhoto" Stretch="UniformToFill" ImageSource="/AppFolder/ResourceFolder/ImageFolder/ProductImagePlaceholder.png"/>
                             </Border.Background>
                         </Border>
 

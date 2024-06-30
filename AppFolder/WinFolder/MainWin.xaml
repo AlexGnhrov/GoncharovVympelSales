@@ -407,7 +407,7 @@
                     <StackPanel x:Name="StaffDetails" Margin="20,0" Orientation="Horizontal" IsHitTestVisible="False">
                         <TextBlock Text="{Binding DepartamentCompany.DepartamentID,StringFormat='{}Отдел:  №{0}'}" FontWeight="SemiBold"
                                    Style="{StaticResource TextForMenuButtons}" Width="auto"/>
-                        <TextBlock Text="{Binding Role.NameRole,StringFormat='{}Роль: {0}'}" FontWeight="SemiBold" Width="auto"
+                        <TextBlock Text="{Binding User.Role.NameRole,StringFormat='{}Роль: {0}'}" FontWeight="SemiBold" Width="auto"
                                    Style="{StaticResource TextForMenuButtons}" TextWrapping="NoWrap"/>
                     </StackPanel>
 
